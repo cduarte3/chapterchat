@@ -58,7 +58,7 @@ export default function Projects() {
             <p className="mb-3 font-normal text-gray-400">
               Connect 4 Pygame with gametree logic, and custom UI. Can be downloaded as a .zip file and ran through main.exe file.
             </p>
-            <Link to="https://github.com/cduarte3/connect4/tree/main" target="_blank">
+            <Link to="https://christianduarte7.itch.io/connect-four" target="_blank">
               <div className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                 Play Connect 4
                 <svg
