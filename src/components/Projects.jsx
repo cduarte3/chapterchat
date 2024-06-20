@@ -18,7 +18,7 @@ export default function Projects() {
             </h5>
             <p className="mb-3 font-normal text-gray-400">
               Uses Parcel, Docker, and AWS (EC2, ECS, ECR, CLI, S3 bucket,
-              dynamoDB, cloudWatch). Also includes hurl and jest testing.
+              dynamoDB, cloudWatch). Includes hurl, jest testing with CI/CD pipelines.
             </p>
             <Link
               to="https://www.youtube.com/watch?v=D5WmuvlWnvE"
@@ -26,6 +26,41 @@ export default function Projects() {
             >
               <div className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                 View Live Demo
+                <svg
+                  className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9"
+                  />
+                </svg>
+              </div>
+            </Link>
+          </div>
+        </div>
+        <div className="border-4 rounded-lg shadow bg-gray-800 border-white h-full p-[30px]">
+          <img
+            className="mx-auto rounded-lg lg:w-[60%]"
+            src="https://media.istockphoto.com/id/1420518918/vector/blackjack-icon-flat-style-vector-illustration-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=a3WpuAt-cEzO1rNAPasLfi6FgwTTepKNm10194yOEUg="
+            alt="Blackjack Cards"
+          />
+          <div>
+            <h5 className="pt-3 mb-2 text-2xl font-bold tracking-tight text-white">
+              BlackJack Pygame
+            </h5>
+            <p className="mb-3 font-normal text-gray-400">
+              BlackJack demo game I made using PyGame. Single executable, can be downloaded and ran on any Windows device.
+            </p>
+            <Link to="https://christianduarte7.itch.io/blackjack-demo" target="_blank">
+              <div className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                Play Blackjack
                 <svg
                   className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
                   aria-hidden="true"
@@ -56,7 +91,7 @@ export default function Projects() {
               Connect 4 Pygame
             </h5>
             <p className="mb-3 font-normal text-gray-400">
-              Connect 4 Pygame with gametree logic, and custom UI. Can be downloaded as a .zip file and ran through main.exe file.
+              Connect 4 Pygame with gametree logic, and custom UI. Can be downloaded and ran as a single file .exe for windows devices.
             </p>
             <Link to="https://christianduarte7.itch.io/connect-four" target="_blank">
               <div className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
@@ -97,42 +132,6 @@ export default function Projects() {
             <Link to="https://weather-app-gamma-cyan-66.vercel.app/" target="_blank">
               <div className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                 Check the Weather
-                <svg
-                  className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                  />
-                </svg>
-              </div>
-            </Link>
-          </div>
-        </div>
-        <div className="border-4 rounded-lg shadow bg-gray-800 border-white h-full p-[30px]">
-          <img
-            className="mx-auto rounded-lg lg:w-[60%]"
-            src="https://media.istockphoto.com/id/1420518918/vector/blackjack-icon-flat-style-vector-illustration-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=a3WpuAt-cEzO1rNAPasLfi6FgwTTepKNm10194yOEUg="
-            alt="Blackjack Cards"
-          />
-          <div>
-            <h5 className="pt-3 mb-2 text-2xl font-bold tracking-tight text-white">
-              BlackJack Pygame
-            </h5>
-            <p className="mb-3 font-normal text-gray-400">
-              Quick BlackJack game I made using PyGame Game can be downloaded as
-              a folder / .zip file and ran through main.exe
-            </p>
-            <Link to="https://github.com/cduarte3/blackjack" target="_blank">
-              <div className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                Play Blackjack
                 <svg
                   className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
                   aria-hidden="true"
