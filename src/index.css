@@ -3,9 +3,8 @@
 @tailwind utilities;
 
 body {
-  background-color: rgb(25, 30, 68);
+  background-color: rgb(255, 254, 229);
+  font-family: 'Inter', sans-serif;
 }
 
-#dark-blue-div {
-  z-index: 1000; /* Set a higher z-index */
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
