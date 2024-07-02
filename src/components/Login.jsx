@@ -1,6 +1,14 @@
-import React from "react";
+import {useState, React} from "react";
 
 export default function Login() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function submit(e){
+    e.preventDefault();
+    
+  }
 
   return (
     <div>
@@ -13,18 +21,18 @@ export default function Login() {
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <form class="space-y-6" action="#" method="POST">
       <div>
-        <label for="email" class="block text-sm font-bold leading-6 text-gray-900">Email address</label>
+        <label for="email" class="block text-lg font-bold leading-6 text-gray-900">Email address</label>
         <div class="mt-2">
-          <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+          <input onChange={(e) => {setEmail(e.target.value)}} id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3" placeholder="example@email.com"/>
         </div>
       </div>
 
       <div>
         <div class="flex items-center justify-between">
-          <label for="password" class="block text-sm font-bold leading-6 text-gray-900">Password</label>
+          <label for="password" class="block text-lg font-bold leading-6 text-gray-900">Password</label>
         </div>
         <div class="mt-2">
-          <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] sm:text-sm sm:leading-6"/>
+          <input onChange={(e) => {setPassword(e.target.value)}} placeholder="Password" id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"/>
         </div>
       </div>
 
