@@ -2,6 +2,22 @@ import React from "react";
 
 export default function Signup() {
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const confirmPassword = e.target.confirmPassword.value; // get confirm password
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match'); // handle error
+      return;
+    }
+
+    console.log(email, password);
+  }
+
+
+
   return (
     <div>
         <div class="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
@@ -11,7 +27,7 @@ export default function Signup() {
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" action="#" method="POST">
+    <form class="space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
       <div>
         <label for="email" class="block text-lg font-bold leading-6 text-gray-900">Email address</label>
         <div class="mt-2">
@@ -25,6 +41,15 @@ export default function Signup() {
         </div>
         <div class="mt-2">
           <input placeholder="Password" id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"/>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between">
+          <label for="confirmPassword" class="block text-lg font-bold leading-6 text-gray-900">Confirm Password</label>
+        </div>
+        <div class="mt-2">
+          <input placeholder="Password" id="confirmPassword" name="confirmPassword" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"/>
         </div>
       </div>
 
