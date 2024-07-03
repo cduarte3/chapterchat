@@ -10,6 +10,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/users', require('./routes/users'));
+app.use('/login', require('./routes/login'));
+app.use('/signup', require('./routes/signup'));
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server is running');
