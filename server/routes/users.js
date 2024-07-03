@@ -8,8 +8,8 @@ router.get("/", async (req, res) => {
   try {
     await client.connect();
     const collection = client.db("chapterchat").collection("users");
-    const reviews = await collection.find().toArray();
-    res.json(reviews);
+    const users = await collection.find().toArray();
+    res.json(users);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: err.message });
@@ -19,21 +19,30 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { review, rating, name } = req.body;
+  const { email, password } = req.body;
 
-  if (!review || !rating || !name) {
+  if (!email || !password) {
     return res
       .status(400)
-      .json({ message: "Missing required fields: review, rating, name" });
+      .json({ message: "Missing required fields: email, password" });
   }
 
   const date = new Date();
 
   try {
     await client.connect();
-    const collection = client.db("feedback").collection("reviews");
-    const result = await collection.insertOne({ review, rating, name, date });
-    res.status(201).json(result.ops[0]);
+    const collection = client.db("chapterchat").collection("users");
+    const result = await collection.insertOne({
+      email,
+      password
+    });
+
+    // Fetch the inserted document using the insertedId
+    const insertedDocument = await collection.findOne({
+      _id: result.insertedId,
+    });
+
+    res.status(201).json(insertedDocument);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: err.message });

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "client": "cd client && npm start",
-    "server": "cd server && node server.js",
+    "server": "cd server && nodemon server.js",
     "dev": "concurrently --kill-others \"npm run server\" \"npm run client\""
   },
   "eslintConfig": {
@@ -26,7 +26,6 @@
     ]
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "nodemon": "^3.1.4"
+    "concurrently": "^8.2.2"
   }
 }
