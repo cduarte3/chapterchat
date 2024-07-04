@@ -4,22 +4,25 @@ import { Link } from "react-router-dom";
 export default function Shelf({ userData }) {
   return (
     <div className="h-[100vh]">
-      <div className="bg-[rgb(64,63,68)] h-[10vh] w-max-300px flex justify-between items-center px-4">
-        <div className="text-amber-50 font-bold">
-          <Link to="/user/:userId/add"><img src="/add.png" alt="add book" className="max-w-[30%] max-h-full ml-5"></img></Link>
+      <div className=" mt-[2%] flex justify-between items-center px-6">
+        <div className="font-bold md:w-[14%] w-[12%]">
+          <Link to="/user/:userId/add"><img src="/add.png" alt="add book" className="mx-auto items-center lg:w-[60%]"></img></Link>
         </div>
         <nav>
-          <ul className="flex space-x-4 text-amber-50 sm:text-3xl md:px-5 px-1">
+          <ul className="h-[15vh] flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
             <li className="md:px-5">
               <Link to="/faq">FAQ</Link>
             </li>
             <li className="md:px-5">
               <Link to="/user/:userId/profile">Profile</Link>
             </li>
+            <li className="md:px-5">
+              <Link to="/"><img src="/logo.png" alt="Logo" className="w-[5rem] sm:w-[6rem] md:w-[7rem] lg:w-[8rem]"></img></Link>
+            </li>
           </ul>
         </nav>
       </div>
-      <h1 className="font-bold mt-[5%] p-5 text-center flex flex-col md:text-8xl sm:text-6xl text-4xl mx-auto justify-center text-[rgb(64,63,68)]">
+      <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col md:text-8xl sm:text-6xl text-4xl mx-auto justify-center text-[rgb(64,63,68)]">
         <span style={{ wordBreak: "break-all" }}>{userData.username}'s</span>{" "}
         Shelf
       </h1>
