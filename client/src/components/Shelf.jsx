@@ -23,7 +23,7 @@ export default function Shelf({ userData }) {
         <span style={{ wordBreak: "break-all" }}>{userData.username}'s</span>{" "}
         Shelf
       </h1>
-      <hr class="lg:w-[50%] w-[70%] h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-[rgb(64,63,68)]" />
+      <hr className="lg:w-[50%] w-[70%] h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-[rgb(64,63,68)]" />
       <div className="text-center flex-col grid max-w-screen-2xl md:grid-cols-4 grid-cols-2 mx-auto justify-items-center gap-12 sm:p-3">
         <div className="relative w-full">
           <img

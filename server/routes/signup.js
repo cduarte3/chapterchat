@@ -36,6 +36,7 @@ router.post("/", async (req, res) => {
       email: email,
       username: username,
       password: hashedPassword,
+      books: [],
     });
 
     if (result.acknowledged) {

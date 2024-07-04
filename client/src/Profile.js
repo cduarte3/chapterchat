@@ -6,7 +6,6 @@ import Shelf from './components/Shelf';
 export default function Profile() {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
-  console.log(userId);
 
   useEffect(() => {
     const url = `http://localhost:5000/users/${userId}`;
@@ -19,7 +18,6 @@ export default function Profile() {
         }
         const data = await response.json();
         setUserData(data);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -35,8 +33,6 @@ export default function Profile() {
     </div>
     );
   }
-
-  console.log(userData);
   return (
     <div>
         <Shelf userData={userData} />
