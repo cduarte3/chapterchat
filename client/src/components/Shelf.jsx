@@ -6,9 +6,12 @@ export default function Shelf({ userData }) {
   const navigate = useNavigate();
 
   const addBook = () => {
-    console.log(userData._id)
     navigate(`/user/${userData._id}/add`);
   };
+
+  const visitBook = (bookId) => {
+    navigate(`/user/${userData._id}/book/${bookId}`);
+  }
 
   return (
     <div className="h-[100vh]">
@@ -58,6 +61,7 @@ export default function Shelf({ userData }) {
               src={book.cover ? `data:image/png;base64,${book.cover}` : ""}
               alt="Cover"
               className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-custom-dark"
+              onClick={() => visitBook(book.id)}
             />
           </div>
         ))}
