@@ -6,7 +6,8 @@ import App from './App';
 import NotFound from './404';
 import Log from './login';
 import Sign from './signup';
-import Profile from './Profile'; 
+import Profile from './Profile';
+import Add from './Add';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
         <Route path="signup" element={<Sign />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/user/:userId" element={<Profile/>} />
+        <Route path="/user/:userId/add" element={<Add/>} />
       </Routes>
     </Router>
   </React.StrictMode>
