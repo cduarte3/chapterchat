@@ -1,7 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Shelf({ userData }) {
+
+  const navigate = useNavigate();
+
+  const addBook = () => {
+    navigate(`/user/${userData._id}/add`);
+  };
+
   return (
     <div className="h-[100vh]">
       <div className=" mt-[2%] flex justify-between items-center px-6">
