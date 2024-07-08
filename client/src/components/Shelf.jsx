@@ -6,6 +6,7 @@ export default function Shelf({ userData }) {
   const navigate = useNavigate();
 
   const addBook = () => {
+    console.log(userData._id)
     navigate(`/user/${userData._id}/add`);
   };
 
@@ -13,13 +14,12 @@ export default function Shelf({ userData }) {
     <div className="h-[100vh]">
       <div className=" mt-[2%] flex justify-between items-center px-6">
         <div className="font-bold md:w-[14%] w-[12%]">
-          <Link to="/user/:userId/add">
             <img
               src="/add.png"
               alt="add book"
               className="mx-auto items-center lg:w-[60%]"
+              onClick={addBook}
             ></img>
-          </Link>
         </div>
         <nav>
           <ul className="h-[15vh] flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
