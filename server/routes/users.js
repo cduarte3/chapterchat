@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { MongoClient, ObjectId } = require("mongodb"); // Corrected here
+const { MongoClient, ObjectId } = require("mongodb");
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const client = new MongoClient(process.env.DATABASE_URL);
 
@@ -32,9 +35,10 @@ router.get("/:userid", async (req, res) => {
 });
 
 // post a review for a book by user ID
-router.post("/:userid", async (req, res) => {
+router.post("/:userid", upload.single('cover'), async (req, res) => {
   const userId = req.params.userid;
   const { title, review, rating } = req.body;
+  const cover = req.file;
 
   if (!userId) {
     return res.status(400).json({ message: "User ID is required" });
@@ -54,6 +58,7 @@ router.post("/:userid", async (req, res) => {
             title: title,
             review: review,
             rating: rating,
+            cover: cover.buffer.toString('base64'),
           },
         },
       }
