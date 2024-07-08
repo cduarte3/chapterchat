@@ -1,12 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Shelf({ userData }) {
+
+  const navigate = useNavigate();
+
+  const addBook = () => {
+    navigate(`/user/${userData._id}/add`);
+  };
+
   return (
     <div className="h-[100vh]">
       <div className=" mt-[2%] flex justify-between items-center px-6">
         <div className="font-bold md:w-[14%] w-[12%]">
-          <Link to="/user/:userId/add"><img src="/add.png" alt="add book" className="mx-auto items-center lg:w-[60%]"></img></Link>
+          <img src="/add.png" alt="add book" className="mx-auto items-center lg:w-[60%]" onClick={addBook}></img>
         </div>
         <nav>
           <ul className="h-[15vh] flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
