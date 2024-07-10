@@ -9,6 +9,8 @@ import Sign from './signup';
 import Profile from './Profile';
 import Add from './Add';
 
+import Book from './Book';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -20,6 +22,8 @@ root.render(
         <Route path="*" element={<NotFound />} />
         <Route path="/user/:userId" element={<Profile/>} />
         <Route path="/user/:userId/add" element={<Add/>} />
+
+        <Route path="/user/:userId/book/:bookId" element={<Book/>} />
       </Routes>
     </Router>
   </React.StrictMode>
