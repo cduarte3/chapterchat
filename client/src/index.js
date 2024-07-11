@@ -8,11 +8,12 @@ import Log from './login';
 import Sign from './signup';
 import Profile from './Profile';
 import Add from './Add';
-
 import Book from './Book';
+import Protected from './Protected';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  
   <React.StrictMode>
     <Router>
       <Routes>
@@ -20,10 +21,9 @@ root.render(
         <Route path="login" element={<Log />} />
         <Route path="signup" element={<Sign />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/user/:userId" element={<Profile/>} />
-        <Route path="/user/:userId/add" element={<Add/>} />
-
-        <Route path="/user/:userId/book/:bookId" element={<Book/>} />
+        <Route path="/user/:userId" element={<Protected><Profile/></Protected>} />
+        <Route path="/user/:userId/add" element={<Protected><Add/></Protected>} />
+        <Route path="/user/:userId/book/:bookId" element={<Protected><Book/></Protected>} />
       </Routes>
     </Router>
   </React.StrictMode>

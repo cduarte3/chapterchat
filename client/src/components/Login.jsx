@@ -32,8 +32,9 @@ export default function Login() {
       }
       else{
         const data = await response.json();
+        localStorage.setItem('token', data.token);
         console.log(data);
-        navigate(`/user/${data.id}`);
+        navigate(`/user/${data.id}`, { state: { token: data.token } });
       }
       
     } catch (error) {
