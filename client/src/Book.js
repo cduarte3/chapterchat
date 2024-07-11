@@ -5,13 +5,25 @@ import BookDetail from './components/BookDetail';
 export default function Profile() {
   const { userId, bookId } = useParams();
   const [bookData, setBookData] = useState(null);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
+    console.log(token);
     const url = `http://localhost:5000/users/${userId}/book/${bookId}`;
 
     const fetchBookData = async () => {
       try {
-        const response = await fetch(url);
+        if (!token) {
+          console.error("Token is not available");
+          return;
+        }
+        const response = await fetch(url, {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -23,7 +35,7 @@ export default function Profile() {
     };
 
     fetchBookData();
-  }, [userId, bookId]);
+  }, [userId, bookId, token]);
 
   if (!bookData) {
     return (
