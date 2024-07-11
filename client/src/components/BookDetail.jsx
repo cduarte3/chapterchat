@@ -18,7 +18,7 @@ export default function BookDetail({ bookData }) {
 
   return (
     <div>
-    <div className="h-[100vh] mb-[20%] xl:mb-[2%]">
+    <div className="min-h-screen">
       <div className=" mt-[2%] flex justify-between items-center px-6">
         <nav>
           <ul className="h-[15vh] flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
@@ -26,7 +26,7 @@ export default function BookDetail({ bookData }) {
               <img
                 src="/delete.png"
                 alt="Delete Review"
-                className="w-[4rem] sm:w-[6rem] md:w-[7rem] lg:w-[8rem]"
+                className="w-[4rem] sm:w-[5rem] md:w-[6rem] lg:w-[7rem]"
                 onClick={deleteBook}
               ></img>
             </li>
@@ -34,7 +34,7 @@ export default function BookDetail({ bookData }) {
               <img
                 src="/edit.png"
                 alt="edit Review"
-                className="w-[4rem] sm:w-[6rem] md:w-[7rem] lg:w-[8rem]"
+                className="w-[4rem] sm:w-[5rem] md:w-[6rem] lg:w-[7rem]"
                 onClick={editBook}
               ></img>
             </li>
@@ -47,22 +47,22 @@ export default function BookDetail({ bookData }) {
                 <img
                   src="/logo.png"
                   alt="Logo"
-                  className="w-[6rem] sm:w-[7rem] md:w-[9rem] lg:w-[11rem]"
+                  className="w-[6rem] sm:w-[7rem] md:w-[9rem] lg:w-[10rem]"
                 ></img>
               </Link>
             </li>
           </ul>
         </nav>
       </div>
-      <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col md:text-8xl sm:text-6xl text-4xl mx-auto justify-center text-[rgb(64,63,68)]">
+      <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col xl:text-7xl md:text-6xl sm:text-6xl text-4xl mx-auto justify-center text-[rgb(64,63,68)]">
         {bookData.title}
       </h1>
       <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-[rgb(64,63,68)]" />
-      <div className="justify-items-center flex-col grid w-[90%] xl:w-[80%] xl:grid-cols-2 grid-cols-1 mx-auto gap-5 sm:p-3">
-        <div className="relative w-[50%]">
+      <div className="justify-items-center flex-col grid w-[90%] xl:w-[80%] 2xl:grid-cols-2 grid-cols-1 mx-auto gap-5 sm:p-3">
+        <div className="relative xl:w-[50%] md:w-[30%] w-[50%]">
           <img
             src="/book.png"
-            alt="User Avatar"
+            alt="blank book"
             className="w-full shadow-custom-dark"
           />
           <img
@@ -86,11 +86,11 @@ export default function BookDetail({ bookData }) {
               readOnly
               sx={{
                 fontSize: {
-                  xs: "4rem",
-                  sm: "4rem",
-                  md: "4.5rem",
-                  lg: "5rem",
-                  xl: "5.5rem",
+                  xs: "2.5rem",
+                  sm: "3rem",
+                  md: "4rem",
+                  lg: "4.5rem",
+                  xl: "5rem",
                 },
               }}
             />
