@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "./Footer";
 import Rating from "@mui/material/Rating";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function BookDetail({ bookData }) {
   const navigate = useNavigate();
@@ -14,6 +14,14 @@ export default function BookDetail({ bookData }) {
   const editBook = () => {
     const currentPath = window.location.pathname;
     navigate(`${currentPath}/edit`);
+  };
+
+  const goHome = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate(-1);
+      return;
+    }
   };
 
   return (
@@ -43,13 +51,12 @@ export default function BookDetail({ bookData }) {
         <nav>
           <ul className="h-[15vh] flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
             <li className="md:px-5">
-              <Link to="/">
                 <img
                   src="/logo.png"
                   alt="Logo"
                   className="w-[6rem] sm:w-[7rem] md:w-[9rem] lg:w-[10rem]"
+                  onClick={goHome}
                 ></img>
-              </Link>
             </li>
           </ul>
         </nav>
@@ -82,7 +89,7 @@ export default function BookDetail({ bookData }) {
           </p>
           <div className="mt-10 flex justify-center">
             <Rating
-              value={bookData.rating}
+              value={Number(bookData.rating)}
               readOnly
               sx={{
                 fontSize: {

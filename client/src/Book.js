@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import BookDetail from './components/BookDetail';
 
 export default function Profile() {
   const { userId, bookId } = useParams();
   const [bookData, setBookData] = useState(null);
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(token);
     const url = `http://localhost:5000/users/${userId}/book/${bookId}`;
 
     const fetchBookData = async () => {
       try {
         if (!token) {
-          console.error("Token is not available");
+          console.error("Token is undefined");
+          navigate("/");
           return;
         }
         const response = await fetch(url, {
@@ -35,7 +36,7 @@ export default function Profile() {
     };
 
     fetchBookData();
-  }, [userId, bookId, token]);
+  }, [userId, bookId, token, navigate]);
 
   if (!bookData) {
     return (

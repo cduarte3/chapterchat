@@ -22,6 +22,7 @@ export default function Login() {
       }),
     };
 
+    // error handling for email or password incorrect/not found
     try {
       const response = await fetch(url, requestOptions);
       if (response.status === 401) {
@@ -31,9 +32,9 @@ export default function Login() {
         alert('Email not found. Please sign up.');
       }
       else{
+        // if the login is good, set the token for the user and redirect to their bookshelf
         const data = await response.json();
         localStorage.setItem('token', data.token);
-        console.log(data);
         navigate(`/user/${data.id}`, { state: { token: data.token } });
       }
       
