@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        "custom-dark": "0 4px 6px 0 rgba(0, 0, 0, 0.5)",
+        "custom-dark": "0 6px 8px 0 rgba(0, 0, 0, 0.8)",
       },
     },
   },
