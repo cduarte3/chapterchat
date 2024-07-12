@@ -13,6 +13,11 @@ export default function Shelf({ userData }) {
     navigate(`/user/${userData._id}/book/${bookId}`);
   };
 
+  const logOut = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen">
       <div className="min-h-screen mb-10 lg:mb-0 xl:mb-10">
@@ -38,13 +43,12 @@ export default function Shelf({ userData }) {
               <Link to="/user/:userId/profile">Profile</Link>
             </li>
             <li className="md:px-5">
-              <Link to="/">
                 <img
                   src="/logo.png"
                   alt="Logo"
                   className="w-[6rem] sm:w-[7rem] md:w-[9rem] lg:w-[11rem]"
+                  onClick={logOut}
                 ></img>
-              </Link>
             </li>
           </ul>
         </nav>

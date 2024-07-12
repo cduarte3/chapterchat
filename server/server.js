@@ -1,13 +1,8 @@
 require("dotenv").config();
 const express = require("express");
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
 const cors = require("cors");
 const app = express();
-const { MongoClient } = require("mongodb");
 const { router: loginRoute, isAuthenticated } = require("./routes/login");
-
-const client = new MongoClient(process.env.DATABASE_URL);
 
 app.use(
   cors({
