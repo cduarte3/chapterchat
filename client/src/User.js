@@ -1,9 +1,9 @@
-import userProfile from "./components/Profile";
+import UserProfile from "./components/Profile";
 
 export default function User() {
   return (
     <>
-      <userProfile />
+      <UserProfile />
     </>
   );
 }
