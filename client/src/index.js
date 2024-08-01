@@ -10,6 +10,7 @@ import Profile from './Profile';
 import Add from './Add';
 import Book from './Book';
 import Protected from './Protected';
+import User from './User';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -24,6 +25,7 @@ root.render(
         <Route path="/user/:userId" element={<Protected><Profile/></Protected>} />
         <Route path="/user/:userId/add" element={<Protected><Add/></Protected>} />
         <Route path="/user/:userId/book/:bookId" element={<Protected><Book/></Protected>} />
+        <Route path="/user/:userId/profile" element={<Protected><User/></Protected>} />
       </Routes>
     </Router>
   </React.StrictMode>
