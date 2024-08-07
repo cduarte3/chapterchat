@@ -47,7 +47,7 @@ export default function Profile() {
   }
   return (
     <>
-        <BookDetail bookData={bookData} />
+        <BookDetail bookData={bookData} userId={userId} />
     </>
   );
 }
