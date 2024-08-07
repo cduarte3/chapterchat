@@ -98,9 +98,9 @@ router.get("/:userid/book/:bookId", async (req, res) => {
     await client.connect();
     const collection = client.db("chapterchat").collection("users");
     const user = await collection.findOne({ _id: new ObjectId(userId) });
-
+    let book;
     if (user) {
-      ID = new ObjectId(bookId);
+      let ID = new ObjectId(bookId);
       for (let i = 0; i < user.books.length; i++) {
         if (user.books[i].id.equals(ID)) {
           book = user.books[i];
@@ -122,5 +122,40 @@ router.get("/:userid/book/:bookId", async (req, res) => {
     await client.close();
   }
 });
+
+
+// delete a book by user ID and book ID
+router.delete("/:userid/book/:bookId", async (req, res) => {
+  const userId = req.params.userid;
+  const bookId = req.params.bookId;
+
+  if (!userId || !bookId) {
+    return res.status(400).json({ message: "User ID and Book ID are required" });
+  }
+
+  try {
+    await client.connect();
+    const collection = client.db("chapterchat").collection("users");
+
+    const result = await collection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $pull: { books: { id: new ObjectId(bookId) } } }
+    );
+
+    if (result.matchedCount === 0) {
+      res.status(404).json({ message: "User not found" });
+    } else if (result.modifiedCount === 0) {
+      res.status(404).json({ message: "Book not found" });
+    } else {
+      res.status(200).json({ message: "Book deleted from shelf!" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  } finally {
+    await client.close();
+  }
+});
+
 
 module.exports = router;
