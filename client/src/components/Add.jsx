@@ -20,6 +20,14 @@ export default function Login({ userId }) {
     setCover(event.target.files[0]);
   };
 
+  const goHome = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate(-1);
+      return;
+    }
+  };
+
   const formData = new FormData();
   formData.append("title", title);
   formData.append("review", review);
@@ -68,6 +76,7 @@ export default function Login({ userId }) {
             className="mx-auto w-[40%] lg:w-[60%]"
             src="/logo.png"
             alt="ChapterChat Logo"
+            onClick={goHome}
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Add Book
@@ -152,6 +161,13 @@ export default function Login({ userId }) {
               >
                 Add
               </button>
+              <button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 mt-4 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
+                  onClick={goHome}
+                >
+                  Cancel
+                </button>
             </div>
           </form>
         </div>
