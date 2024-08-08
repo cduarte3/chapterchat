@@ -13,6 +13,10 @@ export default function Shelf({ userData }) {
     navigate(`/user/${userData._id}/book/${bookId}`);
   };
 
+  const goProfile = () => {
+    navigate(`/user/${userData._id}/profile`);
+  };
+
   const logOut = () => {
     localStorage.removeItem("token");
     navigate("/");
@@ -39,8 +43,9 @@ export default function Shelf({ userData }) {
             <li className="md:px-5">
               <Link to="/faq">FAQ</Link>
             </li>
-            <li className="md:px-5">
-              <Link to="/user/:userId/profile">Profile</Link>
+            <li className="md:px-5"
+            onClick={goProfile}>
+              Profile
             </li>
             <li className="md:px-5">
                 <img

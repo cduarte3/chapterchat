@@ -186,7 +186,7 @@ export default function BookDetail({ bookData, userId }) {
                 </div>
               </div>
             </div>
-            <div className="bg-[rgb(74,73,77)] px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <div className="bg-[rgb(70,73,88)] px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
               <button
                 onClick={confirmDelete}
                 type="button"
