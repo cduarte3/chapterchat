@@ -35,6 +35,38 @@ router.get("/:userid", async (req, res) => {
   }
 });
 
+// check if username or email exists in the system
+router.get("/:email/:username", async (req, res) => {
+  const email = req.params.email;
+  const username = req.params.username;
+
+  if (!email || !username) {
+    return res.status(400).json({ message: "Email and Username are required" });
+  }
+
+  try {
+    await client.connect();
+    const collection = client.db("chapterchat").collection("users");
+    const emailFound = await collection.findOne({ email: email });
+    const userFound = await collection.findOne({ username: username });
+
+    if (userFound && emailFound) {
+      res.status(409).json({ message: "Email and Username already exist." });
+    } else if (userFound) {
+      res.status(409).json({ message: "Username already exists." });
+    } else if (emailFound) {
+      res.status(409).json({ message: "Email already exists." });
+    } else {
+      res.status(200).json({ message: "" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  } finally {
+    await client.close();
+  }
+});
+
 // post a review for a book by user ID
 router.post("/:userid", upload.single("cover"), async (req, res) => {
   const userId = req.params.userid;
@@ -46,9 +78,7 @@ router.post("/:userid", upload.single("cover"), async (req, res) => {
   }
 
   try {
-    const resizedCover = await sharp(cover.buffer)
-      .resize(800, 1220)
-      .toBuffer();
+    const resizedCover = await sharp(cover.buffer).resize(800, 1220).toBuffer();
 
     await client.connect();
     const collection = client.db("chapterchat").collection("users");
@@ -123,14 +153,15 @@ router.get("/:userid/book/:bookId", async (req, res) => {
   }
 });
 
-
 // delete a book by user ID and book ID
 router.delete("/:userid/book/:bookId", async (req, res) => {
   const userId = req.params.userid;
   const bookId = req.params.bookId;
 
   if (!userId || !bookId) {
-    return res.status(400).json({ message: "User ID and Book ID are required" });
+    return res
+      .status(400)
+      .json({ message: "User ID and Book ID are required" });
   }
 
   try {
@@ -154,6 +185,40 @@ router.delete("/:userid/book/:bookId", async (req, res) => {
     res.status(500).json({ message: err.message });
   } finally {
     await client.close();
+  }
+});
+
+// update the changes to the user profile
+router.post("/:userid/update", async (req, res) => {
+  const userId = req.params.userid;
+  const { email, username, password } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required" });
+  }
+
+  try {
+    // Find the user by ID
+    await client.connect();
+    const collection = client.db("chapterchat").collection("users");
+    const user = await collection.findOne({ _id: new ObjectId(userId) });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the user's fields if they are provided
+    if (email) user.email = email;
+    if (username) user.username = username;
+    if (password) user.password = password; // Ensure to hash the password before saving
+
+    // Save the updated user
+    await user.save();
+
+    // Send a success response
+    res.status(200).json({ message: "User updated successfully" });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
