@@ -5,6 +5,7 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const sharp = require("sharp");
+const bcrypt = require("bcrypt");
 
 const client = new MongoClient(process.env.DATABASE_URL);
 
@@ -198,21 +199,37 @@ router.post("/:userid/update", async (req, res) => {
   }
 
   try {
-    // Find the user by ID
+    // Find the user by their given ID
     await client.connect();
     const collection = client.db("chapterchat").collection("users");
     const user = await collection.findOne({ _id: new ObjectId(userId) });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+    // If the user is found, check for if another user has the email or username given
+    const existingUser = await collection.findOne({
+      $or: [
+        { email: email, _id: { $ne: new ObjectId(userId) } },
+        { username: username, _id: { $ne: new ObjectId(userId) } }
+      ]
+    });
+    // return a 409 error for the client side to receive if there is existing fields
+    if (existingUser) {
+      return res.status(409).json({ message: "Email or username already exists" });
+    }
 
     // Update the user's fields if they are provided
-    if (email) user.email = email;
-    if (username) user.username = username;
-    if (password) user.password = password; // Ensure to hash the password before saving
-
+    const updateFields = {};
+    if (email) updateFields.email = email;
+    if (username) updateFields.username = username;
+    if (password) {
+      const salt = 10;
+      const hashedPassword = await bcrypt.hash(password, salt);
+      updateFields.password = hashedPassword;
+    }
+    console.log(updateFields);
     // Save the updated user
-    await user.save();
+    await collection.updateOne({ _id: new ObjectId(userId) }, { $set: updateFields });
 
     // Send a success response
     res.status(200).json({ message: "User updated successfully" });
