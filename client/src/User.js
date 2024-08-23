@@ -19,7 +19,7 @@ export default function User() {
           navigate("/login");
           return;
         }
-        const response = await fetch(`http://localhost:5000/users/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -49,7 +49,10 @@ export default function User() {
   }
   return (
     <>
+    <div className="h-screen">
       <UserProfile userData={userData} />
+    </div>
+      
       <Footer/>
     </>
   );

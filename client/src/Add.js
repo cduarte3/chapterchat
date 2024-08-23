@@ -8,10 +8,13 @@ import Footer from './components/Footer';
 function Add() {
   const { userId } = useParams();
   return (
-    <div className="Add">
+    <>
+    <div className="Add h-screen">
       <AddBook userId={userId} />
-      <Footer />
+      
     </div>
+    <Footer />
+    </>
   );
 }
 

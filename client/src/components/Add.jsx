@@ -45,7 +45,7 @@ export default function Login({ userId }) {
       return;
     }
 
-    const url = `http://localhost:5000/users/${userId}`;
+    const url = `${process.env.REACT_APP_API_URL}/users/${userId}`;
     const token = localStorage.getItem('token');
 
     const requestOptions = {
