@@ -6,7 +6,7 @@ export default function UserProfile({ userData }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [validationMessage, setValidationMessage] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   function cancelForm() {
@@ -20,37 +20,54 @@ export default function UserProfile({ userData }) {
   async function formValidation(event) {
     event.preventDefault();
     const token = localStorage.getItem("token");
-      try {
-        // if the token is undefined, send the user to the login page
-        if (!token) {
-          console.error("Token is not available");
-          navigate("/login");
-          return;
-        }
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${email}/${username}`, {
-          method: "GET",
+    try {
+      console.log("username: ", username);
+      console.log("email: ", email);
+      // if the token is undefined, send the user to the login page
+      if (!token) {
+        console.error("Token is not available");
+        navigate("/login");
+        return;
+      }
+      else if ((username === userData.username || email === userData.email) || (username === "" && email === "" && password === "")) {
+        alert("No changes were made. All empty or possible conflicting fields");
+        return;
+      }
+      else if (password && password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      } else if (password && password.length < 6) {
+        alert("Password must be at least 6 characters");
+        return;
+      }
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/users/${userData._id}/update`,
+        {
+          method: "POST",
           credentials: "include",
           headers: {
+            "Content-Type": "application/json",
             authorization: `Bearer ${token}`,
           },
-        });
-        if (response.status === 200) {
-          alert("Account profile updated");
-          navigate(`/user/${userData._id}`);
+          body: JSON.stringify({ username, email, password }),
         }
-        if (response.status === 409) {
-          const message = await response.json();
-          setValidationMessage(message.message);
-          return;
-        }
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+      );
+      if (response.status === 200) {
+        alert("Account profile updated.");
+        navigate(`/user/${userData._id}`);
       }
+      if (response.status === 409) {
+        alert("Username OR Email already exists.");
+        return;
+      }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   }
-    /*
+  /*
     The following was used to validate the username and password fields.
 
     It has been changed for functionality purposes.
@@ -66,7 +83,7 @@ export default function UserProfile({ userData }) {
           if (!regex_Password.test(password) || password.length < 8) {
               alert("Error!! Password does not meet requirements");
           }
-    */ 
+    */
 
   return (
     <div>
@@ -136,18 +153,32 @@ export default function UserProfile({ userData }) {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
                     className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
                   />
                 </div>
               </div>
-              <div className="justify-center text-center my-5">
-              <h1>{validationMessage}</h1>
-            </div>
+              <div>
+                <div className="flex items-center my-4 justify-between">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="block text-lg font-bold leading-6 text-gray-900"
+                  >
+                    Confirm Password
+                  </label>
+                </div>
+                <div className="mt-2 shadow">
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
+                  />
+                </div>
+              </div>
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
+                  className="flex w-full justify-center mt-8 rounded-md bg-[rgb(64,63,68)] px-3 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
                 >
                   Update
                 </button>

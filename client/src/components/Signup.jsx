@@ -18,7 +18,7 @@ export default function Signup() {
       alert("Password must be at least 6 characters");
       return;
     } else {
-      const url = "${process.env.REACT_APP_API_URL}/signup";
+      const url = `${process.env.REACT_APP_API_URL}/signup`;
       const requestOptions = {
         method: "POST",
         headers: {
