@@ -18,7 +18,7 @@ export default function BookDetail({ bookData, userId }) {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await fetch(`http://localhost:5000/users/${userId}/book/${bookId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

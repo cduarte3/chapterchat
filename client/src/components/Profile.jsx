@@ -27,7 +27,7 @@ export default function UserProfile({ userData }) {
           navigate("/login");
           return;
         }
-        const response = await fetch(`http://localhost:5000/users/${email}/${username}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${email}/${username}`, {
           method: "GET",
           credentials: "include",
           headers: {
