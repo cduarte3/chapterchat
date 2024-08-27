@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Shelf from "./components/Shelf";
 
-export default function Profile() {
+export default function Bookshelf() {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
   const token = localStorage.getItem('token');
