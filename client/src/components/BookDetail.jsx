@@ -88,6 +88,9 @@ export default function BookDetail({ bookData, userId }) {
         <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col xl:text-7xl md:text-6xl sm:text-6xl text-4xl mx-auto justify-center text-[rgb(64,63,68)]">
           {bookData.title}
         </h1>
+        <h2 className="text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-2xl mx-auto justify-center text-[rgb(64,63,68)]">
+          - {bookData.author}
+        </h2>
         <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-[rgb(64,63,68)]" />
         <div className="justify-items-center flex-col grid w-[90%] xl:w-[80%] 2xl:grid-cols-2 grid-cols-1 mx-auto gap-5 sm:p-3">
           <div className="relative xl:w-[50%] md:w-[30%] w-[50%]">

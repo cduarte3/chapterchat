@@ -49,10 +49,9 @@ export default function User() {
   }
   return (
     <>
-    <div className="h-screen">
+    <div className="h-full">
       <UserProfile userData={userData} />
     </div>
-      
       <Footer/>
     </>
   );

@@ -15,6 +15,9 @@ export default function UserProfile({ userData }) {
       navigate(`/user/${userData._id}`);
       return;
     }
+    else {
+      navigate("/login");
+    }
   }
 
   async function formValidation(event) {
