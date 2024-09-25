@@ -45,7 +45,7 @@ export default function Edit() {
 
   return (
     <>
-      <BookEdit bookData={bookData} />
+      <BookEdit bookData={bookData} userId={userId} />
     </>
   );
 }

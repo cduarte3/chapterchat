@@ -3,10 +3,15 @@ import { useNavigate } from "react-router-dom";
 import BasicRating from "./Modify_rating";
 
 export default function Login({ userId }) {
+  const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(3);
   const [cover, setCover] = useState(null);
+
+  const handleAuthorChange = (event) => {
+    setAuthor(event.target.value);
+  };
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -29,6 +34,7 @@ export default function Login({ userId }) {
   };
 
   const formData = new FormData();
+  formData.append("author", author);
   formData.append("title", title);
   formData.append("review", review);
   formData.append("rating", rating);
@@ -104,7 +110,25 @@ export default function Login({ userId }) {
                 />
               </div>
             </div>
-
+            <div>
+              <label
+                htmlFor="author"
+                className="block text-lg font-bold leading-6 text-gray-900"
+              >
+                Author
+              </label>
+              <div className="mt-2 shadow">
+                <input
+                  type="text"
+                  value={author}
+                  onChange={handleAuthorChange}
+                  placeholder="Author"
+                  maxLength="25"
+                  required
+                  className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
+                />
+              </div>
+            </div>
             <div>
               <div className="flex items-center justify-between">
                 <label

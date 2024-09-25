@@ -71,7 +71,7 @@ router.get("/:email/:username", async (req, res) => {
 // post a review for a book by user ID
 router.post("/:userid", upload.single("cover"), async (req, res) => {
   const userId = req.params.userid;
-  const { title, review, rating } = req.body;
+  const { author, title, review, rating } = req.body;
   const cover = req.file;
 
   if (!userId) {
@@ -91,6 +91,7 @@ router.post("/:userid", upload.single("cover"), async (req, res) => {
         $push: {
           books: {
             id: bookId,
+            author: author,
             title: title,
             review: review,
             rating: rating,
