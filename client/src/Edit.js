@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import BookEdit from "./components/BookEdit";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function Edit() {
-  const location = useLocation();
-  const { bookData: initialBookData } = location.state || { bookData: null };
   const { userId, bookId } = useParams();
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
-  const [bookData, setBookData] = useState(initialBookData);
+  const [bookData, setBookData] = useState(null);
 
   useEffect(() => {
     const url = `${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}`;
@@ -18,9 +16,6 @@ export default function Edit() {
         if (!token) {
           console.error("Token is undefined");
           navigate("/");
-          return;
-        }
-        if (bookData) {
           return;
         }
         const response = await fetch(url, {
@@ -41,11 +36,18 @@ export default function Edit() {
     };
 
     fetchBookData();
-  }, [userId, bookId, token, navigate, bookData]);
+  }, [userId, bookId, token, navigate]);
 
+  if (!bookData) {
+    return (
+    <div className="w-full h-screen font-bold mx-auto text-center flex flex-col justify-center md:text-7xl text-5xl">
+      Loading
+    </div>
+    );
+  }
   return (
     <>
-      <BookEdit bookData={bookData} userId={userId} />
+      <BookEdit bookData={bookData} userId={userId} bookId={bookId} />
     </>
   );
 }
