@@ -1,13 +1,15 @@
-import { React, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BasicRating from "./Modify_rating";
 
-export default function Login({ userId }) {
-  const [author, setAuthor] = useState("");
-  const [title, setTitle] = useState("");
-  const [review, setReview] = useState("");
-  const [rating, setRating] = useState(3);
-  const [cover, setCover] = useState(null);
+export default function BookEdit({ bookData, userId, bookId }) {
+  const [author, setAuthor] = useState(bookData.author);
+  const [title, setTitle] = useState(bookData.title);
+  const [review, setReview] = useState(bookData.review);
+  const [rating, setRating] = useState(parseInt(bookData.rating, 10));
+  const [cover, setCover] = useState(bookData.cover);
+
+  const navigate = useNavigate();
 
   const handleAuthorChange = (event) => {
     setAuthor(event.target.value);
@@ -25,14 +27,6 @@ export default function Login({ userId }) {
     setCover(event.target.files[0]);
   };
 
-  const goHome = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate(-1);
-      return;
-    }
-  };
-
   const formData = new FormData();
   formData.append("author", author);
   formData.append("title", title);
@@ -41,17 +35,22 @@ export default function Login({ userId }) {
   if (cover) {
     formData.append("cover", cover);
   }
-  const navigate = useNavigate();
+
+  function cancelForm() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate(`/user/${userId}`);
+      return;
+    }
+    else {
+      navigate("/login");
+    }
+  }
 
   async function submit(e) {
     e.preventDefault();
 
-    if (!title || !review || !cover) {
-      alert("All fields must be filled");
-      return;
-    }
-
-    const url = `${process.env.REACT_APP_API_URL}/users/${userId}`;
+    const url = `${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}/edit`;
     const token = localStorage.getItem('token');
 
     const requestOptions = {
@@ -67,7 +66,7 @@ export default function Login({ userId }) {
       if (response.status === 404 || token === null) {
         alert("Unauthorized access");
       } else {
-        navigate(`/user/${userId}`);
+        navigate(`/user/${userId}/book/${bookId}`);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -75,21 +74,21 @@ export default function Login({ userId }) {
   }
 
   return (
-    <div>
-      <div className="flex h-full flex-col justify-center px-6 py-12 lg:px-8 my-10">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto w-[40%] lg:w-[60%]"
-            src="/logo.png"
-            alt="ChapterChat Logo"
-            onClick={goHome}
-          />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Add Book
-          </h2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <>
+      <div>
+        <div className="flex h-full flex-col justify-center px-6 py-12 lg:px-8 my-10">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <img
+              className="mx-auto w-[40%] lg:w-[60%]"
+              src="/logo.png"
+              alt="ChapterChat Logo"
+              onClick={cancelForm}
+            />
+            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+              Edit Book
+            </h2>
+          </div>
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action="#" method="POST">
             <div>
               <label
@@ -183,19 +182,20 @@ export default function Login({ userId }) {
                 className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
                 onClick={submit}
               >
-                Add
+                 Confirm
               </button>
               <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 mt-4 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
-                  onClick={goHome}
+                  onClick={cancelForm}
                 >
                   Cancel
                 </button>
             </div>
           </form>
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

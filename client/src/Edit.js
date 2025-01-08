@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import BookDetail from './components/BookDetail';
+import React, { useEffect, useState } from "react";
+import BookEdit from "./components/BookEdit";
+import { useParams, useNavigate } from "react-router-dom";
+import Footer from './components/Footer';
 
-export default function Profile() {
+export default function Edit() {
   const { userId, bookId } = useParams();
-  const [bookData, setBookData] = useState(null);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const [bookData, setBookData] = useState(null);
 
   useEffect(() => {
     const url = `${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}`;
@@ -41,13 +42,17 @@ export default function Profile() {
   if (!bookData) {
     return (
     <div className="w-full h-screen font-bold mx-auto text-center flex flex-col justify-center md:text-7xl text-5xl">
-      Loading Book
+      Loading
     </div>
     );
   }
   return (
     <>
-        <BookDetail bookData={bookData} userId={userId} />
+    <div className="h-screen">
+      <BookEdit bookData={bookData} userId={userId} bookId={bookId}/>
+    </div>
+      
+      <Footer />
     </>
   );
 }

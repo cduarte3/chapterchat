@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Shelf from "./components/Shelf";
+import UserProfile from "./components/Profile";
+import Footer from "./components/Footer";
 
-export default function Profile() {
+export default function User() {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
   const token = localStorage.getItem('token');
@@ -18,7 +19,7 @@ export default function Profile() {
           navigate("/login");
           return;
         }
-        const response = await fetch(`http://localhost:5000/users/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -37,19 +38,21 @@ export default function Profile() {
     };
     fetchUserData();
   }, [userId, token, navigate]);
-
+  
   if (!userData) {
     // While the data loads, let the user know
     return (
       <div className="w-full h-screen font-bold mx-auto text-center flex flex-col justify-center md:text-7xl text-5xl">
-        Loading Bookshelf
+        Loading Profile
       </div>
     );
   }
   return (
-    // Once the data is fetched and loaded, it will display in the shelf grid
     <>
-      <Shelf userData={userData} />
+    <div className="h-screen">
+      <UserProfile userData={userData} />
+    </div>
+      <Footer/>
     </>
   );
 }
