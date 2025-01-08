@@ -6,12 +6,14 @@ import App from './App';
 import NotFound from './404';
 import Log from './login';
 import Sign from './signup';
-import Profile from './Profile';
+import Bookshelf from './Bookshelf';
 import Add from './Add';
 import Book from './Book';
 import Protected from './Protected';
+import User from './User';
+import Edit from './Edit';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   
   <React.StrictMode>
@@ -21,9 +23,11 @@ root.render(
         <Route path="login" element={<Log />} />
         <Route path="signup" element={<Sign />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/user/:userId" element={<Protected><Profile/></Protected>} />
+        <Route path="/user/:userId" element={<Protected><Bookshelf/></Protected>} />
         <Route path="/user/:userId/add" element={<Protected><Add/></Protected>} />
         <Route path="/user/:userId/book/:bookId" element={<Protected><Book/></Protected>} />
+        <Route path="/user/:userId/profile" element={<Protected><User/></Protected>} />
+        <Route path="/user/:userId/book/:bookId/edit" element={<Protected><Edit/></Protected>} />
       </Routes>
     </Router>
   </React.StrictMode>

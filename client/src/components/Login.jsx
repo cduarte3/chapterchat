@@ -9,7 +9,7 @@ export default function Login() {
   async function submit(e) {
     e.preventDefault();
 
-    const url = "http://localhost:5000/login";
+    const url = `${process.env.REACT_APP_API_URL}/login`;
 
     const requestOptions = {
       method: "POST",
@@ -66,7 +66,7 @@ export default function Login() {
               >
                 Email address
               </label>
-              <div className="mt-2">
+              <div className="mt-2 shadow">
                 <input
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -91,7 +91,7 @@ export default function Login() {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 shadow">
                 <input
                   onChange={(e) => {
                     setPassword(e.target.value);
