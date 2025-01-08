@@ -49,7 +49,7 @@ export default function User() {
   }
   return (
     <>
-    <div className="h-full">
+    <div className="h-screen">
       <UserProfile userData={userData} />
     </div>
       <Footer/>
