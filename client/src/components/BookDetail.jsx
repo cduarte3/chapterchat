@@ -43,7 +43,7 @@ export default function BookDetail({ bookData, userId }) {
   const goHome = () => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate(-1);
+      navigate("/user/" + userId);
       return;
     }
   };

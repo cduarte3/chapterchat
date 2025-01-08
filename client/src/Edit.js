@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BookEdit from "./components/BookEdit";
 import { useParams, useNavigate } from "react-router-dom";
+import Footer from './components/Footer';
 
 export default function Edit() {
   const { userId, bookId } = useParams();
@@ -47,7 +48,11 @@ export default function Edit() {
   }
   return (
     <>
-      <BookEdit bookData={bookData} userId={userId} bookId={bookId} />
+    <div className="h-screen">
+      <BookEdit bookData={bookData} userId={userId} bookId={bookId}/>
+    </div>
+      
+      <Footer />
     </>
   );
 }
