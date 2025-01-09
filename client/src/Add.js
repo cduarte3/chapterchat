@@ -9,9 +9,8 @@ function Add() {
   const { userId } = useParams();
   return (
     <>
-    <div className="h-screen">
+    <div className="min-h-screen h-full">
       <AddBook userId={userId} />
-      
     </div>
     <Footer />
     </>

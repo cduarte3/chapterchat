@@ -12,6 +12,7 @@ import Book from './Book';
 import Protected from './Protected';
 import User from './User';
 import Edit from './Edit';
+import FAQ from './FAQ';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -28,6 +29,7 @@ root.render(
         <Route path="/user/:userId/book/:bookId" element={<Protected><Book/></Protected>} />
         <Route path="/user/:userId/profile" element={<Protected><User/></Protected>} />
         <Route path="/user/:userId/book/:bookId/edit" element={<Protected><Edit/></Protected>} />
+        <Route path="/faq" element={<FAQ />} />
       </Routes>
     </Router>
   </React.StrictMode>
