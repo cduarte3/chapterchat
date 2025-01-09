@@ -62,9 +62,6 @@ export default function Shelf({ userData }) {
           </nav>
           <nav className="hidden md:flex">
             <ul className="h-[15vh] flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-              <li className="md:px-5">
-                <Link to="/faq">FAQ</Link>
-              </li>
               <li className="md:px-5" onClick={goProfile}>
                 <Link>PROFILE</Link>
               </li>
@@ -105,14 +102,11 @@ export default function Shelf({ userData }) {
                   className="w-[10rem] justify-center mx-auto py-5"
                 ></img>
               </li>
-              <li className="p-4 font-bold" onClick={logOut}>
-                <Link>SIGN OUT</Link>
-              </li>
-              <li className="p-4 font-bold">
-                <Link to="/faq">FAQ</Link>
-              </li>
               <li className="p-4 font-bold" onClick={goProfile}>
                 <Link>PROFILE</Link>
+              </li>
+              <li className="p-4 font-bold" onClick={logOut}>
+                <Link>LOG OUT</Link>
               </li>
             </ul>
           </div>
