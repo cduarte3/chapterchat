@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Footer from "./Footer";
 import Rating from "@mui/material/Rating";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { FaWindowClose } from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
+import { TiThMenu } from "react-icons/ti";
+import { HiMiniHome } from "react-icons/hi2";
 
 // All modal usage was implemented with the help of this template https://www.creative-tim.com/twcomponents/component/modal-confirmation-with-alpine-js-with-style-headless-ui
 
 export default function BookDetail({ bookData, userId }) {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [nav, setNav] = useState(true);
+  const navRef = useRef();
+
+  const handleNav = () => {
+    setNav(!nav);
+  };
 
   const deleteBook = () => {
     setShowModal(true);
@@ -48,6 +58,19 @@ export default function BookDetail({ bookData, userId }) {
     }
   };
 
+  const goProfile = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/user/" + userId + "/profile");
+      return;
+    }
+  };
+
+  const logOut = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <div>
       <div className="min-h-screen">
@@ -72,18 +95,55 @@ export default function BookDetail({ bookData, userId }) {
               </li>
             </ul>
           </nav>
-          <nav>
-            <ul className="h-[15vh] flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-              <li className="md:px-5">
-                <img
-                  src="/logo.png"
-                  alt="Logo"
-                  className="w-[6rem] sm:w-[7rem] md:w-[9rem] lg:w-[10rem]"
-                  onClick={goHome}
-                ></img>
+          <nav className="hidden md:flex">
+            <ul className="h-[15vh] flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+              <li className="md:px-5" onClick={goProfile}>
+                <Link>PROFILE</Link>
+              </li>
+              <li className="md:px-5" onClick={goHome}>
+                <HiMiniHome size={65} />
+              </li>
+              <li className="md:px-5" onClick={logOut}>
+                <FiLogOut size={65} />
               </li>
             </ul>
           </nav>
+          <div onClick={handleNav} className="block md:hidden">
+            {!nav ? (
+              <FaWindowClose size={55} color="rgb(64,63,68)" />
+            ) : (
+              <TiThMenu size={55} color="rgb(64,63,68)" />
+            )}
+          </div>
+
+          <div
+            id="dark-grey-div"
+            ref={navRef}
+            className={
+              !nav
+                ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
+                : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
+            }
+          >
+            <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
+              <li>
+                <img
+                  src="/logo_white.png"
+                  alt="add book"
+                  className="w-[10rem] justify-center mx-auto py-5"
+                ></img>
+              </li>
+              <li className="p-4 font-bold" onClick={goHome}>
+                <Link>HOME</Link>
+              </li>
+              <li className="p-4 font-bold" onClick={goProfile}>
+                <Link>PROFILE</Link>
+              </li>
+              <li className="p-4 font-bold" onClick={logOut}>
+                <Link>LOG OUT</Link>
+              </li>
+            </ul>
+          </div>
         </div>
         <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col xl:text-7xl md:text-6xl sm:text-6xl text-4xl mx-auto justify-center text-[rgb(64,63,68)]">
           {bookData.title}
