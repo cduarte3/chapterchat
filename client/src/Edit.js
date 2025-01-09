@@ -48,7 +48,7 @@ export default function Edit() {
   }
   return (
     <>
-    <div className="h-screen">
+    <div className="min-h-screen h-full">
       <BookEdit bookData={bookData} userId={userId} bookId={bookId}/>
     </div>
       
