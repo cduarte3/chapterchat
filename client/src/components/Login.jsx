@@ -35,6 +35,7 @@ export default function Login() {
         // if the login is good, set the token for the user and redirect to their bookshelf
         const data = await response.json();
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.id);
         navigate(`/user/${data.id}`, { state: { token: data.token } });
       }
       

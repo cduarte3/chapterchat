@@ -28,6 +28,7 @@ export default function Shelf({ userData }) {
 
   const logOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     navigate("/");
   };
 

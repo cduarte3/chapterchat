@@ -56,6 +56,9 @@ export default function BookDetail({ bookData, userId }) {
       navigate("/user/" + userId);
       return;
     }
+    else{
+      navigate("/");
+    }
   };
 
   const goProfile = () => {
@@ -68,6 +71,7 @@ export default function BookDetail({ bookData, userId }) {
 
   const logOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     navigate("/");
   };
 
