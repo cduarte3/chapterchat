@@ -6,7 +6,7 @@
 
 # What is ChapterChat?
 
-ChapterChat is your digital sanctuary for beloved reads. This creative platform empowers you to effortlessly curate a personalized virtual bookshelf, a testament to your literary journey. Simply record the details of each book you've read – **Title, Author, Description, Rating** (out of 5 stars), and a **Cover Image**. As your collection grows, ChapterChat becomes more than just a list; it transforms into a living archive of your literary passions, a space to revisit past favorites, or remember what you didn't enjoy about a certain title. Explore the magic of reading now with ChapterChat.
+ChapterChat is your digital collection for beloved reads. This creative platform empowers you to effortlessly curate a personalized virtual bookshelf, a testament to your literary journey. Simply record the details of each book you've read – **Title, Author, Description, Rating** (out of 5 stars), and a **Cover Image**. As your collection grows, ChapterChat becomes more than just a list; it transforms into a living archive of your literary passions, a space to revisit past favorites, or remember what you didn't enjoy about a certain title. Explore the magic of reading now with ChapterChat.
 
 ![image](https://github.com/user-attachments/assets/130f701b-9699-4e8b-aab8-0934f900f818)
 
