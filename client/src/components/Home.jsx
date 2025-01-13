@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Hero() {
+export default function Home() {
   return (
     <div className="max-w-[800px] w-full h-screen  mx-auto text-center flex flex-col justify-center">
       <img

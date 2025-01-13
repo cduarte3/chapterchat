@@ -13,6 +13,7 @@ import Protected from './Protected';
 import User from './User';
 import Edit from './Edit';
 import FAQ from './FAQ';
+import Support from './Support';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -30,6 +31,7 @@ root.render(
         <Route path="/user/:userId/profile" element={<Protected><User/></Protected>} />
         <Route path="/user/:userId/book/:bookId/edit" element={<Protected><Edit/></Protected>} />
         <Route path="/faq" element={<FAQ />} />
+        <Route path="/support" element={<Support />} />
       </Routes>
     </Router>
   </React.StrictMode>
