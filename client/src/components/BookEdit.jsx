@@ -39,7 +39,7 @@ export default function BookEdit({ bookData, userId, bookId }) {
   function cancelForm() {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate(`/user/${userId}`);
+      navigate(-1);
       return;
     }
     else {

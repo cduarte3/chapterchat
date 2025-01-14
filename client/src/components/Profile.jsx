@@ -12,7 +12,7 @@ export default function UserProfile({ userData }) {
   function cancelForm() {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate(`/user/${userData._id}`);
+      navigate(-1);
       return;
     }
     else {
