@@ -5,7 +5,9 @@ import { useNavigate, Link } from "react-router-dom";
 import { FaWindowClose } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { TiThMenu } from "react-icons/ti";
+import { TbBooks } from "react-icons/tb";
 import { HiMiniHome } from "react-icons/hi2";
+import { FaUserCircle } from "react-icons/fa";
 
 // All modal usage was implemented with the help of this template https://www.creative-tim.com/twcomponents/component/modal-confirmation-with-alpine-js-with-style-headless-ui
 
@@ -25,15 +27,18 @@ export default function BookDetail({ bookData, userId }) {
 
   const confirmDelete = async () => {
     const bookId = bookData.id;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         navigate(-1);
@@ -51,12 +56,15 @@ export default function BookDetail({ bookData, userId }) {
   };
 
   const goHome = () => {
+    navigate("/");
+  };
+
+  const goShelf = () => {
     const token = localStorage.getItem("token");
     if (token) {
       navigate("/user/" + userId);
       return;
-    }
-    else{
+    } else {
       navigate("/");
     }
   };
@@ -91,37 +99,40 @@ export default function BookDetail({ bookData, userId }) {
   return (
     <div>
       <div className="min-h-screen">
-        <div className=" mt-[2%] flex justify-between items-center px-6">
+        <div className="fixed top-0 left-0 right-0 bg-[rgb(255,254,224)] py-4 flex justify-between items-center px-6 shadow-md z-50">
           <nav>
-            <ul className="h-[15vh] flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-              <li className="md:px-5">
+            <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+              <li>
                 <img
                   src="/delete.png"
                   alt="Delete Review"
-                  className="w-[4rem] sm:w-[5rem] md:w-[6rem] lg:w-[7rem]"
+                  className="w-16 md:w-24"
                   onClick={deleteBook}
                 ></img>
               </li>
-              <li className="md:px-5">
+              <li className="pl-2">
                 <img
                   src="/edit.png"
                   alt="edit Review"
-                  className="w-[4rem] sm:w-[5rem] md:w-[6rem] lg:w-[7rem]"
+                  className="w-16 md:w-24"
                   onClick={editBook}
                 ></img>
               </li>
             </ul>
           </nav>
           <nav className="hidden md:flex">
-            <ul className="h-[15vh] flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-              <li className="md:px-5" onClick={goProfile}>
-                <Link>PROFILE</Link>
+            <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+              <li className="md:px-3" onClick={goHome}>
+                <HiMiniHome size={60} />
               </li>
-              <li className="md:px-5" onClick={goHome}>
-                <HiMiniHome size={65} />
+              <li className="md:px-3" onClick={goShelf}>
+                <TbBooks size={60} />
               </li>
-              <li className="md:px-5" onClick={logOut}>
-                <FiLogOut size={65} />
+              <li className="md:px-3" onClick={goProfile}>
+                <FaUserCircle size={60} />
+              </li>
+              <li className="md:px-3" onClick={logOut}>
+                <FiLogOut size={60} />
               </li>
             </ul>
           </nav>
@@ -146,12 +157,15 @@ export default function BookDetail({ bookData, userId }) {
               <li>
                 <img
                   src="/logo_white.png"
-                  alt="add book"
+                  alt="Logo in light beige"
                   className="w-[10rem] justify-center mx-auto py-5"
                 ></img>
               </li>
               <li className="p-4 font-bold" onClick={goHome}>
                 <Link>HOME</Link>
+              </li>
+              <li className="p-4 font-bold" onClick={goShelf}>
+                <Link>BOOKSHELF</Link>
               </li>
               <li className="p-4 font-bold" onClick={goProfile}>
                 <Link>PROFILE</Link>
@@ -162,61 +176,69 @@ export default function BookDetail({ bookData, userId }) {
             </ul>
           </div>
         </div>
-        <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col xl:text-7xl md:text-6xl sm:text-6xl text-4xl mx-auto justify-center text-[rgb(64,63,68)]">
-          {bookData.title}
-        </h1>
-        <h2 className="text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-2xl mx-auto justify-center text-[rgb(64,63,68)]">
-          - {bookData.author}
-        </h2>
-        <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-[rgb(64,63,68)]" />
-        <div className="justify-items-center flex-col grid w-[90%] xl:w-[80%] 2xl:grid-cols-2 grid-cols-1 mx-auto gap-5 sm:p-3">
-          <div className="relative xl:w-[50%] md:w-[30%] w-[50%]">
-            <img
-              src="/book.png"
-              alt="blank book"
-              className="w-full shadow-custom-dark"
-            />
-            <img
-              src={
-                bookData.cover ? `data:image/png;base64,${bookData.cover}` : ""
-              }
-              alt="Cover"
-              className="absolute top-[1%] left-[7%] w-[92%] h-[98%] max-h-[99%] bottom-[-10%] object-cover shadow-custom-dark object-fit"
-            />
-          </div>
-          <div className="mx-5 sm:mx-0">
-            <p
-              className="text-[rgb(64,63,68)] text-xl font-bold"
-              style={{ textIndent: "2em" }}
-            >
-              {bookData.review}
-            </p>
-            <div className="mt-10 flex justify-center">
-              <Rating
-                value={Number(bookData.rating)}
-                readOnly
-                sx={{
-                  fontSize: {
-                    xs: "2.5rem",
-                    sm: "3rem",
-                    md: "4rem",
-                    lg: "4.5rem",
-                    xl: "5rem",
-                  },
-                }}
+        <div className="pt-28">
+          <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col xl:text-7xl md:text-6xl sm:text-6xl text-4xl mx-auto justify-center text-[rgb(64,63,68)]">
+            {bookData.title}
+          </h1>
+          <h2 className="text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-2xl mx-auto justify-center text-[rgb(64,63,68)]">
+            - {bookData.author}
+          </h2>
+          <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-[rgb(64,63,68)]" />
+          <div className="justify-items-center flex-col grid w-[90%] xl:w-[80%] 2xl:grid-cols-2 grid-cols-1 mx-auto gap-5 sm:p-3">
+            <div className="relative xl:w-[50%] md:w-[30%] w-[50%]">
+              <img
+                src="/book.png"
+                alt="blank book"
+                className="w-full shadow-custom-dark"
+              />
+              <img
+                src={
+                  bookData.cover
+                    ? `data:image/png;base64,${bookData.cover}`
+                    : ""
+                }
+                alt="Cover"
+                className="absolute top-[1%] left-[7%] w-[92%] h-[98%] max-h-[99%] bottom-[-10%] object-cover shadow-custom-dark object-fit"
               />
             </div>
+            <div className="mx-5 sm:mx-0">
+              <p
+                className="text-[rgb(64,63,68)] text-xl font-bold"
+                style={{ textIndent: "2em" }}
+              >
+                {bookData.review}
+              </p>
+              <div className="mt-10 flex justify-center">
+                <Rating
+                  value={Number(bookData.rating)}
+                  readOnly
+                  sx={{
+                    fontSize: {
+                      xs: "2.5rem",
+                      sm: "3rem",
+                      md: "4rem",
+                      lg: "4.5rem",
+                      xl: "5rem",
+                    },
+                  }}
+                />
+              </div>
+            </div>
           </div>
+          <br />
+          <br />
         </div>
-        <br />
-        <br />
       </div>
+
       <Footer />
 
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center h-screen">
-          <div className="fixed inset-0 transition-opacity" onClick={() => setShowModal(false)}>
+          <div
+            className="fixed inset-0 transition-opacity"
+            onClick={() => setShowModal(false)}
+          >
             <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
           </div>
           <div className="bg-[rgb(255,254,229)] rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">

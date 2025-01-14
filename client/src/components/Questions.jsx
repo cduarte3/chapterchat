@@ -1,9 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FaWindowClose } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { TiThMenu } from "react-icons/ti";
 import { HiMiniHome } from "react-icons/hi2";
+import {
+  FaUserCircle,
+  FaWindowClose,
+} from "react-icons/fa";
+import { TbBooks } from "react-icons/tb";
 
 export default function Questions() {
   useEffect(() => {
@@ -27,6 +31,19 @@ export default function Questions() {
   };
 
   const goHome = () => {
+    navigate("/");
+  };
+
+  const goProfile = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/user/" + userId + "/profile");
+      return;
+    }
+  };
+
+  const goShelf = () => {
+    const token = localStorage.getItem("token");
     if (token) {
       navigate("/user/" + userId);
       return;
@@ -37,65 +54,83 @@ export default function Questions() {
 
   return (
     <>
-      <div className=" mt-[2%] flex justify-between items-center px-6">
-        <nav>
-          <ul className="h-[15vh] flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-            <li className="md:px-5">
-              <img
-                src="/logo.png"
-                alt="Delete Review"
-                className="w-[6rem] sm:w-[7rem] md:w-[8rem] lg:w-[10rem]"
-              ></img>
-            </li>
-          </ul>
-        </nav>
-        <nav className="hidden md:flex">
-          <ul className="h-[15vh] flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-            <li className="md:px-5">
-              <HiMiniHome size={65} onClick={goHome} />
-            </li>
-            {token && (
-              <li className="md:px-5">
-                <FiLogOut size={65} onClick={logOut} />
-              </li>
-            )}
-          </ul>
-        </nav>
-        <div onClick={handleNav} className="block md:hidden">
-          {!nav ? (
-            <FaWindowClose size={55} color="rgb(64,63,68)" />
-          ) : (
-            <TiThMenu size={55} color="rgb(64,63,68)" />
-          )}
-        </div>
-
-        <div
-          id="dark-grey-div"
-          ref={navRef}
-          className={
-            !nav
-              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
-              : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
-          }
-        >
-          <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
-            <li>
-              <img
-                src="/logo_white.png"
-                alt="add book"
-                className="w-[10rem] justify-center mx-auto py-5"
-              ></img>
-            </li>
-            <li className="p-4 font-bold">
-              <Link>HOME</Link>
-            </li>
-            <li className="p-4 font-bold">
-              <Link>LOG OUT</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="lg:max-w-[80%] max-w-[80%] mx-auto items-center h-full">
+      <div className="fixed top-0 left-0 right-0 bg-[rgb(255,254,224)] z-50 px-4 flex justify-between items-center py-4 shadow-md">
+              <nav>
+                <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+                  <li className="md:px-5">
+                    <img
+                      src="/logo.png"
+                      alt="ChapterChat Logo"
+                      className="w-20 md:w-28"
+                    ></img>
+                  </li>
+                </ul>
+              </nav>
+              <nav className="hidden md:flex">
+                <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+                  <li className="md:px-3">
+                    <HiMiniHome size={60} onClick={goHome} />
+                  </li>
+                  {token && (
+                    <>
+                      <li className="md:px-3" onClick={goShelf}>
+                        <TbBooks size={60} />
+                      </li>
+                      <li className="md:px-3" onClick={goProfile}>
+                        <FaUserCircle size={60} />
+                      </li>
+                      <li className="md:px-5">
+                        <FiLogOut size={60} onClick={logOut} />
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </nav>
+              <div onClick={handleNav} className="block md:hidden">
+                {!nav ? (
+                  <FaWindowClose size={50} color="rgb(64,63,68)" />
+                ) : (
+                  <TiThMenu size={50} color="rgb(64,63,68)" />
+                )}
+              </div>
+      
+              <div
+                id="dark-grey-div"
+                ref={navRef}
+                className={
+                  !nav
+                    ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
+                    : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
+                }
+              >
+                <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
+                  <li>
+                    <img
+                      src="/logo_white.png"
+                      alt="Logo in light beige"
+                      className="w-[10rem] justify-center mx-auto py-5"
+                    ></img>
+                  </li>
+                  <li className="p-4 font-bold">
+                    <Link>HOME</Link>
+                  </li>
+                  {token && (
+                    <>
+                      <li className="p-4 font-bold" onClick={goShelf}>
+                        <Link>BOOKSHELF</Link>
+                      </li>
+                      <li className="p-4 font-bold" onClick={goProfile}>
+                        <Link>PROFILE</Link>
+                      </li>
+                      <li className="p-4 font-bold" onClick={logOut}>
+                        <Link>LOG OUT</Link>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </div>
+            </div>
+      <div className="lg:max-w-[80%] max-w-[80%] mx-auto items-center h-full pt-28">
         <h1 className="font-black mt-[2%] p-5 text-center flex flex-col xl:text-7xl md:text-6xl sm:text-6xl text-5xl mx-auto justify-center text-[rgb(64,63,68)]">
           Frequently Asked Questions
         </h1>
