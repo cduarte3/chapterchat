@@ -52,14 +52,17 @@ export default function Login({ userId }) {
     }
 
     const url = `${process.env.REACT_APP_API_URL}/users/${userId}`;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     const requestOptions = {
       method: "POST",
-      body: formData,
       headers: {
         Authorization: `Bearer ${token}`,
+        Accept: "application/json",
       },
+      credentials: "include",
+      mode: "cors",
+      body: formData,
     };
 
     try {
@@ -71,6 +74,7 @@ export default function Login({ userId }) {
       }
     } catch (error) {
       console.error("Error:", error);
+      alert("Error adding book. Please try again.");
     }
   }
 
@@ -146,7 +150,7 @@ export default function Login({ userId }) {
                   maxLength="600"
                   required
                   className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
-                  style={{ maxHeight: '400px' }}
+                  style={{ maxHeight: "400px" }}
                 />
               </div>
             </div>
@@ -186,12 +190,12 @@ export default function Login({ userId }) {
                 Add
               </button>
               <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 mt-4 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
-                  onClick={goHome}
-                >
-                  Cancel
-                </button>
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 mt-4 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
+                onClick={goHome}
+              >
+                Cancel
+              </button>
             </div>
           </form>
         </div>

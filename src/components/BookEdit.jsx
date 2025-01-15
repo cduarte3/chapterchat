@@ -41,8 +41,7 @@ export default function BookEdit({ bookData, userId, bookId }) {
     if (token) {
       navigate(-1);
       return;
-    }
-    else {
+    } else {
       navigate("/login");
     }
   }
@@ -51,14 +50,17 @@ export default function BookEdit({ bookData, userId, bookId }) {
     e.preventDefault();
 
     const url = `${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}/edit`;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     const requestOptions = {
       method: "POST",
-      body: formData,
       headers: {
         Authorization: `Bearer ${token}`,
+        Accept: "application/json",
       },
+      credentials: "include",
+      mode: "cors",
+      body: formData,
     };
 
     try {
@@ -70,6 +72,7 @@ export default function BookEdit({ bookData, userId, bookId }) {
       }
     } catch (error) {
       console.error("Error:", error);
+      alert("Error updating book. Please try again.");
     }
   }
 
@@ -89,111 +92,111 @@ export default function BookEdit({ bookData, userId, bookId }) {
             </h2>
           </div>
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
-            <div>
-              <label
-                htmlFor="title"
-                className="block text-lg font-bold leading-6 text-gray-900"
-              >
-                Title
-              </label>
-              <div className="mt-2 shadow">
-                <input
-                  type="text"
-                  value={title}
-                  onChange={handleTitleChange}
-                  placeholder="Title"
-                  maxLength="30"
-                  required
-                  className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="author"
-                className="block text-lg font-bold leading-6 text-gray-900"
-              >
-                Author
-              </label>
-              <div className="mt-2 shadow">
-                <input
-                  type="text"
-                  value={author}
-                  onChange={handleAuthorChange}
-                  placeholder="Author"
-                  maxLength="25"
-                  required
-                  className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
-                />
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
+            <form className="space-y-6" action="#" method="POST">
+              <div>
                 <label
-                  htmlFor="review"
+                  htmlFor="title"
                   className="block text-lg font-bold leading-6 text-gray-900"
                 >
-                  Review
+                  Title
                 </label>
+                <div className="mt-2 shadow">
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={handleTitleChange}
+                    placeholder="Title"
+                    maxLength="30"
+                    required
+                    className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
+                  />
+                </div>
               </div>
-              <div className="mt-2 shadow">
-                <textarea
-                  value={review}
-                  onChange={handleReviewChange}
-                  placeholder="Review"
-                  maxLength="600"
-                  required
-                  className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
-                  style={{ maxHeight: '400px' }}
-                />
+              <div>
+                <label
+                  htmlFor="author"
+                  className="block text-lg font-bold leading-6 text-gray-900"
+                >
+                  Author
+                </label>
+                <div className="mt-2 shadow">
+                  <input
+                    type="text"
+                    value={author}
+                    onChange={handleAuthorChange}
+                    placeholder="Author"
+                    maxLength="25"
+                    required
+                    className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
+                  />
+                </div>
               </div>
-            </div>
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="review"
+                    className="block text-lg font-bold leading-6 text-gray-900"
+                  >
+                    Review
+                  </label>
+                </div>
+                <div className="mt-2 shadow">
+                  <textarea
+                    value={review}
+                    onChange={handleReviewChange}
+                    placeholder="Review"
+                    maxLength="600"
+                    required
+                    className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
+                    style={{ maxHeight: "400px" }}
+                  />
+                </div>
+              </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="rating"
-                  className="block text-lg font-bold leading-6 text-gray-900"
-                >
-                  Rating
-                </label>
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="rating"
+                    className="block text-lg font-bold leading-6 text-gray-900"
+                  >
+                    Rating
+                  </label>
+                </div>
+                <BasicRating value={rating} setRating={setRating} />
               </div>
-              <BasicRating value={rating} setRating={setRating} />
-            </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="cover"
-                  className="block text-lg font-bold leading-6 text-gray-900"
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="cover"
+                    className="block text-lg font-bold leading-6 text-gray-900"
+                  >
+                    Cover
+                  </label>
+                </div>
+                <div className="mt-2">
+                  <input type="file" onChange={handleCoverChange} required />
+                </div>
+              </div>
+              <br />
+              <div>
+                <button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
+                  onClick={submit}
                 >
-                  Cover
-                </label>
-              </div>
-              <div className="mt-2">
-                <input type="file" onChange={handleCoverChange} required />
-              </div>
-            </div>
-            <br />
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
-                onClick={submit}
-              >
-                 Confirm
-              </button>
-              <button
+                  Confirm
+                </button>
+                <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 mt-4 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
                   onClick={cancelForm}
                 >
                   Cancel
                 </button>
-            </div>
-          </form>
-        </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </>
