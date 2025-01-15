@@ -15,7 +15,12 @@ export default function Login() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
       },
+      credentials: "include",
+      mode: "cors",
       body: JSON.stringify({
         email: email,
         password: password,
@@ -26,19 +31,16 @@ export default function Login() {
     try {
       const response = await fetch(url, requestOptions);
       if (response.status === 401) {
-        alert('Password is incorrect. Please try again.');
-      }
-      else if (response.status === 404) {
-        alert('Email not found. Please sign up.');
-      }
-      else{
+        alert("Password is incorrect. Please try again.");
+      } else if (response.status === 404) {
+        alert("Email not found. Please sign up.");
+      } else {
         // if the login is good, set the token for the user and redirect to their bookshelf
         const data = await response.json();
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('userId', data.id);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.id);
         navigate(`/user/${data.id}`, { state: { token: data.token } });
       }
-      
     } catch (error) {
       console.error("Error:", error);
     }
@@ -59,7 +61,12 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST" onSubmit={submit}>
+          <form
+            className="space-y-6"
+            action="#"
+            method="POST"
+            onSubmit={submit}
+          >
             <div>
               <label
                 htmlFor="email"
