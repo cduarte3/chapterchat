@@ -29,24 +29,32 @@ export default function BookDetail({ bookData, userId }) {
     const bookId = bookData.id;
     const token = localStorage.getItem("token");
 
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      mode: "cors",
+    };
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        requestOptions
       );
 
       if (response.ok) {
         navigate(-1);
       } else {
         console.error("Failed to delete the book");
+        alert("Error deleting book. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
+      alert("Connection error. Please try again later.");
     }
   };
 

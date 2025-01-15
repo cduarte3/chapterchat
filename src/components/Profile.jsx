@@ -14,8 +14,7 @@ export default function UserProfile({ userData }) {
     if (token) {
       navigate(-1);
       return;
-    }
-    else {
+    } else {
       navigate("/login");
     }
   }
@@ -31,29 +30,35 @@ export default function UserProfile({ userData }) {
         console.error("Token is not available");
         navigate("/login");
         return;
-      }
-      else if ((username === userData.username || email === userData.email) || (username === "" && email === "" && password === "")) {
+      } else if (
+        username === userData.username ||
+        email === userData.email ||
+        (username === "" && email === "" && password === "")
+      ) {
         alert("No changes were made. All empty or possible conflicting fields");
         return;
-      }
-      else if (password && password !== confirmPassword) {
+      } else if (password && password !== confirmPassword) {
         alert("Passwords do not match");
         return;
       } else if (password && password.length < 6) {
         alert("Password must be at least 6 characters");
         return;
       }
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+        mode: "cors",
+        body: JSON.stringify({ username, email, password }),
+      };
+
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/users/${userData._id}/update`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ username, email, password }),
-        }
+        requestOptions
       );
       if (response.status === 200) {
         alert("Account profile updated.");
