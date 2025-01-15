@@ -8,6 +8,13 @@ function App() {
   return (
     <div className="App">
       <Home />
+      <div className="flex">
+        <img
+          src="/book-divider.svg"
+          alt="Bookshelf"
+          className="h-[40px] w-full -mb-[1px]"
+        />
+      </div>
       <Footer />
     </div>
   );

@@ -172,6 +172,16 @@ export default function Home() {
                 className="w-[10rem] justify-center mx-auto py-5"
               ></img>
             </li>
+            {!token && (
+              <>
+                <li className="p-4 font-bold">
+                  <Link to="login">SIGN IN</Link>
+                </li>
+                <li className="p-4 font-bold">
+                  <Link to="/signup">SIGN UP</Link>
+                </li>
+              </>
+            )}
             {token && (
               <>
                 <li className="p-4 font-bold" onClick={goShelf}>
@@ -189,7 +199,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mt-3 relative w-full h-[550px] md:h-screen object-cover">
+      <div className="mt-3 relative w-full h-[75vh] md:h-screen object-cover">
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         <div className="absolute inset-0 flex items-center justify-between p-4">
           <button
@@ -220,7 +230,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
           {images.map((_, index) => (
             <button
               key={index}
@@ -257,29 +267,30 @@ export default function Home() {
         </div>
 
         <div className="pt-20 hidden md:block">
-          <div class="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[16px] rounded-t-xl h-[172px] max-w-[301px] md:h-[294px] md:max-w-[512px]">
-            <div class="rounded-xl overflow-hidden h-[140px] md:h-[262px]">
+          <div class="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[8px] rounded-t-xl  h-[294px] max-w-[512px]">
+            <div class="rounded-lg overflow-hidden h-[278px] bg-[rgb(24,24,24)]">
               <img
                 src="desk-dash.png"
-                class="h-[140px] md:h-[262px] w-full rounded-xl"
+                class="h-[278px] w-full rounded-lg"
                 alt=""
               />
             </div>
           </div>
-          <div class="shadow-xl relative mx-auto bg-[rgb(54,54,54)] rounded-b-xl h-[24px] max-w-[301px] md:h-[42px] md:max-w-[512px]"></div>
-          <div class="relative mx-auto bg-[rgb(24,24,24)] rounded-b-xl h-[55px] max-w-[83px] md:h-[95px] md:max-w-[142px]"></div>
+          <div class="relative mx-auto bg-[rgb(150,150,150)] rounded-b-xl rounded-t-sm h-[21px] max-w-[597px] shadow-md">
+            <div class="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-xl w-[96px] h-[8px] bg-[rgb(80,80,80)]"></div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 pt-20">
-          <div className="flex justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 pt-32">
+          <div className="flex justify-center order-2 sm:order-1">
             <img
               src="/shelf.svg"
               alt="Bookshelf"
-              className="w-40 h-40 md:w-80 md:h-80"
+              className="w-40 h-40 md:w-60 md:h-60 lg:w-80 lg:h-80"
             />
           </div>
-          <div className="flex items-center justify-center">
-            <h1 className="text-right text-lg md:text-xl lg:text-3xl max-w-[90%] pr-20 text-[rgb(255,254,224)] font-bold">
+          <div className="flex items-center justify-center order-1 sm:order-2">
+            <h1 className="text-center sm:text-right text-lg md:text-xl lg:text-3xl max-w-[90%] sm:pr-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
               ChapterChat is your digital collection for beloved reads. This
               creative platform empowers you to effortlessly curate a
               personalized virtual bookshelf, a testament to your literary
@@ -289,7 +300,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 pt-20">
           <div className="flex items-center justify-center">
-            <h1 className="text-left text-lg md:text-xl lg:text-3xl max-w-[90%] pl-20 text-[rgb(255,254,224)] font-bold">
+            <h1 className="text-center sm:text-left text-lg md:text-xl lg:text-3xl max-w-[90%] sm:pl-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
               Simply record the details of each book you've read – Title,
               Author, Description, Rating (out of 5 stars), and a Cover Image.
             </h1>
@@ -298,20 +309,20 @@ export default function Home() {
             <img
               src="/chat.svg"
               alt="Bookshelf"
-              className="w-40 h-40 md:w-80 md:h-80"
+              className="w-40 h-40 md:w-60 md:h-60 lg:w-80 lg:h-80"
             />
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 pt-20">
-          <div className="flex justify-center">
+          <div className="flex justify-center order-2 sm:order-1">
             <img
               src="/book.svg"
               alt="Bookshelf"
-              className="w-40 h-40 md:w-80 md:h-80"
+              className="w-40 h-40 md:w-60 md:h-60 lg:w-80 lg:h-80"
             />
           </div>
-          <div className="flex items-center justify-center">
-            <h1 className="text-right text-lg md:text-xl lg:text-3xl max-w-[90%] pr-20 text-[rgb(255,254,224)] font-bold">
+          <div className="flex items-center justify-center order-1 sm:order-2">
+            <h1 className="text-center sm:text-right text-lg md:text-xl lg:text-3xl max-w-[90%] sm:pr-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
               As your collection grows, ChapterChat becomes more than just a
               list. It transforms into a living archive of your literary
               passions, a space to revisit past favorites, or remember what you
@@ -343,13 +354,6 @@ export default function Home() {
             </button>
           </Link>
         </div>
-      </div>
-      <div className="flex">
-        <img
-          src="/book-divider.svg"
-          alt="Bookshelf"
-          className="h-[60px] w-full"
-        />
       </div>
     </>
   );
