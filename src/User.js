@@ -6,39 +6,50 @@ import Footer from "./components/Footer";
 export default function User() {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  
+
   // This function fetches the user bookshelf information
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // if the token is undefined, send the user to the login page
         if (!token) {
           console.error("Token is not available");
           navigate("/login");
           return;
         }
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+
+        const requestOptions = {
           method: "GET",
-          credentials: "include",
           headers: {
-            authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
-        });
+          credentials: "include",
+          mode: "cors",
+        };
+
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/users/${userId}`,
+          requestOptions
+        );
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
+
         const data = await response.json();
         setUserData(data);
-        
       } catch (error) {
         console.error("Error fetching user data:", error);
+        navigate("/login");
       }
     };
+
     fetchUserData();
   }, [userId, token, navigate]);
-  
+
   if (!userData) {
     // While the data loads, let the user know
     return (
@@ -49,10 +60,10 @@ export default function User() {
   }
   return (
     <>
-    <div className="min-h-screen h-full">
-      <UserProfile userData={userData} />
-    </div>
-      <Footer/>
+      <div className="min-h-screen h-full">
+        <UserProfile userData={userData} />
+      </div>
+      <Footer />
     </>
   );
 }

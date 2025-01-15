@@ -9,15 +9,11 @@ export default function Login() {
   async function submit(e) {
     e.preventDefault();
 
-    const url = `${process.env.REACT_APP_API_URL}/login`;
-
     const requestOptions = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
+        Accept: "application/json",
       },
       credentials: "include",
       mode: "cors",
@@ -27,22 +23,31 @@ export default function Login() {
       }),
     };
 
-    // error handling for email or password incorrect/not found
     try {
-      const response = await fetch(url, requestOptions);
-      if (response.status === 401) {
-        alert("Password is incorrect. Please try again.");
-      } else if (response.status === 404) {
-        alert("Email not found. Please sign up.");
-      } else {
-        // if the login is good, set the token for the user and redirect to their bookshelf
-        const data = await response.json();
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userId", data.id);
-        navigate(`/user/${data.id}`, { state: { token: data.token } });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/login`,
+        requestOptions
+      );
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          alert("Password is incorrect. Please try again.");
+          return;
+        }
+        if (response.status === 404) {
+          alert("Email not found. Please sign up.");
+          return;
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.id);
+      navigate(`/user/${data.id}`, { state: { token: data.token } });
     } catch (error) {
       console.error("Error:", error);
+      alert("Connection error. Please try again later.");
     }
   }
 
