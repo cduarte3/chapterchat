@@ -111,7 +111,7 @@ export default function Questions() {
                       className="w-[10rem] justify-center mx-auto py-5"
                     ></img>
                   </li>
-                  <li className="p-4 font-bold">
+                  <li className="p-4 font-bold" onClick={goHome}>
                     <Link>HOME</Link>
                   </li>
                   {token && (
