@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { TiThMenu } from "react-icons/ti";
-import { HiMiniHome } from "react-icons/hi2";
 import {
   FaChevronLeft,
   FaChevronRight,
@@ -47,7 +46,7 @@ export default function Home() {
     },
   ];
 
-  const headings = ["READ", "REVIEW", "DISCUSS"];
+  const headings = ["READ", "REVIEW", "CHAT"];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -77,15 +76,6 @@ export default function Home() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     navigate("/");
-  };
-
-  const goHome = () => {
-    if (token) {
-      navigate("/user/" + userId);
-      return;
-    } else {
-      navigate("/");
-    }
   };
 
   const goProfile = () => {
@@ -121,10 +111,27 @@ export default function Home() {
           </ul>
         </nav>
         <nav className="hidden md:flex">
-          <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-            <li className="md:px-3">
-              <HiMiniHome size={60} onClick={goHome} />
-            </li>
+          <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] text-2xl font-['Inter']">
+            {!token && (
+              <>
+                <li className="md:px-3">
+                  <Link
+                    to="/login"
+                    className="py-3 px-5 bg-[rgb(64,63,68)] rounded-full text-[rgb(255,254,224)]"
+                  >
+                    Sign In
+                  </Link>
+                </li>
+                <li className="md:px-3">
+                  <Link
+                    to="/signup"
+                    className="py-3 px-5 bg-[rgb(64,63,68)] rounded-full text-[rgb(255,254,224)]"
+                  >
+                    Sign Up
+                  </Link>
+                </li>
+              </>
+            )}
             {token && (
               <>
                 <li className="md:px-3" onClick={goShelf}>
@@ -165,9 +172,6 @@ export default function Home() {
                 className="w-[10rem] justify-center mx-auto py-5"
               ></img>
             </li>
-            <li className="p-4 font-bold">
-              <Link>HOME</Link>
-            </li>
             {token && (
               <>
                 <li className="p-4 font-bold" onClick={goShelf}>
@@ -185,7 +189,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mt-3 relative w-full h-[500px] md:h-screen object-cover mb-8">
+      <div className="mt-3 relative w-full h-[550px] md:h-screen object-cover">
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         <div className="absolute inset-0 flex items-center justify-between p-4">
           <button
@@ -195,7 +199,7 @@ export default function Home() {
             <FaChevronLeft size={24} />
           </button>
           <div className="absolute bottom-0 left-0 p-8 z-10">
-            <h1 className="text-[rgb(255,254,224)] text-7xl sm:text-8xl md:text-9xl lg:text-[200px] font-bold drop-shadow-lg">
+            <h1 className="text-[rgb(255,254,224)] text-7xl sm:text-8xl md:text-9xl lg:text-[20vh] xl:text-[30vh] drop-shadow-lg font-['Radley']">
               {headings[parseInt(cimg)]}
             </h1>
           </div>
@@ -230,27 +234,122 @@ export default function Home() {
           ))}
         </div>
       </div>
+      <div className="w-full min-h-screen flex flex-col bg-[rgb(64,63,68)] py-32">
+        <h1 className="text-[rgb(255,254,224)] text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center font-['Radley']">
+          <span className="lg:hidden">
+            Welcome to
+            <br />
+            ChapterChat
+          </span>
+          <span className="hidden lg:block">Welcome to ChapterChat</span>
+        </h1>
 
-      <div className="max-w-[800px] w-full h-screen  mx-auto text-center flex flex-col justify-center">
+        <div className="pt-20 md:hidden">
+          <div class="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
+            <div class="h-[32px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[72px] rounded-s-lg"></div>
+            <div class="h-[46px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[124px] rounded-s-lg"></div>
+            <div class="h-[46px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[178px] rounded-s-lg"></div>
+            <div class="h-[64px] w-[3px] bg-[rgb(24,24,24)] absolute -end-[17px] top-[142px] rounded-e-lg"></div>
+            <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-[rgb(24,24,24)]">
+              <img src="dash.png" class="w-[272px] h-[572px]" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-20 hidden md:block">
+          <div class="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[16px] rounded-t-xl h-[172px] max-w-[301px] md:h-[294px] md:max-w-[512px]">
+            <div class="rounded-xl overflow-hidden h-[140px] md:h-[262px]">
+              <img
+                src="desk-dash.png"
+                class="h-[140px] md:h-[262px] w-full rounded-xl"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="shadow-xl relative mx-auto bg-[rgb(54,54,54)] rounded-b-xl h-[24px] max-w-[301px] md:h-[42px] md:max-w-[512px]"></div>
+          <div class="relative mx-auto bg-[rgb(24,24,24)] rounded-b-xl h-[55px] max-w-[83px] md:h-[95px] md:max-w-[142px]"></div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 pt-20">
+          <div className="flex justify-center">
+            <img
+              src="/shelf.svg"
+              alt="Bookshelf"
+              className="w-40 h-40 md:w-80 md:h-80"
+            />
+          </div>
+          <div className="flex items-center justify-center">
+            <h1 className="text-right text-lg md:text-xl lg:text-3xl max-w-[90%] pr-20 text-[rgb(255,254,224)] font-bold">
+              ChapterChat is your digital collection for beloved reads. This
+              creative platform empowers you to effortlessly curate a
+              personalized virtual bookshelf, a testament to your literary
+              journey.
+            </h1>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 pt-20">
+          <div className="flex items-center justify-center">
+            <h1 className="text-left text-lg md:text-xl lg:text-3xl max-w-[90%] pl-20 text-[rgb(255,254,224)] font-bold">
+              Simply record the details of each book you've read – Title,
+              Author, Description, Rating (out of 5 stars), and a Cover Image.
+            </h1>
+          </div>
+          <div className="flex justify-center">
+            <img
+              src="/chat.svg"
+              alt="Bookshelf"
+              className="w-40 h-40 md:w-80 md:h-80"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 pt-20">
+          <div className="flex justify-center">
+            <img
+              src="/book.svg"
+              alt="Bookshelf"
+              className="w-40 h-40 md:w-80 md:h-80"
+            />
+          </div>
+          <div className="flex items-center justify-center">
+            <h1 className="text-right text-lg md:text-xl lg:text-3xl max-w-[90%] pr-20 text-[rgb(255,254,224)] font-bold">
+              As your collection grows, ChapterChat becomes more than just a
+              list. It transforms into a living archive of your literary
+              passions, a space to revisit past favorites, or remember what you
+              didn't enjoy about a certain title.
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div className="max-w-[800px] w-full h-full  mx-auto text-center flex flex-col justify-center py-24 ">
+        <h1 className="text-[rgb(64,63,68)] text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center font-['Radley'] pb-10">
+          Get Started Now
+        </h1>
         <img
           src="logo.png"
           alt="ChapterChat Logo"
-          className="mx-auto rounded-lg md:w-[50%] w-[70%]"
+          className="mx-auto w-[40%]"
           style={{ display: "block" }}
         ></img>
-        <div className="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto sm:p-8">
+        <div className="grid max-w-screen-xl grid-cols-2 gap-8  mx-auto pt-10">
           <Link to="/login">
-            <button className="bg-[rgb(64,63,68)] hover:bg-[rgb(36,36,38)] text-amber-50 font-bold sm:py-4 md:px-9 py-3 px-5 rounded md:text-5xl text-3xl">
+            <button className="bg-[rgb(64,63,68)] hover:bg-[rgb(36,36,38)] text-[rgb(255,254,224)] font-bold sm:py-4 md:px-9 py-3 px-5 rounded-full md:text-3xl text-2xl">
               Sign In
             </button>
           </Link>
 
           <Link to="/signup">
-            <button className="bg-[rgb(64,63,68)] hover:bg-[rgb(36,36,38)] text-amber-50 font-bold sm:py-4 md:px-9 py-3 px-5 rounded md:text-5xl text-3xl">
+            <button className="bg-[rgb(64,63,68)] hover:bg-[rgb(36,36,38)] text-[rgb(255,254,224)] font-bold sm:py-4 md:px-9 py-3 px-5 rounded-full md:text-3xl text-2xl">
               Sign Up
             </button>
           </Link>
         </div>
+      </div>
+      <div className="flex">
+        <img
+          src="/book-divider.svg"
+          alt="Bookshelf"
+          className="h-[60px] w-full"
+        />
       </div>
     </>
   );
