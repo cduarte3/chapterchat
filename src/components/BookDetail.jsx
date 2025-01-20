@@ -17,6 +17,25 @@ export default function BookDetail({ bookData, userId }) {
   const [nav, setNav] = useState(true);
   const navRef = useRef();
 
+  const getGenreDisplay = (genreValue) => {
+    const genreMap = {
+      crime: "Crime / Mystery",
+      romance: "Romance",
+      fantasy: "Fantasy / Sci Fi",
+      action: "Action / Adventure",
+      horror: "Horror / Thriller",
+      graphic: "Graphic Novel",
+      comedy: "Comedy",
+      poetry: "Poetry",
+      drama: "Drama",
+      historical: "Historical",
+      children: "Children's",
+      philo: "Philosophical / Religious",
+      Biography: "Biography / Autobiography",
+    };
+    return genreMap[genreValue] || genreValue;
+  };
+
   const handleNav = () => {
     setNav(!nav);
   };
@@ -185,7 +204,7 @@ export default function BookDetail({ bookData, userId }) {
           </div>
         </div>
         <div className="pt-28">
-          <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col xl:text-7xl md:text-6xl sm:text-6xl text-4xl mx-auto justify-center text-[rgb(64,63,68)]">
+          <h1 className="font-['Radley'] font-bold mt-[2%] p-5 text-center flex flex-col xl:text-8xl sm:text-7xl text-5xl mx-auto justify-center text-[rgb(64,63,68)]">
             {bookData.title}
           </h1>
           <h2 className="text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-2xl mx-auto justify-center text-[rgb(64,63,68)]">
@@ -193,25 +212,21 @@ export default function BookDetail({ bookData, userId }) {
           </h2>
           <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-[rgb(64,63,68)]" />
           <div className="justify-items-center flex-col grid w-[90%] xl:w-[80%] 2xl:grid-cols-2 grid-cols-1 mx-auto gap-5 sm:p-3">
-            <div className="relative xl:w-[50%] md:w-[30%] w-[50%]">
+            <div className="relative xl:w-[50%] md:w-[30%] w-[50%] aspect-[3/4]">
               <img
                 src="/book.png"
                 alt="blank book"
                 className="w-full shadow-custom-dark"
               />
               <img
-                src={
-                  bookData.cover
-                    ? `data:image/png;base64,${bookData.cover}`
-                    : ""
-                }
+                src={bookData.cover}
                 alt="Cover"
                 className="absolute top-[1%] left-[7%] w-[92%] h-[98%] max-h-[99%] bottom-[-10%] object-cover shadow-custom-dark object-fit"
               />
             </div>
-            <div className="mx-5 sm:mx-0">
+            <div className="mx-5 sm:mx-0 flex flex-col justify-center h-full">
               <p
-                className="text-[rgb(64,63,68)] text-xl font-bold"
+                className="text-[rgb(64,63,68)] text-xl lg:text-3xl 2xl:text-right text-center"
                 style={{ textIndent: "2em" }}
               >
                 {bookData.review}
@@ -231,6 +246,11 @@ export default function BookDetail({ bookData, userId }) {
                   }}
                 />
               </div>
+              <div>
+                <h2 className="text-center flex flex-col xl:text-4xl md:text-3xl sm:text-2xl text-1xl mx-auto justify-center text-[rgb(64,63,68)] mt-3">
+                  <b>Genre:</b> {getGenreDisplay(bookData.genre)}
+                </h2>
+              </div>
             </div>
           </div>
           <br />
@@ -249,7 +269,7 @@ export default function BookDetail({ bookData, userId }) {
           >
             <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
           </div>
-          <div className="bg-[rgb(255,254,229)] rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+          <div className="bg-[rgb(255,254,229)] rounded-xl overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full border-2 border-red-600">
             <div className="bg-[rgb(255,254,229)] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 border-2 border-red-600 sm:mx-0 sm:h-10 sm:w-10">
