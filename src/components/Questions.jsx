@@ -3,10 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { TiThMenu } from "react-icons/ti";
 import { HiMiniHome } from "react-icons/hi2";
-import {
-  FaUserCircle,
-  FaWindowClose,
-} from "react-icons/fa";
+import { FaUserCircle, FaWindowClose } from "react-icons/fa";
 import { TbBooks } from "react-icons/tb";
 
 export default function Questions() {
@@ -55,81 +52,81 @@ export default function Questions() {
   return (
     <>
       <div className="fixed top-0 left-0 right-0 bg-[rgb(255,254,224)] z-50 px-4 flex justify-between items-center py-4 shadow-md">
-              <nav>
-                <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-                  <li className="md:px-5">
-                    <img
-                      src="/logo.png"
-                      alt="ChapterChat Logo"
-                      className="w-20 md:w-28"
-                    ></img>
-                  </li>
-                </ul>
-              </nav>
-              <nav className="hidden md:flex">
-                <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-                  <li className="md:px-3">
-                    <HiMiniHome size={60} onClick={goHome} />
-                  </li>
-                  {token && (
-                    <>
-                      <li className="md:px-3" onClick={goShelf}>
-                        <TbBooks size={60} />
-                      </li>
-                      <li className="md:px-3" onClick={goProfile}>
-                        <FaUserCircle size={60} />
-                      </li>
-                      <li className="md:px-5">
-                        <FiLogOut size={60} onClick={logOut} />
-                      </li>
-                    </>
-                  )}
-                </ul>
-              </nav>
-              <div onClick={handleNav} className="block md:hidden">
-                {!nav ? (
-                  <FaWindowClose size={50} color="rgb(64,63,68)" />
-                ) : (
-                  <TiThMenu size={50} color="rgb(64,63,68)" />
-                )}
-              </div>
-      
-              <div
-                id="dark-grey-div"
-                ref={navRef}
-                className={
-                  !nav
-                    ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
-                    : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
-                }
-              >
-                <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
-                  <li>
-                    <img
-                      src="/logo_white.png"
-                      alt="Logo in light beige"
-                      className="w-[10rem] justify-center mx-auto py-5"
-                    ></img>
-                  </li>
-                  <li className="p-4 font-bold" onClick={goHome}>
-                    <Link>HOME</Link>
-                  </li>
-                  {token && (
-                    <>
-                      <li className="p-4 font-bold" onClick={goShelf}>
-                        <Link>BOOKSHELF</Link>
-                      </li>
-                      <li className="p-4 font-bold" onClick={goProfile}>
-                        <Link>PROFILE</Link>
-                      </li>
-                      <li className="p-4 font-bold" onClick={logOut}>
-                        <Link>LOG OUT</Link>
-                      </li>
-                    </>
-                  )}
-                </ul>
-              </div>
-            </div>
+        <nav>
+          <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+            <li className="md:px-5">
+              <img
+                src="/logo.png"
+                alt="ChapterChat Logo"
+                className="w-20 md:w-28"
+              ></img>
+            </li>
+          </ul>
+        </nav>
+        <nav className="hidden md:flex">
+          <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+            <li className="md:px-3">
+              <HiMiniHome size={60} onClick={goHome} />
+            </li>
+            {token && (
+              <>
+                <li className="md:px-3" onClick={goShelf}>
+                  <TbBooks size={60} />
+                </li>
+                <li className="md:px-3" onClick={goProfile}>
+                  <FaUserCircle size={60} />
+                </li>
+                <li className="md:px-5">
+                  <FiLogOut size={60} onClick={logOut} />
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
+        <div onClick={handleNav} className="block md:hidden">
+          {!nav ? (
+            <FaWindowClose size={50} color="rgb(64,63,68)" />
+          ) : (
+            <TiThMenu size={50} color="rgb(64,63,68)" />
+          )}
+        </div>
+
+        <div
+          id="dark-grey-div"
+          ref={navRef}
+          className={
+            !nav
+              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
+              : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
+          }
+        >
+          <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
+            <li>
+              <img
+                src="/logo_white.png"
+                alt="Logo in light beige"
+                className="w-[10rem] justify-center mx-auto py-5"
+              ></img>
+            </li>
+            <li className="p-4 font-bold" onClick={goHome}>
+              <Link>HOME</Link>
+            </li>
+            {token && (
+              <>
+                <li className="p-4 font-bold" onClick={goShelf}>
+                  <Link>BOOKSHELF</Link>
+                </li>
+                <li className="p-4 font-bold" onClick={goProfile}>
+                  <Link>PROFILE</Link>
+                </li>
+                <li className="p-4 font-bold" onClick={logOut}>
+                  <Link>LOG OUT</Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
+      </div>
       <div className="lg:max-w-[80%] max-w-[80%] mx-auto items-center h-full pt-28">
         <h1 className="font-black mt-[2%] p-5 text-center flex flex-col xl:text-7xl md:text-6xl sm:text-6xl text-5xl mx-auto justify-center text-[rgb(64,63,68)]">
           Frequently Asked Questions
@@ -154,28 +151,28 @@ export default function Questions() {
       <div>
         <div className="pt-5 flex-col grid lg:grid-cols-2 grid-cols-1">
           <div className="lg:pt-28 pt-10 lg:w-[110%]">
-            <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[8px] rounded-t-xl h-[172px] max-w-[301px] md:h-[294px] 2xl:h-[391px] md:max-w-[512px] 2xl:max-w-[690px]">
-              <div class="rounded-lg overflow-hidden h-[156px] md:h-[278px] 2xl:h-[372px] bg-white dark:bg-gray-800">
+            <div className="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[8px] rounded-t-xl h-[172px] max-w-[301px] md:h-[294px] 2xl:h-[391px] md:max-w-[512px] 2xl:max-w-[690px]">
+              <div className="rounded-lg overflow-hidden h-[156px] md:h-[278px] 2xl:h-[372px] bg-white dark:bg-gray-800">
                 <img
                   src="desk-dash.png"
-                  class="h-[156px] md:h-[278px] 2xl:h-[372px] w-full rounded-lg"
+                  className="h-[156px] md:h-[278px] 2xl:h-[372px] w-full rounded-lg"
                   alt=""
                 />
               </div>
             </div>
-            <div class="relative mx-auto bg-gray-900 dark:bg-gray-700 rounded-b-xl rounded-t-sm h-[17px] max-w-[351px] md:h-[21px] 2xl:h-[31px] md:max-w-[597px] 2xl:max-w-[770px]">
-              <div class="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-xl w-[56px] h-[5px] md:w-[96px] md:h-[8px] bg-gray-800"></div>
+            <div className="relative mx-auto bg-gray-900 dark:bg-gray-700 rounded-b-xl rounded-t-sm h-[17px] max-w-[351px] md:h-[21px] 2xl:h-[31px] md:max-w-[597px] 2xl:max-w-[770px]">
+              <div className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-xl w-[56px] h-[5px] md:w-[96px] md:h-[8px] bg-gray-800"></div>
             </div>
           </div>
 
           <div className="py-10 lg:py-5">
-            <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
-              <div class="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[72px] rounded-s-lg"></div>
-              <div class="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[124px] rounded-s-lg"></div>
-              <div class="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[178px] rounded-s-lg"></div>
-              <div class="h-[64px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -end-[17px] top-[142px] rounded-e-lg"></div>
-              <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-gray-800">
-                <img src="dash.png" class="w-[272px] h-[572px]" alt="" />
+            <div className="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
+              <div className="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[72px] rounded-s-lg"></div>
+              <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[124px] rounded-s-lg"></div>
+              <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[178px] rounded-s-lg"></div>
+              <div className="h-[64px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -end-[17px] top-[142px] rounded-e-lg"></div>
+              <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-gray-800">
+                <img src="dash.png" className="w-[272px] h-[572px]" alt="" />
               </div>
             </div>
           </div>

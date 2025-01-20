@@ -134,7 +134,7 @@ export default function Shelf({ userData }) {
                   className="w-full shadow-custom-dark"
                 />
                 <img
-                  src={book.cover ? `data:image/png;base64,${book.cover}` : ""}
+                  src={book.cover}
                   alt="Cover"
                   className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-custom-dark"
                   onClick={() => visitBook(book.id)}
