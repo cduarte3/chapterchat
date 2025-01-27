@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BasicRating from "./Modify_rating";
 
-export default function Login({ userId }) {
+export default function AddBook({ userId }) {
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [review, setReview] = useState("");
@@ -52,9 +52,7 @@ export default function Login({ userId }) {
 
     try {
       const encodedTitle = formatUrlParameter(title);
-      console.log(encodedTitle);
       const encodedAuthor = formatUrlParameter(author);
-      console.log(encodedAuthor);
       const response = await fetch(
         `https://bookcover.longitood.com/bookcover?book_title=${encodedTitle}&author_name=${encodedAuthor}`
       );
@@ -64,7 +62,6 @@ export default function Login({ userId }) {
       }
 
       const data = await response.json();
-      console.log(data);
       setFoundCover(true);
       setCover(data.url);
     } catch (error) {
@@ -92,6 +89,15 @@ export default function Login({ userId }) {
   async function submit(e) {
     e.preventDefault();
 
+    const storedUserId = localStorage.getItem("userId");
+    const activeUserId = userId || storedUserId;
+
+    if (!activeUserId) {
+      alert("No user ID found. Please log in again.");
+      navigate("/login");
+      return;
+    }
+
     if (!title || !review || !author || !rating || !genre) {
       alert("All fields must be filled");
       return;
@@ -100,18 +106,21 @@ export default function Login({ userId }) {
     const submissionCover =
       cover ||
       "https://bookstoreromanceday.org/wp-content/uploads/2020/08/book-cover-placeholder.png";
-    const url = `${process.env.REACT_APP_API_URL}/users/${userId}`;
+    const url = `${process.env.REACT_APP_API_URL}/users/${activeUserId}`;
     const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Session expired. Please log in again.");
+      navigate("/login");
+      return;
+    }
 
     const requestOptions = {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-        Accept: "application/json",
       },
-      credentials: "include",
-      mode: "cors",
       body: JSON.stringify({
         author,
         title,
@@ -124,11 +133,13 @@ export default function Login({ userId }) {
 
     try {
       const response = await fetch(url, requestOptions);
-      if (response.status === 404 || token === null) {
-        alert("Unauthorized access");
-      } else {
-        navigate(`/user/${userId}`);
+
+      if (!response.ok) {
+        throw new Error(await response.text());
       }
+
+      const data = await response.json();
+      navigate(`/user/${activeUserId}`);
     } catch (error) {
       console.error("Error:", error);
       alert("Error adding book. Please try again.");
@@ -304,8 +315,6 @@ export default function Login({ userId }) {
               </div>
               <BasicRating value={rating} setRating={setRating} />
             </div>
-
-            <br />
             <div>
               <button
                 type="submit"

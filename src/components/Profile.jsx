@@ -23,8 +23,6 @@ export default function UserProfile({ userData }) {
     event.preventDefault();
     const token = localStorage.getItem("token");
     try {
-      console.log("username: ", username);
-      console.log("email: ", email);
       // if the token is undefined, send the user to the login page
       if (!token) {
         console.error("Token is not available");
@@ -57,12 +55,12 @@ export default function UserProfile({ userData }) {
       };
 
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/users/${userData._id}/update`,
+        `${process.env.REACT_APP_API_URL}/users/${userData.id}/update`,
         requestOptions
       );
       if (response.status === 200) {
         alert("Account profile updated.");
-        navigate(`/user/${userData._id}`);
+        navigate(`/user/${userData.id}`);
       }
       if (response.status === 409) {
         alert("Username OR Email already exists.");
