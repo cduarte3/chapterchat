@@ -66,7 +66,7 @@ export default function BookDetail({ bookData, userId }) {
       );
 
       if (response.ok) {
-        navigate(-1);
+        navigate("/user/" + userId);
       } else {
         console.error("Failed to delete the book");
         alert("Error deleting book. Please try again.");
@@ -125,7 +125,7 @@ export default function BookDetail({ bookData, userId }) {
 
   return (
     <div>
-      <div className="min-h-screen">
+      <div className="min-h-screen mb-10">
         <div className="fixed top-0 left-0 right-0 bg-[rgb(255,254,224)] py-4 flex justify-between items-center px-6 shadow-md z-50">
           <nav>
             <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
@@ -207,12 +207,12 @@ export default function BookDetail({ bookData, userId }) {
           <h1 className="font-['Radley'] font-bold mt-[2%] p-5 text-center flex flex-col xl:text-8xl sm:text-7xl text-5xl mx-auto justify-center text-[rgb(64,63,68)]">
             {bookData.title}
           </h1>
-          <h2 className="text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-2xl mx-auto justify-center text-[rgb(64,63,68)]">
-            - {bookData.author}
+          <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-2xl mx-auto justify-center text-[rgb(64,63,68)]">
+            {bookData.author}
           </h2>
           <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-[rgb(64,63,68)]" />
-          <div className="justify-items-center flex-col grid w-[90%] xl:w-[80%] 2xl:grid-cols-2 grid-cols-1 mx-auto gap-5 sm:p-3">
-            <div className="relative xl:w-[50%] md:w-[30%] w-[50%] aspect-[3/4]">
+          <div className="justify-items-center flex-col grid w-[90%] xl:w-[80%] lg:grid-cols-2 grid-cols-1 mx-auto gap-5 sm:p-3">
+            <div className="relative w-[60%] sm:w-[55%] md:w-[50%] lg:w-[70%] 2xl:w-[60%] aspect-[3/4]">
               <img
                 src="/book.png"
                 alt="blank book"
@@ -224,21 +224,18 @@ export default function BookDetail({ bookData, userId }) {
                 className="absolute top-[1%] left-[7%] w-[92%] h-[98%] max-h-[99%] bottom-[-10%] object-cover shadow-custom-dark object-fit"
               />
             </div>
-            <div className="mx-5 sm:mx-0 flex flex-col justify-center h-full">
-              <p
-                className="text-[rgb(64,63,68)] text-xl lg:text-3xl 2xl:text-right text-center"
-                style={{ textIndent: "2em" }}
-              >
+            <div className="mx-5 sm:mx-0 flex flex-col justify-center h-full mt-3 lg:mt-0">
+              <p className="text-[rgb(64,63,68)] text-2xl xl:text-3xl 2xl:text-4xl text-center">
                 {bookData.review}
               </p>
-              <div className="mt-10 flex justify-center">
+              <div className="mt-6 flex justify-center">
                 <Rating
                   value={Number(bookData.rating)}
                   readOnly
                   sx={{
                     fontSize: {
-                      xs: "2.5rem",
-                      sm: "3rem",
+                      xs: "4rem",
+                      sm: "4rem",
                       md: "4rem",
                       lg: "4.5rem",
                       xl: "5rem",
@@ -247,8 +244,9 @@ export default function BookDetail({ bookData, userId }) {
                 />
               </div>
               <div>
-                <h2 className="text-center flex flex-col xl:text-4xl md:text-3xl sm:text-2xl text-1xl mx-auto justify-center text-[rgb(64,63,68)] mt-3">
-                  <b>Genre:</b> {getGenreDisplay(bookData.genre)}
+                <h2 className="text-center flex flex-col xl:text-4xl text-3xl mx-auto justify-center text-[rgb(64,63,68)] mt-6">
+                  <b className="mb-2">Genre:</b>{" "}
+                  {getGenreDisplay(bookData.genre)}
                 </h2>
               </div>
             </div>
