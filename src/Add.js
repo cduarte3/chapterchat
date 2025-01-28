@@ -1,18 +1,16 @@
-import React from 'react';
-import './index.css';
-import AddBook from './components/Add';
-import { useParams } from 'react-router-dom';
-import Footer from './components/Footer';
-
+import React from "react";
+import { useParams } from "react-router-dom";
+import AddBook from "./components/Add";
+import Footer from "./components/Footer";
 
 function Add() {
   const { userId } = useParams();
   return (
     <>
-    <div className="min-h-screen h-full">
-      <AddBook userId={userId} />
-    </div>
-    <Footer />
+      <div className="min-h-screen h-full">
+        <AddBook userId={userId} />
+      </div>
+      <Footer />
     </>
   );
 }

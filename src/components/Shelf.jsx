@@ -17,15 +17,23 @@ export default function Shelf({ userData }) {
   };
 
   const addBook = () => {
-    navigate(`/user/${userData._id}/add`);
+    navigate(`/user/${userData.id}/add`);
   };
 
   const visitBook = (bookId) => {
-    navigate(`/user/${userData._id}/book/${bookId}`);
+    if (!bookId) {
+      console.error("No bookId provided");
+      return;
+    }
+    try {
+      navigate(`/user/${userData.id}/book/${bookId}`);
+    } catch (error) {
+      console.error("Navigation error:", error);
+    }
   };
 
   const goProfile = () => {
-    navigate(`/user/${userData._id}/profile`);
+    navigate(`/user/${userData.id}/profile`);
   };
 
   const logOut = () => {
@@ -53,7 +61,7 @@ export default function Shelf({ userData }) {
 
   return (
     <div className="min-h-screen">
-      <div className="min-h-screen mb-10 lg:mb-0 xl:mb-10">
+      <div className="min-h-screen mb-10">
         <div className="fixed top-0 left-0 right-0 bg-[rgb(255,254,224)] py-4 flex justify-between items-center px-6 shadow-md z-50">
           <nav>
             <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
@@ -118,7 +126,7 @@ export default function Shelf({ userData }) {
           </div>
         </div>
         <div className="pt-28">
-          <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col md:text-8xl sm:text-6xl text-4xl mx-auto justify-center text-[rgb(64,63,68)]">
+          <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col lg:text-8xl md:text-7xl sm:text-6xl text-5xl mx-auto justify-center text-[rgb(64,63,68)] font-['Radley']">
             <span style={{ wordBreak: "break-all" }}>
               {userData.username}'s
             </span>{" "}
@@ -126,21 +134,28 @@ export default function Shelf({ userData }) {
           </h1>
           <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-[rgb(64,63,68)]" />
           <div className="text-center flex-col grid w-[90%] xl:w-[75%] lg:grid-cols-4 grid-cols-2 mx-auto justify-items-center gap-12 sm:p-3">
-            {userData.books.map((book) => (
-              <div key={book.id} className="relative w-full">
-                <img
-                  src="/book.png"
-                  alt="User Avatar"
-                  className="w-full shadow-custom-dark"
-                />
-                <img
-                  src={book.cover ? `data:image/png;base64,${book.cover}` : ""}
-                  alt="Cover"
-                  className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-custom-dark"
-                  onClick={() => visitBook(book.id)}
-                />
-              </div>
-            ))}
+            {userData.books &&
+              userData.books.map((book) => (
+                <div
+                  key={book.id}
+                  className="relative w-full cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    visitBook(book.id);
+                  }}
+                >
+                  <img
+                    src="/book.png"
+                    alt="User Avatar"
+                    className="w-full shadow-custom-dark"
+                  />
+                  <img
+                    src={book.cover}
+                    alt="Cover"
+                    className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-custom-dark"
+                  />
+                </div>
+              ))}
           </div>
         </div>
       </div>
