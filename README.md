@@ -10,6 +10,12 @@ ChapterChat is your digital collection for beloved reads. This creative platform
 
 <br/>
 
+# What information can I include about a book?
+
+Books you review can contain information fields such as Title, Author, Review Description, Genre, Star rating out of 5, and a cover that is applied for you automatically once inputting a title and author.
+
+<br/>
+
 # How can I add a book to my shelf?
 
 Once you've signed up for an account or signed into your existing account, simply click on the **'+'** in the top left of your bookshelf to get started.
@@ -21,12 +27,6 @@ Once you've signed up for an account or signed into your existing account, simpl
 </p>
 
 <br/>
-
-# What information can I include about a book?
-
-Books you review can contain information fields such as Title, Author, Review Description, Genre, Star rating out of 5, and a cover that is applied for you automatically once inputting a title and author.
-
-<br/><br/>
 
 # What extra features will be added soon?
 

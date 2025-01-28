@@ -302,7 +302,8 @@ export default function Home() {
           <div className="flex items-center justify-center">
             <h1 className="text-center sm:text-left text-lg md:text-xl lg:text-3xl max-w-[90%] sm:pl-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
               Simply record the details of each book you've read – Title,
-              Author, Description, Rating (out of 5 stars), and a Cover Image.
+              Author, Description, Genre, Rating (out of 5 stars), and a Cover
+              Image.
             </h1>
           </div>
           <div className="flex justify-center">
@@ -324,9 +325,9 @@ export default function Home() {
           <div className="flex items-center justify-center order-1 sm:order-2">
             <h1 className="text-center sm:text-right text-lg md:text-xl lg:text-3xl max-w-[90%] sm:pr-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
               As your collection grows, ChapterChat becomes more than just a
-              list. It transforms into a living archive of your literary
-              passions, a space to revisit past favorites, or remember what you
-              didn't enjoy about a certain title.
+              list of reviews; it transforms into a living archive of your
+              literary history, allowing for a space to revisit past favorites,
+              or share any critiques about a certain title.
             </h1>
           </div>
         </div>

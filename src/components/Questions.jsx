@@ -181,38 +181,23 @@ export default function Questions() {
       <div className="lg:max-w-[80%] max-w-[80%] mx-auto items-center h-full pb-20">
         <div className="pt-20">
           <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center text-[rgb(64,63,68)]">
+            What information can I include about a book?
+          </h2>
+          <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center text-[rgb(64,63,68)]">
+            Books you review can contain information fields such as Title,
+            Author, Review Description, Genre, Star rating out of 5, and a cover
+            that is applied for you automatically once inputting a title and
+            author.
+          </p>
+        </div>
+        <div className="pt-20">
+          <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center text-[rgb(64,63,68)]">
             How can I add a book to my shelf?
           </h2>
           <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center text-[rgb(64,63,68)]">
             Once you've signed up for an account or signed into your existing
             account, simply click on the '+' icon in the top left of your
             bookshelf to get started.
-          </p>
-        </div>
-        <div className="pt-20">
-          <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center text-[rgb(64,63,68)]">
-            What image formats can I use?
-          </h2>
-          <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center text-[rgb(64,63,68)]">
-            ChapterChat will automatically convert images to the preferred image
-            size and format on upload. Simply choose your desired cover art, and
-            changes will be made automatically.
-          </p>
-          <img
-            src="https://static1.squarespace.com/static/60f1a490a90ed8713c41c36c/6115a1d8295f857705d9e51d/6115a2048c97ac3ad5f0220a/1702413883836/36-design-powers-image-file-format.jpg?format=1500w"
-            alt=""
-            className="mx-auto rounded-2xl mt-10 max-h-[350px]"
-          />
-        </div>
-        <div className="pt-20">
-          <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center text-[rgb(64,63,68)]">
-            What information can I include about a book?
-          </h2>
-          <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center text-[rgb(64,63,68)]">
-            Books you review can contain information fields such as Title,
-            Author, Review Description, Star rating out of 5, and an uploaded
-            cover. Cover images will be monitored to ensure content is fairly
-            used and appropriate.
           </p>
         </div>
         <div className="pt-20">
