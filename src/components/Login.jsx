@@ -1,10 +1,36 @@
-import { useState, React } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, React, useEffect, useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { HiMiniHome } from "react-icons/hi2";
+import { TiThMenu } from "react-icons/ti";
+import { FaWindowClose } from "react-icons/fa";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [nav, setNav] = useState(true);
+  const navRef = useRef();
+
+  const handleNav = () => {
+    setNav(!nav);
+  };
+
+  const goHome = () => {
+    navigate("/");
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setNav(true);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   async function submit(e) {
     e.preventDefault();
@@ -53,7 +79,63 @@ export default function Login() {
 
   return (
     <div>
-      <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="top-0 left-0 right-0 bg-[rgb(255,254,224)] z-50 px-4 flex justify-between items-center py-4 shadow-md">
+        <nav>
+          <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+            <li className="md:px-5">
+              <img
+                src="/logo.png"
+                alt="ChapterChat Logo"
+                className="w-20 md:w-28"
+              ></img>
+            </li>
+          </ul>
+        </nav>
+        <nav className="hidden md:flex">
+          <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+            <li className="md:px-3">
+              <HiMiniHome size={60} onClick={goHome} />
+            </li>
+          </ul>
+        </nav>
+        <div onClick={handleNav} className="block md:hidden">
+          {!nav ? (
+            <FaWindowClose size={50} color="rgb(64,63,68)" />
+          ) : (
+            <TiThMenu size={50} color="rgb(64,63,68)" />
+          )}
+        </div>
+
+        <div
+          id="dark-grey-div"
+          ref={navRef}
+          className={
+            !nav
+              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
+              : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
+          }
+        >
+          <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
+            <li>
+              <img
+                src="/logo_white.png"
+                alt="Logo in light beige"
+                className="w-[10rem] justify-center mx-auto py-5"
+              ></img>
+            </li>
+            <li className="p-4 font-bold">
+              <Link to="/">HOME</Link>
+            </li>
+            <li className="p-4 font-bold">
+              <Link to="/login">SIGN IN</Link>
+            </li>
+            <li className="p-4 font-bold">
+              <Link to="/signup">SIGN UP</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto w-[40%] lg:w-[60%]"
