@@ -4,7 +4,7 @@
 
 # What is ChapterChat?
 
-ChapterChat is your digital collection for beloved reads. This creative platform empowers you to effortlessly curate a personalized virtual bookshelf, a testament to your literary journey. Simply record the details of each book you've read – **Title, Author, Description, Rating** (out of 5 stars), and a **Cover Image**. As your collection grows, ChapterChat becomes more than just a list; it transforms into a living archive of your literary passions, a space to revisit past favorites, or remember what you didn't enjoy about a certain title. Explore the magic of reading now with ChapterChat.
+ChapterChat is your digital collection for beloved reads. This creative platform empowers you to effortlessly curate a personalized virtual bookshelf, a testament to your literary journey. Simply record the details of each book you've read – **Title, Author, Description, Genre, Rating** (out of 5 stars), and a **Cover Image**. As your collection grows, ChapterChat becomes more than just a list of reviews; it transforms into a living archive of your literary history, allowing for a space to revisit past favorites, or share any critiques about a certain title. Explore the magic of reading now with ChapterChat.
 
 ![image](https://github.com/user-attachments/assets/130f701b-9699-4e8b-aab8-0934f900f818)
 
@@ -20,17 +20,11 @@ Once you've signed up for an account or signed into your existing account, simpl
   <img src="https://github.com/user-attachments/assets/176202b1-37f8-4ea8-b481-aa5d3e1ff069" />
 </p>
 
-# What image formats can I use?
-
-ChapterChat will automatically convert images to the preferred image size and format on upload. Simply choose the desired image, and changes will be made automatically.
-
-![image](https://github.com/user-attachments/assets/6134eb54-d2a7-459e-97c2-a35f72d79275)
-
 <br/>
 
 # What information can I include about a book?
 
-Books you review can contain information fields such as Title, Author, Review Description, Star rating out of 5, and an uploaded cover. Cover images will be monitored to ensure content is fairly used and appropriate.
+Books you review can contain information fields such as Title, Author, Review Description, Genre, Star rating out of 5, and a cover that is applied for you automatically once inputting a title and author.
 
 <br/><br/>
 
@@ -48,7 +42,7 @@ In the future, it is planned that ChapterChat may feature a social aspect. Havin
 
 ## More storage
 
-Right now, ChapterChat is still a fairly small platform. With the right investment of time and money, chapterchat can grow and have greater storage capabilities. This will allow for faster load times, better quality images, more images being able to be hosted in the site, and more.
+Right now, ChapterChat is still a fairly small platform. With the right investment of time and money, chapterchat can grow and have greater storage capabilities. This will allow for faster load times, better quality images, better quality of the site, potential for a mobile app, and more.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/5d863706-9327-41bd-8548-5f90af52599b" />
