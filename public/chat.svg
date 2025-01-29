@@ -1,24 +1,12 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 
 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
 
 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
 
-<g id="SVGRepo_iconCarrier">
-
-<defs>
-
-<style>.cls-1{fill:none;stroke:#FFFEE0;stroke-miterlimit:10;stroke-width:1.91px;}.cls-2{fill:#FFFEE0;}</style>
-
-</defs>
-
-<path className="cls-1" d="M1.5,5.3v9.54a3.82,3.82,0,0,0,3.82,3.82H7.23v2.86L13,18.66h5.73a3.82,3.82,0,0,0,3.82-3.82V5.3a3.82,3.82,0,0,0-3.82-3.82H5.32A3.82,3.82,0,0,0,1.5,5.3Z"/>
-
-<polygon className="cls-2" points="12 6.25 13.18 8.76 15.82 9.17 13.91 11.12 14.36 13.89 12 12.58 9.64 13.89 10.09 11.12 8.18 9.17 10.82 8.76 12 6.25"/>
-
-</g>
+<g id="SVGRepo_iconCarrier"> <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 13.9021 3.5901 15.6665 4.59721 17.1199C4.70168 17.2707 4.7226 17.4653 4.64529 17.6317L3.42747 20.2519C3.23699 20.5853 3.47768 21 3.86159 21H12Z" stroke="#FFFEE0" stroke-width="2"/> <path d="M15 10L11.25 14L9 12.1818" stroke="#FFFEE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g>
 
 </svg>
