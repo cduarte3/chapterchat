@@ -290,7 +290,7 @@ export default function Home() {
             />
           </div>
           <div className="flex items-center justify-center order-1 sm:order-2">
-            <h1 className="text-center sm:text-right text-lg md:text-xl lg:text-3xl max-w-[90%] sm:pr-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
+            <h1 className="text-center sm:text-right text-lg md:text-xl lg:text-3xl 2xl:text-4xl max-w-[90%] sm:pr-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
               ChapterChat is your digital collection for beloved reads. This
               creative platform empowers you to effortlessly curate a
               personalized virtual bookshelf, a testament to your literary
@@ -300,7 +300,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 pt-20">
           <div className="flex items-center justify-center">
-            <h1 className="text-center sm:text-left text-lg md:text-xl lg:text-3xl max-w-[90%] sm:pl-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
+            <h1 className="text-center sm:text-left text-lg md:text-xl lg:text-3xl 2xl:text-4xl max-w-[90%] sm:pl-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
               Simply record the details of each book you've read – Title,
               Author, Description, Genre, Rating (out of 5 stars), and a Cover
               Image.
@@ -323,7 +323,7 @@ export default function Home() {
             />
           </div>
           <div className="flex items-center justify-center order-1 sm:order-2">
-            <h1 className="text-center sm:text-right text-lg md:text-xl lg:text-3xl max-w-[90%] sm:pr-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
+            <h1 className="text-center sm:text-right text-lg md:text-xl lg:text-3xl 2xl:text-4xl max-w-[90%] sm:pr-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
               As your collection grows, ChapterChat becomes more than just a
               list of reviews; it transforms into a living archive of your
               literary history, allowing for a space to revisit past favorites,
