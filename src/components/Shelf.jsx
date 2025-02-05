@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import { TiThMenu } from "react-icons/ti";
-import { FaWindowClose } from "react-icons/fa";
+import { FaWindowClose, FaSort } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { HiMiniHome } from "react-icons/hi2";
 import { FaUserCircle } from "react-icons/fa";
@@ -11,9 +11,44 @@ export default function Shelf({ userData }) {
   const navigate = useNavigate();
   const [nav, setNav] = useState(true);
   const navRef = useRef();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [sortCriteria, setSortCriteria] = useState("titleAsc");
 
   const handleNav = () => {
     setNav(!nav);
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value.toLowerCase());
+  };
+
+  const getLastName = (authorName) => {
+    const names = authorName.split(" ");
+    return names.length > 1 ? names[names.length - 1] : names[0];
+  };
+
+  const sortBooks = (books) => {
+    return [...books].sort((a, b) => {
+      switch (sortCriteria) {
+        case "titleAsc":
+          return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+        case "titleDesc":
+          return b.title.toLowerCase().localeCompare(a.title.toLowerCase());
+        case "authorAsc":
+          return getLastName(a.author)
+            .toLowerCase()
+            .localeCompare(getLastName(b.author).toLowerCase());
+        case "authorDesc":
+          return getLastName(b.author)
+            .toLowerCase()
+            .localeCompare(getLastName(a.author).toLowerCase());
+        case "genre":
+          return a.genre.toLowerCase().localeCompare(b.genre.toLowerCase());
+        default:
+          return 0;
+      }
+    });
   };
 
   const addBook = () => {
@@ -132,30 +167,88 @@ export default function Shelf({ userData }) {
             </span>{" "}
             Shelf
           </h1>
-          <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-[rgb(64,63,68)]" />
+          <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-[rgb(64,63,68)]" />
+          <div className="mt-4 md:mt-10 mb-10 xl:w-[75%] w-[90%] mx-auto justify-items-center">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={handleSearch}
+                placeholder="Search Author or Title"
+                className="border-4 border-[rgb(64,63,68)] rounded-full pl-5 pr-16 h-16 md:pr-20 md:h-20 w-full text-xl md:text-2xl"
+              ></input>
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="bg-[rgb(64,63,68)] rounded-full h-16 w-16 md:h-20 md:w-20 absolute right-0 top-0 items-center justify-center mx-auto flex"
+              >
+                <FaSort size={35} color="rgb(255,254,224)" />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-[rgb(255,254,224)] border-4 border-[rgb(64,63,68)] z-40">
+                  <div className="py-1 font-bold">
+                    {[
+                      "titleAsc",
+                      "titleDesc",
+                      "authorAsc",
+                      "authorDesc",
+                      "genre",
+                    ].map((criteria) => (
+                      <button
+                        key={criteria}
+                        onClick={() => {
+                          setSortCriteria(criteria);
+                          setIsDropdownOpen(false);
+                        }}
+                        className={`
+            block px-4 py-2 text-lg md:text-xl w-full text-left
+            ${
+              sortCriteria === criteria
+                ? "bg-[rgb(64,63,68)] text-[rgb(255,254,224)]"
+                : "text-[rgb(64,63,68)] hover:bg-gray-300"
+            }
+          `}
+                      >
+                        {criteria === "titleAsc" && "Title (A-Z)"}
+                        {criteria === "titleDesc" && "Title (Z-A)"}
+                        {criteria === "authorAsc" && "Author (A-Z)"}
+                        {criteria === "authorDesc" && "Author (Z-A)"}
+                        {criteria === "genre" && "Genre"}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
           <div className="text-center flex-col grid w-[90%] xl:w-[75%] lg:grid-cols-4 grid-cols-2 mx-auto justify-items-center gap-12 sm:p-3">
             {userData.books &&
-              userData.books.map((book) => (
-                <div
-                  key={book.id}
-                  className="relative w-full cursor-pointer"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    visitBook(book.id);
-                  }}
-                >
-                  <img
-                    src="/book.png"
-                    alt="User Avatar"
-                    className="w-full shadow-custom-dark"
-                  />
-                  <img
-                    src={book.cover}
-                    alt="Cover"
-                    className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-custom-dark"
-                  />
-                </div>
-              ))}
+              sortBooks(userData.books)
+                .filter(
+                  (book) =>
+                    book.title.toLowerCase().includes(searchTerm) ||
+                    book.author.toLowerCase().includes(searchTerm)
+                )
+                .map((book) => (
+                  <div
+                    key={book.id}
+                    className="relative w-full cursor-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      visitBook(book.id);
+                    }}
+                  >
+                    <img
+                      src="/book.png"
+                      alt="User Avatar"
+                      className="w-full shadow-custom-dark"
+                    />
+                    <img
+                      src={book.cover}
+                      alt="Cover"
+                      className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-custom-dark"
+                    />
+                  </div>
+                ))}
           </div>
         </div>
       </div>
