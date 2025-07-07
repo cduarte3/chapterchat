@@ -10,6 +10,10 @@ ChapterChat is your digital collection for beloved reads. This creative platform
 
 <br/>
 
+Server Backend source code available at: https://github.com/cduarte3/bookserver
+
+<br/>
+
 # What information can I include about a book?
 
 Books you review can contain information fields such as Title, Author, Review Description, Genre, Star rating out of 5, and a cover that is applied for you automatically once inputting a title and author.
