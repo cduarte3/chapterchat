@@ -10,6 +10,9 @@ import {
   FaWindowClose,
 } from "react-icons/fa";
 import { TbBooks } from "react-icons/tb";
+import Silk from "./Silk";
+import GradualBlur from "./GradualBlur";
+import SpotlightCard from "./SpotlightCard";
 
 export default function Home() {
   useEffect(() => {
@@ -98,104 +101,170 @@ export default function Home() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 bg-[rgb(255,254,224)] z-50 px-4 flex justify-between items-center py-4 shadow-md">
-        <nav>
-          <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-            <li className="md:px-5">
-              <img
-                src="/logo.png"
-                alt="ChapterChat Logo"
-                className="w-20 md:w-28"
-              ></img>
-            </li>
-          </ul>
-        </nav>
-        <nav className="hidden md:flex">
-          <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] text-2xl font-['Inter']">
-            {!token && (
-              <>
-                <li className="md:px-3">
-                  <Link
-                    to="/login"
-                    className="py-3 px-5 bg-[rgb(64,63,68)] rounded-full text-[rgb(255,254,224)]"
-                  >
-                    Sign In
-                  </Link>
-                </li>
-                <li className="md:px-3">
-                  <Link
-                    to="/signup"
-                    className="py-3 px-5 bg-[rgb(64,63,68)] rounded-full text-[rgb(255,254,224)]"
-                  >
-                    Sign Up
-                  </Link>
-                </li>
-              </>
-            )}
-            {token && (
-              <>
-                <li className="md:px-3" onClick={goShelf}>
-                  <TbBooks size={60} />
-                </li>
-                <li className="md:px-3" onClick={goProfile}>
-                  <FaUserCircle size={60} />
-                </li>
-                <li className="md:px-5">
-                  <FiLogOut size={60} onClick={logOut} />
-                </li>
-              </>
-            )}
-          </ul>
-        </nav>
-        <div onClick={handleNav} className="block md:hidden">
-          {!nav ? (
-            <FaWindowClose size={50} color="rgb(64,63,68)" />
-          ) : (
-            <TiThMenu size={50} color="rgb(64,63,68)" />
-          )}
+      <div className="relative w-full h-[120vh] overflow-hidden z-0">
+        <div className="absolute inset-0 w-full h-full">
+          <Silk
+            speed={6}
+            scale={1}
+            color="#565656"
+            noiseIntensity={1.5}
+            rotation={0}
+          />
         </div>
 
-        <div
-          id="dark-grey-div"
-          ref={navRef}
-          className={
-            !nav
-              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
-              : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
-          }
-        >
-          <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
-            <li>
+        <div className="relative z-10">
+          <div className="fixed top-0 left-0 right-0 z-40">
+            <GradualBlur
+              target="parent"
+              position="top"
+              height="6rem"
+              strength={1}
+              divCount={10}
+              curve="bezier"
+              exponential={true}
+              opacity={1}
+            />
+          </div>
+          <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
+            <nav>
+              <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+                <li className="md:px-5"></li>
+              </ul>
+            </nav>
+            <nav className="hidden md:flex">
+              <ul className="flex justify-center items-center font-bold space-x-4 text-white text-2xl font-['Inter']">
+                {!token && (
+                  <>
+                    <li className="md:px-3 mt-3">
+                      <Link to="/login" className="py-3 px-5">
+                        Sign In
+                      </Link>
+                    </li>
+                    <li className="md:px-3 mt-3">
+                      <Link to="/signup" className="py-3 px-5">
+                        Sign Up
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {token && (
+                  <>
+                    <li className="md:px-3" onClick={goShelf}>
+                      <TbBooks size={60} />
+                    </li>
+                    <li className="md:px-3" onClick={goProfile}>
+                      <FaUserCircle size={60} />
+                    </li>
+                    <li className="md:px-5">
+                      <FiLogOut size={60} onClick={logOut} />
+                    </li>
+                  </>
+                )}
+              </ul>
+            </nav>
+            <div onClick={handleNav} className="block md:hidden">
+              {!nav ? (
+                <FaWindowClose size={50} color="rgb(64,63,68)" />
+              ) : (
+                <TiThMenu size={50} color="rgb(64,63,68)" />
+              )}
+            </div>
+
+            <div
+              id="dark-grey-div"
+              ref={navRef}
+              className={
+                !nav
+                  ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
+                  : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
+              }
+            >
+              <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
+                <li>
+                  <img
+                    src="/logo_white.png"
+                    alt="Logo in light beige"
+                    className="w-[10rem] justify-center mx-auto py-5"
+                  ></img>
+                </li>
+                {!token && (
+                  <>
+                    <li className="p-4 font-bold">
+                      <Link to="login">SIGN IN</Link>
+                    </li>
+                    <li className="p-4 font-bold">
+                      <Link to="/signup">SIGN UP</Link>
+                    </li>
+                  </>
+                )}
+                {token && (
+                  <>
+                    <li className="p-4 font-bold" onClick={goShelf}>
+                      <Link>BOOKSHELF</Link>
+                    </li>
+                    <li className="p-4 font-bold" onClick={goProfile}>
+                      <Link>PROFILE</Link>
+                    </li>
+                    <li className="p-4 font-bold" onClick={logOut}>
+                      <Link>LOG OUT</Link>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-3 w-full h-[75vh] md:h-screen object-cover mx-auto flex flex-col justify-center items-center">
+            <img
+              src="chapter-logo-lg.png"
+              alt="Person Reading"
+              className="w-[60%] h-auto"
+            />
+            <div className="pt-20">
+              <div className="flex justify-center items-center gap-8 md:gap-16 lg:gap-56">
+                <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[7vw] font-['Radley'] italic select-none">
+                  READ
+                </h1>
+                <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[7vw] font-['Radley'] italic select-none">
+                  REVIEW
+                </h1>
+                <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[7vw] font-['Radley'] italic select-none">
+                  CHAT
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img
+          src="waves.svg"
+          alt="Waves"
+          className="w-full rotate-180 relative z-20"
+        />
+      </div>
+
+      <div className="-mt-8 relative w-full min-h-screen flex flex-col bg-[#242626]">
+        <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center font-['Radley'] mt-20">
+          <span className="lg:hidden">
+            Welcome to
+            <br />
+            ChapterChat
+          </span>
+          <span className="hidden lg:block">Welcome to ChapterChat</span>
+        </h1>
+
+        <div className="pt-20 hidden md:block">
+          <div className="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[8px] rounded-t-xl  h-[294px] max-w-[512px]">
+            <div className="rounded-lg overflow-hidden h-[278px] bg-[rgb(24,24,24)]">
               <img
-                src="/logo_white.png"
-                alt="Logo in light beige"
-                className="w-[10rem] justify-center mx-auto py-5"
-              ></img>
-            </li>
-            {!token && (
-              <>
-                <li className="p-4 font-bold">
-                  <Link to="login">SIGN IN</Link>
-                </li>
-                <li className="p-4 font-bold">
-                  <Link to="/signup">SIGN UP</Link>
-                </li>
-              </>
-            )}
-            {token && (
-              <>
-                <li className="p-4 font-bold" onClick={goShelf}>
-                  <Link>BOOKSHELF</Link>
-                </li>
-                <li className="p-4 font-bold" onClick={goProfile}>
-                  <Link>PROFILE</Link>
-                </li>
-                <li className="p-4 font-bold" onClick={logOut}>
-                  <Link>LOG OUT</Link>
-                </li>
-              </>
-            )}
-          </ul>
+                src="desk-dash.png"
+                className="h-[278px] w-full rounded-lg"
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="relative mx-auto bg-[rgb(150,150,150)] rounded-b-xl rounded-t-sm h-[21px] max-w-[597px] shadow-md">
+            <div className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-xl w-[96px] h-[8px] bg-[rgb(80,80,80)]"></div>
+          </div>
         </div>
       </div>
 
@@ -245,15 +314,6 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full min-h-screen flex flex-col bg-[rgb(64,63,68)] py-32">
-        <h1 className="text-[rgb(255,254,224)] text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center font-['Radley']">
-          <span className="lg:hidden">
-            Welcome to
-            <br />
-            ChapterChat
-          </span>
-          <span className="hidden lg:block">Welcome to ChapterChat</span>
-        </h1>
-
         <div className="pt-20 md:hidden">
           <div className="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
             <div className="h-[32px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[72px] rounded-s-lg"></div>
@@ -263,21 +323,6 @@ export default function Home() {
             <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-[rgb(24,24,24)]">
               <img src="dash.png" className="w-[272px] h-[572px]" alt="" />
             </div>
-          </div>
-        </div>
-
-        <div className="pt-20 hidden md:block">
-          <div className="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[8px] rounded-t-xl  h-[294px] max-w-[512px]">
-            <div className="rounded-lg overflow-hidden h-[278px] bg-[rgb(24,24,24)]">
-              <img
-                src="desk-dash.png"
-                className="h-[278px] w-full rounded-lg"
-                alt=""
-              />
-            </div>
-          </div>
-          <div className="relative mx-auto bg-[rgb(150,150,150)] rounded-b-xl rounded-t-sm h-[21px] max-w-[597px] shadow-md">
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-xl w-[96px] h-[8px] bg-[rgb(80,80,80)]"></div>
           </div>
         </div>
 
@@ -355,6 +400,18 @@ export default function Home() {
             </button>
           </Link>
         </div>
+      </div>
+      <div className="fixed bottom-0 left-0 right-0 z-50">
+        <GradualBlur
+          target="parent"
+          position="bottom"
+          height="6rem"
+          strength={1}
+          divCount={10}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+        />
       </div>
     </>
   );
