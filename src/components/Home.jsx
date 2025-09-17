@@ -101,8 +101,8 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative w-full h-[120vh] overflow-hidden z-0">
-        <div className="absolute inset-0 w-full h-full">
+      <div className="relative w-full min-h-screen overflow-hidden z-0">
+        <div className="absolute inset-0 w-full h-full min-h-screen">
           <Silk
             speed={6}
             scale={1}
@@ -112,7 +112,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="relative z-10">
+        <div className="relative z-10 min-h-screen">
           <div className="fixed top-0 left-0 right-0 z-40">
             <GradualBlur
               target="parent"
@@ -132,17 +132,23 @@ export default function Home() {
               </ul>
             </nav>
             <nav className="hidden md:flex">
-              <ul className="flex justify-center items-center font-bold space-x-4 text-white text-2xl font-['Inter']">
+              <ul className="flex justify-center items-center font-bold space-x-4 text-white text-2xl font-['Radley']">
                 {!token && (
                   <>
                     <li className="md:px-3 mt-3">
-                      <Link to="/login" className="py-3 px-5">
-                        Sign In
+                      <Link
+                        to="/login"
+                        className="py-3 px-5 hover:text-[rgb(82,82,82)]"
+                      >
+                        SIGN IN
                       </Link>
                     </li>
                     <li className="md:px-3 mt-3">
-                      <Link to="/signup" className="py-3 px-5">
-                        Sign Up
+                      <Link
+                        to="/signup"
+                        className="py-3 px-5 hover:text-[rgb(82,82,82)]"
+                      >
+                        SIGN UP
                       </Link>
                     </li>
                   </>
@@ -179,7 +185,7 @@ export default function Home() {
                   : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
               }
             >
-              <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
+              <ul className="pt-4 uppercase text-2xl text-white">
                 <li>
                   <img
                     src="/logo_white.png"
@@ -214,13 +220,13 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-3 w-full h-[75vh] md:h-screen object-cover mx-auto flex flex-col justify-center items-center">
+          <div className="min-h-screen w-full object-cover mx-auto flex flex-col justify-center items-center">
             <img
-              src="chapter-logo-lg.png"
-              alt="Person Reading"
-              className="w-[60%] h-auto"
+              src="chaptr-logo-lg.png"
+              alt="Chapter logo"
+              className="w-[30%] h-auto pt-20"
             />
-            <div className="pt-20">
+            <div className="pt-5 lg:pt-20 pb-10">
               <div className="flex justify-center items-center gap-8 md:gap-16 lg:gap-56">
                 <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[7vw] font-['Radley'] italic select-none">
                   READ
@@ -242,14 +248,14 @@ export default function Home() {
         />
       </div>
 
-      <div className="-mt-8 relative w-full min-h-screen flex flex-col bg-[#242626]">
+      <div className="-mt-[1px] relative w-full min-h-screen flex flex-col bg-[#242626]">
         <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center font-['Radley'] mt-20">
           <span className="lg:hidden">
             Welcome to
             <br />
-            ChapterChat
+            Chaptr
           </span>
-          <span className="hidden lg:block">Welcome to ChapterChat</span>
+          <span className="hidden lg:block">Welcome to Chaptr</span>
         </h1>
 
         <div className="pt-20 hidden md:block">
@@ -266,9 +272,64 @@ export default function Home() {
             <div className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-xl w-[96px] h-[8px] bg-[rgb(80,80,80)]"></div>
           </div>
         </div>
+        <div className="pt-20 md:hidden">
+          <div className="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
+            <div className="h-[32px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[72px] rounded-s-lg"></div>
+            <div className="h-[46px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[124px] rounded-s-lg"></div>
+            <div className="h-[46px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[178px] rounded-s-lg"></div>
+            <div className="h-[64px] w-[3px] bg-[rgb(24,24,24)] absolute -end-[17px] top-[142px] rounded-e-lg"></div>
+            <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-[rgb(24,24,24)]">
+              <img src="dash.png" className="w-[272px] h-[572px]" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <SpotlightCard
+          className="custom-spotlight-card w-[30%] mx-auto mt-44 mb-10 border border-gray-100 flex flex-col items-center text-center justify-center"
+          spotlightColor="rgba(255, 255, 255, 0.2)"
+        >
+          <img
+            src="/shelf.svg"
+            alt="Bookshelf"
+            className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
+          />
+          <h1 className="mt-10 py-10 text-center text-lg md:text-xl lg:text-3xl 2xl:text-4xl max-w-[80%] text-white font-bold">
+            Chaptr is your digital collection for beloved reads using a
+            personalized virtual bookshelf.
+          </h1>
+        </SpotlightCard>
+        <SpotlightCard
+          className="custom-spotlight-card w-[30%] mx-auto my-10 border border-gray-100 flex flex-col items-center text-center justify-center"
+          spotlightColor="rgba(255, 255, 255, 0.2)"
+        >
+          <img
+            src="/chat.svg"
+            alt="Text ubble"
+            className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
+          />
+          <h1 className="mt-10 py-10 text-center text-lg md:text-xl lg:text-3xl 2xl:text-4xl max-w-[80%] text-white font-bold">
+            Simply record the Title, Author, Description, Genre, Rating, and
+            select a Cover Image.
+          </h1>
+        </SpotlightCard>
+        <SpotlightCard
+          className="custom-spotlight-card w-[30%] mx-auto my-10 border border-gray-100 flex flex-col items-center text-center justify-center"
+          spotlightColor="rgba(255, 255, 255, 0.2)"
+        >
+          <img
+            src="/book.svg"
+            alt="Open book"
+            className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
+          />
+          <h1 className="mt-10 py-10 text-center text-lg md:text-xl lg:text-3xl 2xl:text-4xl max-w-[80%] text-white font-bold">
+            As your collection grows, Chaptr becomes more than just a list of
+            reviews; transforming into a living archive and a space to revisit
+            past favorites.
+          </h1>
+        </SpotlightCard>
       </div>
 
-      <div className="mt-3 relative w-full h-[75vh] md:h-screen object-cover">
+      <div className="relative w-full h-[75vh] md:h-screen object-cover">
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         <div className="absolute inset-0 flex items-center justify-between p-4">
           <button
@@ -314,18 +375,6 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full min-h-screen flex flex-col bg-[rgb(64,63,68)] py-32">
-        <div className="pt-20 md:hidden">
-          <div className="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
-            <div className="h-[32px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[72px] rounded-s-lg"></div>
-            <div className="h-[46px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[124px] rounded-s-lg"></div>
-            <div className="h-[46px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[178px] rounded-s-lg"></div>
-            <div className="h-[64px] w-[3px] bg-[rgb(24,24,24)] absolute -end-[17px] top-[142px] rounded-e-lg"></div>
-            <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-[rgb(24,24,24)]">
-              <img src="dash.png" className="w-[272px] h-[572px]" alt="" />
-            </div>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 pt-32">
           <div className="flex justify-center order-2 sm:order-1">
             <img
