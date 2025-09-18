@@ -296,7 +296,7 @@ export default function Home() {
           </h1>
         </SpotlightCard>
 
-        <div className="flex flex-col mx-auto pt-10 min-h-[50vh] font-['Radley'] items-center">
+        <div className="flex flex-col mx-auto pt-10 mb-[8rem] font-['Radley'] items-center">
           <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center mt-20">
             <span className="lg:hidden">
               Get Started
