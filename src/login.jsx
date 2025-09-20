@@ -1,14 +1,11 @@
-import React from 'react';
-import './index.css';
-import Login from './components/Login';
-import Footer from './components/Footer';
-
+import React from "react";
+import "./index.css";
+import Login from "./components/Login";
 
 function Log() {
   return (
     <div className="Login">
       <Login />
-      <Footer />
     </div>
   );
 }

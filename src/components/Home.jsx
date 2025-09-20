@@ -22,7 +22,7 @@ export default function Home() {
   lenis.on("scroll", ScrollTrigger.update);
 
   gsap.ticker.add((time) => {
-    lenis.raf(time * 1000); // Convert time from seconds to milliseconds
+    lenis.raf(time * 1000);
   });
 
   gsap.ticker.lagSmoothing(0);
@@ -81,8 +81,8 @@ export default function Home() {
       </div>
       <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
         <nav>
-          <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-            <li className="md:px-5">
+          <ul className="flex justify-center items-center space-x-4 md:px-5 text-xl px-1">
+            <li>
               <img
                 src="chaptr-logo-sm.png"
                 className="w-[150px]"
@@ -95,18 +95,15 @@ export default function Home() {
           <ul className="flex justify-center items-center font-bold space-x-4 text-white text-2xl font-['Radley']">
             {!token && (
               <>
-                <li className="md:px-3 mt-3">
-                  <Link
-                    to="/login"
-                    className="py-3 px-5 hover:text-[rgb(82,82,82)]"
-                  >
+                <li className="md:px-3 py-3">
+                  <Link to="/login" className="px-5 hover:text-[rgb(82,82,82)]">
                     SIGN IN
                   </Link>
                 </li>
-                <li className="md:px-3 mt-3">
+                <li className="md:px-3 py-3">
                   <Link
                     to="/signup"
-                    className="py-3 px-5 hover:text-[rgb(82,82,82)]"
+                    className="px-5 hover:text-[rgb(82,82,82)]"
                   >
                     SIGN UP
                   </Link>
