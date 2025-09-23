@@ -97,12 +97,22 @@ export default function Signup() {
         if (response.status === 400 || response.status === 409) {
           setErrorMessage("Email or Username already in use");
           handleOpen();
-        } else {
+        } else if (response.status === 201) {
           const data = await response.json();
-          navigate(`/user/${data}`);
+          console.log(data);
+
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("userId", data.id);
+
+          navigate(`/user/${data.id}`);
+        } else {
+          setErrorMessage("Server connection error. Please try again later.");
+          handleOpen();
         }
       } catch (error) {
         console.error("Error:", error);
+        setErrorMessage("Connection error. Please try again later.");
+        handleOpen();
       }
     }
   }
