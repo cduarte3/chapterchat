@@ -8,6 +8,8 @@ import GradualBlur from "./GradualBlur";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 
 export default function Signup() {
   const lenis = new Lenis();
@@ -27,6 +29,11 @@ export default function Signup() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const navigate = useNavigate();
   const [nav, setNav] = useState(true);
@@ -61,13 +68,15 @@ export default function Signup() {
     const confirmPassword = e.target.confirmPassword.value; // get confirm password
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setErrorMessage("Passwords do not match");
+      handleOpen();
       return;
     } else if (password.length < 6) {
-      alert("Password must be at least 6 characters");
+      setErrorMessage("Password must be at least 6 characters");
+      handleOpen();
       return;
     } else {
-      const url = `${import.meta.env.REACT_APP_API_URL}/signup`;
+      const url = `${import.meta.env.VITE_API_URL}/signup`;
       const requestOptions = {
         method: "POST",
         headers: {
@@ -86,7 +95,8 @@ export default function Signup() {
       try {
         const response = await fetch(url, requestOptions);
         if (response.status === 400 || response.status === 409) {
-          alert("Email or Username already in use");
+          setErrorMessage("Email or Username already in use");
+          handleOpen();
         } else {
           const data = await response.json();
           navigate(`/user/${data}`);
@@ -189,6 +199,28 @@ export default function Signup() {
               Sign up
             </h2>
           </div>
+
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box className="text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12  bg-[#242626] border-2 border-white rounded-3xl p-6 max-w-[80%] sm:max-w-md">
+              <img
+                src="alert.png"
+                alt="Alert icon"
+                className="mx-auto w-[40%]"
+              ></img>
+              <h1 className="text-white font-bold text-3xl mt-2 font-['Radley']">
+                Error
+              </h1>
+              <h2 className="text-white text-xl mt-2 font-['Libre Baskerville']">
+                {errorMessage}
+              </h2>
+            </Box>
+          </Modal>
+
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form
               className="space-y-6"

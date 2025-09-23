@@ -8,6 +8,8 @@ import GradualBlur from "./GradualBlur";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 
 export default function Login() {
   const lenis = new Lenis();
@@ -30,9 +32,14 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [nav, setNav] = useState(true);
   const navRef = useRef();
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleNav = () => {
     setNav(!nav);
@@ -80,11 +87,13 @@ export default function Login() {
 
       if (!response.ok) {
         if (response.status === 401) {
-          alert("Password is incorrect. Please try again.");
+          setErrorMessage("Password is incorrect, please try again.");
+          handleOpen();
           return;
         }
         if (response.status === 404) {
-          alert("Email not found. Please sign up.");
+          setErrorMessage("Email not found, please check again.");
+          handleOpen();
           return;
         }
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -96,7 +105,8 @@ export default function Login() {
       navigate(`/user/${data.id}`, { state: { token: data.token } });
     } catch (error) {
       console.error("Error:", error);
-      alert("Connection error. Please try again later.");
+      setErrorMessage("Connection error. Please try again later.");
+      handleOpen();
     }
   }
 
@@ -193,6 +203,27 @@ export default function Login() {
               Sign in
             </h2>
           </div>
+
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box className="text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12  bg-[#242626] border-2 border-white rounded-3xl p-6 max-w-[80%] sm:max-w-md">
+              <img
+                src="alert.png"
+                alt="Alert icon"
+                className="mx-auto w-[40%]"
+              ></img>
+              <h1 className="text-white font-bold text-3xl mt-2 font-['Radley']">
+                Error
+              </h1>
+              <h2 className="text-white text-xl mt-2 font-['Libre Baskerville']">
+                {errorMessage}
+              </h2>
+            </Box>
+          </Modal>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form
