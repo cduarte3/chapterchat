@@ -65,6 +65,19 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setNav(true);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-40">
@@ -142,7 +155,7 @@ export default function Home() {
               : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
           }
         >
-          <ul className="pt-4 uppercase text-2xl text-white">
+          <ul className="pt-4 uppercase text-2xl text-white font-['Radley']">
             <li>
               <img
                 src="/chaptr-logo-lg.png"

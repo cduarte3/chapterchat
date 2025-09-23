@@ -52,7 +52,7 @@ export default function Bookshelf() {
   if (!userData) {
     // While the data loads, let the user know
     return (
-      <div className="w-full h-screen font-bold mx-auto text-center flex flex-col justify-center md:text-7xl text-5xl">
+      <div className="w-full h-screen font-bold mx-auto text-center flex flex-col justify-center md:text-7xl text-5xl text-white font-['Radley']">
         Loading Bookshelf
       </div>
     );
