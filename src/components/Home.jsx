@@ -225,23 +225,15 @@ export default function Home() {
                 <img
                   src="macbook.png"
                   className="w-auto mx-auto px-10 lg:pr-10"
-                  alt="laptop with app screenshot"
+                  alt="Laptop with app screenshot"
                 />
               </div>
-              <div className="pt-20 md:hidden">
-                <div className="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
-                  <div className="h-[32px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[72px] rounded-s-lg"></div>
-                  <div className="h-[46px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[124px] rounded-s-lg"></div>
-                  <div className="h-[46px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[178px] rounded-s-lg"></div>
-                  <div className="h-[64px] w-[3px] bg-[rgb(24,24,24)] absolute -end-[17px] top-[142px] rounded-e-lg"></div>
-                  <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-[rgb(24,24,24)]">
-                    <img
-                      src="dash.png"
-                      className="w-[272px] h-[572px]"
-                      alt=""
-                    />
-                  </div>
-                </div>
+              <div className="md:hidden">
+                <img
+                  src="iphone.png"
+                  className="w-auto mx-auto px-10 sm:px-32"
+                  alt="Smartphone with app screenshot"
+                />
               </div>
             </div>
           </div>
