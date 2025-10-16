@@ -18,6 +18,9 @@ export default function BasicRating({ value, setRating }) {
               lg: "3.5rem", // On large devices
               xl: "4rem", // On extra-large devices
             },
+            "& .MuiRating-iconEmpty": {
+              color: "gray",
+            },
           }}
         />
       </div>

@@ -4,29 +4,11 @@ import Footer from "./Footer";
 import { TiThMenu } from "react-icons/ti";
 import { FaWindowClose, FaSort } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import { HiMiniHome } from "react-icons/hi2";
 import { FaUserCircle } from "react-icons/fa";
-import Lenis from "lenis";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import GradualBlur from "./GradualBlur";
 
 export default function Shelf({ userData }) {
-  const lenis = new Lenis();
-
-  lenis.on("scroll", (e) => {
-    console.log(e);
-  });
-
-  lenis.on("scroll", ScrollTrigger.update);
-
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
-
-  gsap.ticker.lagSmoothing(0);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -37,6 +19,8 @@ export default function Shelf({ userData }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sortCriteria, setSortCriteria] = useState("titleAsc");
+  const [hoveredBook, setHoveredBook] = useState(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const handleNav = () => {
     setNav(!nav);
@@ -49,6 +33,15 @@ export default function Shelf({ userData }) {
   const getLastName = (authorName) => {
     const names = authorName.split(" ");
     return names.length > 1 ? names[names.length - 1] : names[0];
+  };
+
+  const handleMouseMove = (e, book) => {
+    setMousePosition({ x: e.clientX, y: e.clientY });
+    setHoveredBook(book);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredBook(null);
   };
 
   const sortBooks = (books) => {
@@ -133,8 +126,20 @@ export default function Shelf({ userData }) {
           opacity={1}
         />
       </div>
+      {hoveredBook && (
+        <div
+          className="fixed pointer-events-none z-[200] bg-black bg-opacity-80 text-white px-3 py-2 rounded-lg text-sm font-bold shadow-lg"
+          style={{
+            left: mousePosition.x + 10,
+            top: mousePosition.y - 40,
+            transform: "translate(0, 0)",
+          }}
+        >
+          {hoveredBook.title}
+        </div>
+      )}
       <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
-        <div className="min-h-screen mb-10">
+        <div className="min-h-screen pb-20">
           <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
             <nav>
               <ul className="flex justify-center items-center space-x-4 md:px-3 text-xl">
@@ -160,9 +165,9 @@ export default function Shelf({ userData }) {
             </nav>
             <div onClick={handleNav} className="block md:hidden">
               {!nav ? (
-                <FaWindowClose size={55} color="rgb(64,63,68)" />
+                <FaWindowClose size={55} color="rgb(255,255,255)" />
               ) : (
-                <TiThMenu size={55} color="rgb(64,63,68)" />
+                <TiThMenu size={55} color="rgb(255,255,255)" />
               )}
             </div>
 
@@ -207,11 +212,9 @@ export default function Shelf({ userData }) {
           </div>
 
           <div className="pt-28">
-            <h1 className="font-bold mt-[2%] p-5 text-center flex flex-col lg:text-8xl md:text-7xl sm:text-6xl text-5xl mx-auto justify-center text-white font-['Radley']">
-              <span style={{ wordBreak: "break-all" }}>
-                {getPosessiveName(userData.username)}
-              </span>{" "}
-              Shelf
+            <h1 className="font-bold mt-[2%] p-5 text-center flex flex-wrap justify-center lg:text-8xl md:text-7xl sm:text-6xl text-5xl mx-auto text-white font-['Radley']">
+              <span>{getPosessiveName(userData.username)}</span>
+              <span className="">Shelf</span>
             </h1>
             <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-white" />
             <div className="mt-4 md:mt-10 mb-10 mx-auto w-[75%] xl:max-w-[55%]">
@@ -221,16 +224,19 @@ export default function Shelf({ userData }) {
                   value={searchTerm}
                   onChange={handleSearch}
                   placeholder="Search Author or Title"
-                  className="border-4 border-white bg-[#242626] rounded-full pl-5 pr-16 h-16 md:pr-20 md:h-20 w-full text-xl md:text-2xl"
+                  className="border-4 border-white bg-[#242626] rounded-full pl-5 pr-16 h-16 md:pr-20 md:h-20 w-full text-xl md:text-2xl text-white"
                 ></input>
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="bg-white rounded-full h-16 w-16 md:h-20 md:w-20 absolute right-0 top-0 items-center justify-center mx-auto flex"
                 >
-                  <FaSort size={35} color="rgb(36,38,38)" />
+                  <FaSort
+                    className="h-8 w-8 md:h-10 md:w-10"
+                    color="rgb(36,38,38)"
+                  />
                 </button>
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-[#242626] border-4 border-[rgb(64,63,68)] z-40">
+                  <div className="absolute right-0 mt-2 w-48 rounded-2xl shadow-lg bg-[#242626] border-4 border-white z-40">
                     <div className="py-1 font-bold">
                       {[
                         "titleAsc",
@@ -249,8 +255,8 @@ export default function Shelf({ userData }) {
             block px-4 py-2 text-lg md:text-xl w-full text-left
             ${
               sortCriteria === criteria
-                ? "bg-[rgb(64,63,68)] text-[rgb(255,254,224)]"
-                : "text-[rgb(64,63,68)] hover:bg-gray-300"
+                ? "bg-white text-[#242626]"
+                : "text-white hover:bg-white hover:text-[#242626]"
             }
           `}
                         >
@@ -282,15 +288,17 @@ export default function Shelf({ userData }) {
                         e.preventDefault();
                         visitBook(book.id);
                       }}
+                      onMouseMove={(e) => handleMouseMove(e, book)}
+                      onMouseLeave={handleMouseLeave}
                     >
                       <img
                         src="/book.png"
-                        alt="User Avatar"
+                        alt="Book placeholder"
                         className="w-full shadow-custom-dark"
                       />
                       <img
                         src={book.cover}
-                        alt="Cover"
+                        alt="Book cover"
                         className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-custom-dark"
                       />
                     </div>
@@ -298,7 +306,6 @@ export default function Shelf({ userData }) {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     </>
   );
