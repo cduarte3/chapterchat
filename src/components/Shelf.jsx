@@ -2,13 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import { TiThMenu } from "react-icons/ti";
+import { TbBooks } from "react-icons/tb";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import { FaWindowClose, FaSort } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
-
+import { isOwnProfile, getCurrentUserId } from "../utils/auth";
 import GradualBlur from "./GradualBlur";
 
 export default function Shelf({ userData }) {
+  const isCurrentUserProfile = isOwnProfile(userData.id);
+  const currentUserId = getCurrentUserId();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -42,6 +47,10 @@ export default function Shelf({ userData }) {
 
   const handleMouseLeave = () => {
     setHoveredBook(null);
+  };
+
+  const goBack = () => {
+    navigate(-1);
   };
 
   const sortBooks = (books) => {
@@ -81,6 +90,10 @@ export default function Shelf({ userData }) {
     } catch (error) {
       console.error("Navigation error:", error);
     }
+  };
+
+  const goToMyShelf = () => {
+    navigate(`/user/${currentUserId}`);
   };
 
   const goProfile = () => {
@@ -143,21 +156,35 @@ export default function Shelf({ userData }) {
           <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
             <nav>
               <ul className="flex justify-center items-center space-x-4 md:px-3 text-xl">
-                <li>
-                  <img
-                    src="/add.png"
-                    alt="add book"
-                    className="w-[60px]"
-                    onClick={addBook}
-                  ></img>
-                </li>
+                {isCurrentUserProfile && (
+                  <li>
+                    <img
+                      src="/add.png"
+                      alt="add book"
+                      className="w-[60px]"
+                      onClick={addBook}
+                    ></img>
+                  </li>
+                )}
+                {!isCurrentUserProfile && (
+                  <li onClick={goBack}>
+                    <IoMdArrowRoundBack size={60} color="white" />
+                  </li>
+                )}
               </ul>
             </nav>
             <nav className="hidden md:flex">
               <ul className="flex justify-center items-center font-bold space-x-4 text-white text-2xl font-['Radley']">
-                <li className="md:px-3" onClick={goProfile}>
-                  <FaUserCircle size={60} />
-                </li>
+                {isCurrentUserProfile && (
+                  <li className="md:px-3" onClick={goProfile}>
+                    <FaUserCircle size={60} />
+                  </li>
+                )}
+                {!isCurrentUserProfile && (
+                  <li className="md:px-3" onClick={goToMyShelf}>
+                    <TbBooks size={60} />
+                  </li>
+                )}
                 <li className="md:px-3" onClick={logOut}>
                   <FiLogOut size={60} />
                 </li>

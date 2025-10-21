@@ -350,19 +350,6 @@ export default function Signup() {
           </div>
         </div>
       </div>
-
-      <div className="flex min-h-screen flex-col justify-center px-6 lg:px-8 mb-12 md:mt-12 lg:mt-0">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto w-[40%] md:w-[50%] lg:w-[60%] mt-5"
-            src="logo.png"
-            alt="ChapterChat Logo"
-          />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign up for an account
-          </h2>
-        </div>
-      </div>
     </>
   );
 }
