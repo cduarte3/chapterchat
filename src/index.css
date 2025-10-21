@@ -13,3 +13,10 @@ body {
 #dark-grey-div {
   z-index: 1000;
 }
+
+.silk-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #7b7481, #9b8b99);
+  opacity: 0.1;
+}

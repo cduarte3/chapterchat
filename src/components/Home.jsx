@@ -1,16 +1,15 @@
-import React from "react";
-import { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserCircle, FaWindowClose } from "react-icons/fa";
 import { TbBooks } from "react-icons/tb";
-import Silk from "./Silk";
 import GradualBlur from "./GradualBlur";
 import SpotlightCard from "./SpotlightCard";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+const Silk = lazy(() => import("./Silk"));
 
 export default function Home() {
   const lenis = new Lenis();
@@ -204,13 +203,19 @@ export default function Home() {
 
       <div className="relative w-full min-h-screen overflow-hidden z-0">
         <div className="absolute inset-0 w-full h-full min-h-screen">
-          <Silk
-            speed={6}
-            scale={1}
-            color="#565656"
-            noiseIntensity={1.5}
-            rotation={0}
-          />
+          <Suspense
+            fallback={
+              <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
+            }
+          >
+            <Silk
+              speed={6}
+              scale={1}
+              color="#565656"
+              noiseIntensity={1.5}
+              rotation={0}
+            />
+          </Suspense>
         </div>
 
         <div className="relative z-10 min-h-screen">

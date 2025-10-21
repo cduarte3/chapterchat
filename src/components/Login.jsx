@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { HiMiniHome } from "react-icons/hi2";
 import { TiThMenu } from "react-icons/ti";
 import { FaWindowClose } from "react-icons/fa";
-import Silk from "./Silk";
 import GradualBlur from "./GradualBlur";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+
+const Silk = lazy(() => import("./Silk"));
 
 export default function Login() {
   const lenis = new Lenis();
@@ -183,13 +184,19 @@ export default function Login() {
 
       <div className="relative w-full min-h-screen overflow-hidden z-0">
         <div className="absolute inset-0 w-full h-full min-h-screen">
-          <Silk
-            speed={6}
-            scale={1}
-            color="#565656"
-            noiseIntensity={1.5}
-            rotation={0}
-          />
+          <Suspense
+            fallback={
+              <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
+            }
+          >
+            <Silk
+              speed={6}
+              scale={1}
+              color="#565656"
+              noiseIntensity={1.5}
+              rotation={0}
+            />
+          </Suspense>
         </div>
 
         <div className="mt-[3rem]  relative flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 z-10">
