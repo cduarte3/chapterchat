@@ -280,28 +280,45 @@ export default function Shelf({ userData }) {
                       book.title.toLowerCase().includes(searchTerm) ||
                       book.author.toLowerCase().includes(searchTerm)
                   )
-                  .map((book) => (
-                    <div
-                      key={book.id}
-                      className="relative w-full cursor-pointer"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        visitBook(book.id);
-                      }}
-                      onMouseMove={(e) => handleMouseMove(e, book)}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <img
-                        src="/book.png"
-                        alt="Book placeholder"
-                        className="w-full shadow-custom-dark"
-                      />
-                      <img
-                        src={book.cover}
-                        alt="Book cover"
-                        className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-custom-dark"
-                      />
-                    </div>
+                  .map((book, index, arr) => (
+                    <React.Fragment key={book.id}>
+                      <div
+                        className="relative w-full cursor-pointer z-10"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          visitBook(book.id);
+                        }}
+                        onMouseMove={(e) => handleMouseMove(e, book)}
+                        onMouseLeave={handleMouseLeave}
+                      >
+                        <img
+                          src="/book.png"
+                          alt="Book placeholder"
+                          className="w-full shadow-custom-dark"
+                        />
+                        <img
+                          src={book.cover}
+                          alt="Book cover"
+                          className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-custom-dark"
+                        />
+                      </div>
+                      {((index + 1) % 2 === 0 || index === arr.length - 1) &&
+                        arr.length > 0 && (
+                          <img
+                            src="/shelf-rack2.png"
+                            alt="Shelf"
+                            className="col-span-2 lg:hidden w-full h-auto -mt-14 sm:-mt-16 md:-mt-20 z-0"
+                          />
+                        )}
+                      {((index + 1) % 4 === 0 || index === arr.length - 1) &&
+                        arr.length > 0 && (
+                          <img
+                            src="/shelf-rack2.png"
+                            alt="Shelf"
+                            className="hidden lg:block col-span-4 w-full h-auto -mt-24 xl:-mt-26 2xl:-mt-28 z-0"
+                          />
+                        )}
+                    </React.Fragment>
                   ))}
             </div>
           </div>

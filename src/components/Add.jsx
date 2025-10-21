@@ -313,7 +313,7 @@ export default function AddBook({ userId }) {
 
                 <button
                   type="submit"
-                  className="flex w-[70%] mx-auto justify-center rounded-full py-3 px-5 text-2xl font-semibold bg-white border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] hover:text-white text-[#404040]"
+                  className="flex w-[70%] mx-auto justify-center rounded-full py-3 px-5 text-2xl font-semibold bg-[#d9d9d9] border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] hover:text-white text-[#404040]"
                   onClick={submit}
                 >
                   Confirm
