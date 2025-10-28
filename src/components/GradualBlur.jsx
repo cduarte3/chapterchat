@@ -215,9 +215,18 @@ const GradualBlur = (props) => {
     if (isVertical) {
       baseStyle.height = responsiveHeight;
       baseStyle.width = responsiveWidth || "100%";
-      baseStyle[config.position] = 0;
       baseStyle.left = 0;
       baseStyle.right = 0;
+
+      // Special handling for top position on iOS
+      if (config.position === "top") {
+        baseStyle.top = 0;
+        // Extend beyond safe area on iOS
+        baseStyle.paddingTop = "env(safe-area-inset-top)";
+        baseStyle.marginTop = "calc(-1 * env(safe-area-inset-top))";
+      } else {
+        baseStyle[config.position] = 0;
+      }
     } else if (isHorizontal) {
       baseStyle.width = responsiveWidth || responsiveHeight;
       baseStyle.height = "100%";
