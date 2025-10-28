@@ -4,29 +4,12 @@ import { HiMiniHome } from "react-icons/hi2";
 import { TiThMenu } from "react-icons/ti";
 import { FaWindowClose } from "react-icons/fa";
 import GradualBlur from "./GradualBlur";
-import Lenis from "lenis";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 
 const Silk = lazy(() => import("./Silk"));
 
 export default function Signup() {
-  const lenis = new Lenis();
-
-  lenis.on("scroll", (e) => {
-    console.log(e);
-  });
-
-  lenis.on("scroll", ScrollTrigger.update);
-
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
-
-  gsap.ticker.lagSmoothing(0);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -66,7 +49,7 @@ export default function Signup() {
     const email = e.target.email.value;
     const username = e.target.username.value;
     const password = e.target.password.value;
-    const confirmPassword = e.target.confirmPassword.value; // get confirm password
+    const confirmPassword = e.target.confirmPassword.value;
 
     if (password !== confirmPassword) {
       setErrorMessage("Passwords do not match");
@@ -120,7 +103,7 @@ export default function Signup() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-40">
+      <div className="fixed top-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
         <GradualBlur
           target="parent"
           position="top"

@@ -4,29 +4,12 @@ import { HiMiniHome } from "react-icons/hi2";
 import { TiThMenu } from "react-icons/ti";
 import { FaWindowClose } from "react-icons/fa";
 import GradualBlur from "./GradualBlur";
-import Lenis from "lenis";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 
 const Silk = lazy(() => import("./Silk"));
 
 export default function Login() {
-  const lenis = new Lenis();
-
-  lenis.on("scroll", (e) => {
-    console.log(e);
-  });
-
-  lenis.on("scroll", ScrollTrigger.update);
-
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
-
-  gsap.ticker.lagSmoothing(0);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -113,7 +96,7 @@ export default function Login() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-40">
+      <div className="fixed top-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
         <GradualBlur
           target="parent"
           position="top"
@@ -140,15 +123,27 @@ export default function Login() {
         <nav className="hidden md:flex">
           <ul className="flex justify-center items-center font-bold space-x-4 text-white sm:text-3xl md:px-5 text-xl px-1">
             <li>
-              <HiMiniHome size={60} onClick={goHome} />
+              <HiMiniHome
+                size={60}
+                onClick={goHome}
+                className="cursor-pointer"
+              />
             </li>
           </ul>
         </nav>
         <div onClick={handleNav} className="block md:hidden">
           {!nav ? (
-            <FaWindowClose size={50} color="rgb(64,63,68)" />
+            <FaWindowClose
+              size={50}
+              color="rgb(64,63,68)"
+              className="cursor-pointer"
+            />
           ) : (
-            <TiThMenu size={50} color="rgb(64,63,68)" />
+            <TiThMenu
+              size={50}
+              color="rgb(64,63,68)"
+              className="cursor-pointer"
+            />
           )}
         </div>
 
@@ -169,13 +164,13 @@ export default function Login() {
                 className="w-[10rem] justify-center mx-auto py-5"
               ></img>
             </li>
-            <li className="p-4 font-bold">
+            <li className="p-4 font-bold cursor-pointer">
               <Link to="/">HOME</Link>
             </li>
-            <li className="p-4 font-bold">
+            <li className="p-4 font-bold cursor-pointer">
               <Link to="/login">SIGN IN</Link>
             </li>
-            <li className="p-4 font-bold">
+            <li className="p-4 font-bold cursor-pointer">
               <Link to="/signup">SIGN UP</Link>
             </li>
           </ul>

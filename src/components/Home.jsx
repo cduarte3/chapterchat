@@ -79,7 +79,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-40">
+      <div className="fixed top-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
         <GradualBlur
           target="parent"
           position="top"
@@ -150,8 +150,8 @@ export default function Home() {
           ref={navRef}
           className={
             !nav
-              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-70 border-gray-100 z-[90]"
-              : "fixed left-[-100%] top-0 w-[50%] h-full border-r z-[90]"
+              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-70 border-gray-100"
+              : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
           }
         >
           <ul className="pt-4 uppercase text-2xl text-white font-['Radley']">

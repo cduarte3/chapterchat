@@ -49,7 +49,11 @@ export default function Shelf({ userData }) {
   };
 
   const goBack = () => {
-    navigate(-1);
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate(-1);
+      return;
+    }
   };
 
   const sortBooks = (books) => {
@@ -136,7 +140,7 @@ export default function Shelf({ userData }) {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-40">
+      <div className="fixed top-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
         <GradualBlur
           target="parent"
           position="top"
@@ -170,14 +174,18 @@ export default function Shelf({ userData }) {
                     <img
                       src="/add.png"
                       alt="add book"
-                      className="w-[60px]"
+                      className="w-[60px] cursor-pointer"
                       onClick={addBook}
                     ></img>
                   </li>
                 )}
                 {!isCurrentUserProfile && (
                   <li onClick={goBack}>
-                    <IoMdArrowRoundBack size={60} color="white" />
+                    <IoMdArrowRoundBack
+                      size={60}
+                      color="white"
+                      className="cursor-pointer"
+                    />
                   </li>
                 )}
               </ul>
@@ -185,25 +193,33 @@ export default function Shelf({ userData }) {
             <nav className="hidden md:flex">
               <ul className="flex justify-center items-center font-bold space-x-4 text-white text-2xl font-['Radley']">
                 {isCurrentUserProfile && (
-                  <li className="md:px-3" onClick={goProfile}>
+                  <li className="md:px-3 cursor-pointer" onClick={goProfile}>
                     <FaUserCircle size={60} />
                   </li>
                 )}
                 {!isCurrentUserProfile && (
-                  <li className="md:px-3" onClick={goToMyShelf}>
+                  <li className="md:px-3 cursor-pointer" onClick={goToMyShelf}>
                     <TbBooks size={60} />
                   </li>
                 )}
-                <li className="md:px-3" onClick={logOut}>
+                <li className="md:px-3 cursor-pointer" onClick={logOut}>
                   <FiLogOut size={60} />
                 </li>
               </ul>
             </nav>
             <div onClick={handleNav} className="block md:hidden">
               {!nav ? (
-                <FaWindowClose size={55} color="rgb(255,255,255)" />
+                <FaWindowClose
+                  size={55}
+                  color="rgb(255,255,255)"
+                  className="cursor-pointer"
+                />
               ) : (
-                <TiThMenu size={55} color="rgb(255,255,255)" />
+                <TiThMenu
+                  size={55}
+                  color="rgb(255,255,255)"
+                  className="cursor-pointer"
+                />
               )}
             </div>
 
@@ -224,10 +240,13 @@ export default function Shelf({ userData }) {
                     className="w-[10rem] justify-center mx-auto py-5"
                   ></img>
                 </li>
-                <li className="p-4 font-bold" onClick={goProfile}>
+                <li
+                  className="p-4 font-bold cursor-pointer"
+                  onClick={goProfile}
+                >
                   <Link>PROFILE</Link>
                 </li>
-                <li className="p-4 font-bold" onClick={logOut}>
+                <li className="p-4 font-bold cursor-pointer" onClick={logOut}>
                   <Link>LOG OUT</Link>
                 </li>
               </ul>
@@ -238,7 +257,7 @@ export default function Shelf({ userData }) {
             <GradualBlur
               target="parent"
               position="bottom"
-              height="6rem"
+              height="2rem"
               strength={1}
               divCount={10}
               curve="bezier"
