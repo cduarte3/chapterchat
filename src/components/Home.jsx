@@ -150,8 +150,8 @@ export default function Home() {
           ref={navRef}
           className={
             !nav
-              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-70 border-gray-100"
-              : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
+              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-70 border-gray-100 z-[90]"
+              : "fixed left-[-100%] top-0 w-[50%] h-full border-r z-[90]"
           }
         >
           <ul className="pt-4 uppercase text-2xl text-white font-['Radley']">
