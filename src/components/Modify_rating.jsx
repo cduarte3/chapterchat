@@ -12,11 +12,11 @@ export default function BasicRating({ value, setRating }) {
           }}
           sx={{
             fontSize: {
-              xs: "2.5rem", // On extra-small devices
-              sm: "2.5rem", // On small devices
-              md: "3rem", // On medium devices
-              lg: "3.5rem", // On large devices
-              xl: "4rem", // On extra-large devices
+              xs: "4rem", // On extra-small devices
+              sm: "4rem", // On small devices
+              md: "4rem", // On medium devices
+              lg: "4.5rem", // On large devices
+              xl: "5rem", // On extra-large devices
             },
             "& .MuiRating-iconEmpty": {
               color: "gray",

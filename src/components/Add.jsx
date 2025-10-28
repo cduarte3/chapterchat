@@ -4,6 +4,15 @@ import BasicRating from "./Modify_rating";
 import GradualBlur from "./GradualBlur";
 
 export default function AddBook({ userId }) {
+  const [author, setAuthor] = useState("");
+  const [title, setTitle] = useState("");
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState(3);
+  const [cover, setCover] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [foundCover, setFoundCover] = useState(true);
+  const [genre, setGenre] = useState("");
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -69,15 +78,6 @@ export default function AddBook({ userId }) {
       document.head.removeChild(textareaStyle);
     };
   }, []);
-
-  const [author, setAuthor] = useState("");
-  const [title, setTitle] = useState("");
-  const [review, setReview] = useState("");
-  const [rating, setRating] = useState(3);
-  const [cover, setCover] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [foundCover, setFoundCover] = useState(true);
-  const [genre, setGenre] = useState("");
 
   const handleAuthorChange = (event) => {
     setAuthor(event.target.value);
@@ -235,12 +235,12 @@ export default function AddBook({ userId }) {
       />
       <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
         <div className="flex h-full flex-col">
-          <h2 className="text-white mt-48 py-3 text-center text-6xl font-bold leading-9 tracking-tight font-['Radley']">
+          <h2 className="text-white mt-48 py-3 text-center mx-auto text-6xl font-bold tracking-tight font-['Radley'] max-w-[85%]">
             Add Book Review
           </h2>
 
           <div className="mt-20">
-            <div className="text-red-500 text-2xl cursor-pointer z-50 hover:underline items-start mb-5 w-[40%] flex mx-auto">
+            <div className="text-red-500 text-2xl cursor-pointer z-50 hover:underline items-start mb-5 w-[90%] sm:w-[70%] lg:max-w-[55%] xl:max-w-[75%] 2xl:max-w-[80%] flex mx-auto">
               <h1 onClick={goHome} className="font-['Radley']">
                 Go Back
               </h1>
@@ -248,28 +248,43 @@ export default function AddBook({ userId }) {
             <form
               action="#"
               method="POST"
-              className="lg:max-w-[40%] grid grid-cols-1 lg:grid-cols-2 mx-auto items-stretch"
+              className="mb-10 lg:mb-15 w-[90%] sm:w-[70%] lg:max-w-[55%] xl:max-w-[75%] 2xl:max-w-[80%] grid grid-cols-1 xl:grid-cols-2 mx-auto items-stretch gap-10"
             >
-              <div className="space-y-6 flex flex-col">
+              <div className="space-y-6 flex flex-col xl:mx-auto xl:min-w-[400px] 2xl:min-w-[550px]">
+                <label
+                  htmlFor="title"
+                  className="block text-4xl font-bold text-white font-['Radley']"
+                >
+                  Title
+                </label>
                 <input
                   type="text"
                   value={title}
                   onChange={handleTitleChange}
-                  placeholder="Title"
                   maxLength="50"
                   required
                   className="block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl"
                 />
-
+                <label
+                  htmlFor="author"
+                  className="block text-4xl font-bold text-white font-['Radley']"
+                >
+                  Author
+                </label>
                 <input
                   type="text"
                   value={author}
                   onChange={handleAuthorChange}
-                  placeholder="Author"
                   maxLength="25"
                   required
                   className="block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl"
                 />
+                <label
+                  htmlFor="genre"
+                  className="block text-4xl font-bold text-white font-['Radley']"
+                >
+                  Genre
+                </label>
                 <select
                   name="genre"
                   id="genre"
@@ -296,28 +311,25 @@ export default function AddBook({ userId }) {
                   <option value="philo">Philosophical / Religious</option>
                   <option value="Biography">Biography / Autobiography</option>
                 </select>
-
+                <label
+                  htmlFor="review"
+                  className="block text-4xl font-bold text-white font-['Radley']"
+                >
+                  Review
+                </label>
                 <textarea
                   value={review}
                   onChange={handleReviewChange}
-                  placeholder="Review"
                   maxLength="600"
                   required
                   className="resize-none block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl"
                   style={{ maxHeight: "300px", minHeight: "300px" }}
                 />
 
-                <div className="mx-auto">
+                <div className=" mx-auto">
                   <BasicRating value={rating} setRating={setRating} />
                 </div>
 
-                <button
-                  type="submit"
-                  className="flex w-[70%] mx-auto justify-center rounded-full py-3 px-5 text-2xl font-semibold bg-[#d9d9d9] border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] hover:text-white text-[#404040]"
-                  onClick={submit}
-                >
-                  Confirm
-                </button>
                 {/* This button will take the user back to the home page 
                   <button
                     type="submit"
@@ -329,7 +341,7 @@ export default function AddBook({ userId }) {
                   */}
               </div>
 
-              <div className="ml-10 flex flex-col">
+              <div className="flex flex-col 2xl:max-w-[700px] xl:mx-auto">
                 <div className="flex justify-between items-center mb-8">
                   <label
                     htmlFor="cover"
@@ -338,13 +350,15 @@ export default function AddBook({ userId }) {
                     Cover
                   </label>
                   <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={fetchCover}
-                      className="px-4 py-2 bg-[rgb(36,36,38)] border-2 border-white text-white rounded-full hover:bg-[rgb(52,52,53)] text-xl"
-                    >
-                      Search
-                    </button>
+                    {!cover && (
+                      <button
+                        type="button"
+                        onClick={fetchCover}
+                        className="px-4 py-2 bg-[rgb(36,36,38)] border-2 border-white text-white rounded-full hover:bg-[rgb(52,52,53)] text-xl"
+                      >
+                        Search
+                      </button>
+                    )}
                     {cover && (
                       <button
                         type="button"
@@ -357,22 +371,32 @@ export default function AddBook({ userId }) {
                   </div>
                 </div>
 
-                <div className="flex-1 flex items-center justify-center">
+                <div className="flex justify-center">
                   {!cover && (
                     <img
                       src="/no-book.png"
                       alt="Book Cover"
-                      className="h-full w-auto border-2 rounded-3xl border-white object-cover"
+                      className="h-[500px] lg:h-[700px] 2xl:h-[800px] w-auto border-2 rounded-3xl border-white object-cover"
                     />
                   )}
                   {cover && (
                     <img
                       src={cover}
                       alt="Book Cover"
-                      className="h-full w-auto border-2 rounded-3xl border-white object-cover"
+                      className="h-[500px] lg:h-[700px] 2xl:h-[800px] w-auto border-2 rounded-3xl border-white object-cover"
                     />
                   )}
                 </div>
+              </div>
+
+              <div className="col-span-1 xl:col-span-2 mt-10 mb-20">
+                <button
+                  type="submit"
+                  onClick={submit}
+                  className="flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-full py-4 px-5 text-2xl font-semibold bg-white border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] hover:text-white text-[#404040]"
+                >
+                  Confirm
+                </button>
               </div>
             </form>
           </div>
@@ -452,6 +476,18 @@ export default function AddBook({ userId }) {
             </div>
           </div>
         )}
+        <div className="fixed bottom-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
+          <GradualBlur
+            target="parent"
+            position="bottom"
+            height="6rem"
+            strength={1}
+            divCount={10}
+            curve="bezier"
+            exponential={true}
+            opacity={1}
+          />
+        </div>
       </div>
     </>
   );

@@ -4,9 +4,8 @@ import Footer from "./Footer";
 import { TiThMenu } from "react-icons/ti";
 import { TbBooks } from "react-icons/tb";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { FaWindowClose, FaSort } from "react-icons/fa";
+import { FaWindowClose, FaSort, FaUserCircle, FaSearch } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import { FaUserCircle } from "react-icons/fa";
 import { isOwnProfile, getCurrentUserId } from "../utils/auth";
 import GradualBlur from "./GradualBlur";
 
@@ -70,6 +69,16 @@ export default function Shelf({ userData }) {
             .localeCompare(getLastName(a.author).toLowerCase());
         case "genre":
           return a.genre.toLowerCase().localeCompare(b.genre.toLowerCase());
+        case "addedAsc":
+          return new Date(a.addedDate) - new Date(b.addedDate);
+        case "addedDesc":
+          return new Date(b.addedDate) - new Date(a.addedDate);
+        case "ratingAsc":
+          return a.rating - b.rating;
+        case "ratingDesc":
+          return b.rating - a.rating;
+        case "newlyUpdated":
+          return new Date(b.updatedAt) - new Date(a.updatedAt);
         default:
           return 0;
       }
@@ -246,12 +255,16 @@ export default function Shelf({ userData }) {
             <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-white" />
             <div className="mt-4 md:mt-10 mb-10 mx-auto w-[75%] xl:max-w-[55%]">
               <div className="relative">
+                <div className="h-16 w-16 md:h-20 md:w-20 absolute left-0 top-0 items-center justify-center mx-auto flex z-10 ">
+                  <FaSearch className="h-8 w-8 md:h-10 md:w-10" color="white" />
+                </div>
+
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={handleSearch}
-                  placeholder="Search Author or Title"
-                  className="border-4 border-white bg-[#242626] rounded-full pl-5 pr-16 h-16 md:pr-20 md:h-20 w-full text-xl md:text-2xl text-white"
+                  placeholder="Search..."
+                  className="shadow-custom-dark border-4 border-white bg-transparent backdrop-blur-lg pl-16 md:pl-20 pr-16 h-16 md:pr-20 md:h-20 w-full text-xl md:text-2xl text-white placeholder-white rounded-full"
                 ></input>
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -271,14 +284,20 @@ export default function Shelf({ userData }) {
                         "authorAsc",
                         "authorDesc",
                         "genre",
-                      ].map((criteria) => (
-                        <button
-                          key={criteria}
-                          onClick={() => {
-                            setSortCriteria(criteria);
-                            setIsDropdownOpen(false);
-                          }}
-                          className={`
+                        "addedAsc",
+                        "addedDesc",
+                        "ratingAsc",
+                        "ratingDesc",
+                        "newlyUpdated",
+                      ].map((criteria, index, array) => (
+                        <div key={criteria}>
+                          <button
+                            key={criteria}
+                            onClick={() => {
+                              setSortCriteria(criteria);
+                              setIsDropdownOpen(false);
+                            }}
+                            className={`
             block px-4 py-2 text-lg md:text-xl w-full text-left
             ${
               sortCriteria === criteria
@@ -286,13 +305,24 @@ export default function Shelf({ userData }) {
                 : "text-white hover:bg-white hover:text-[#242626]"
             }
           `}
-                        >
-                          {criteria === "titleAsc" && "Title (A-Z)"}
-                          {criteria === "titleDesc" && "Title (Z-A)"}
-                          {criteria === "authorAsc" && "Author (A-Z)"}
-                          {criteria === "authorDesc" && "Author (Z-A)"}
-                          {criteria === "genre" && "Genre"}
-                        </button>
+                          >
+                            {criteria === "titleAsc" && "Title (A-Z)"}
+                            {criteria === "titleDesc" && "Title (Z-A)"}
+                            {criteria === "authorAsc" && "Author (A-Z)"}
+                            {criteria === "authorDesc" && "Author (Z-A)"}
+                            {criteria === "genre" && "Genre"}
+                            {criteria === "addedAsc" &&
+                              "Date Added (Old - New)"}
+                            {criteria === "addedDesc" &&
+                              "Date Added (New - Old)"}
+                            {criteria === "ratingAsc" && "Rating (Low - High)"}
+                            {criteria === "ratingDesc" && "Rating (High - Low)"}
+                            {criteria === "newlyUpdated" && "Recently Updated"}
+                          </button>
+                          {index < array.length - 1 && (
+                            <hr className="border-gray-500 border-t-1 mx-2" />
+                          )}
+                        </div>
                       ))}
                     </div>
                   </div>
