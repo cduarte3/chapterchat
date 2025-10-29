@@ -55,7 +55,7 @@ export default function UserProfile({ userData }) {
       };
 
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/users/${userData.id}/update`,
+        `${import.meta.env.VITE_API_URL}/users/${userData.id}/update`,
         requestOptions
       );
       if (response.status === 200) {

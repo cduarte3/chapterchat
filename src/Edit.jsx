@@ -10,7 +10,9 @@ export default function Edit() {
   const [bookData, setBookData] = useState(null);
 
   useEffect(() => {
-    const url = `${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}`;
+    const url = `${
+      import.meta.env.VITE_API_URL
+    }/users/${userId}/book/${bookId}`;
 
     const fetchBookData = async () => {
       try {

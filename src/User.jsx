@@ -31,7 +31,7 @@ export default function User() {
         };
 
         const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/users/${userId}`,
+          `${import.meta.env.VITE_API_URL}/users/${userId}`,
           requestOptions
         );
 

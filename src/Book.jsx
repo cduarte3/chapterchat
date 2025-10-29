@@ -9,7 +9,9 @@ export default function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const url = `${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}`;
+    const url = `${
+      import.meta.env.VITE_API_URL
+    }/users/${userId}/book/${bookId}`;
 
     const fetchBookData = async () => {
       try {

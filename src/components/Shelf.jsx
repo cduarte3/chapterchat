@@ -272,7 +272,7 @@ export default function Shelf({ userData }) {
               <span className="">Shelf</span>
             </h1>
             <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-white" />
-            <div className="mt-4 md:mt-10 mb-10 mx-auto w-[75%] xl:max-w-[55%]">
+            <div className="mt-4 md:mt-10 mb-10 mx-auto w-[90%] md:w-[75%] xl:max-w-[55%]">
               <div className="relative">
                 <div className="h-16 w-16 md:h-20 md:w-20 absolute left-0 top-0 items-center justify-center mx-auto flex z-10 ">
                   <FaSearch className="h-8 w-8 md:h-10 md:w-10" color="white" />
@@ -375,7 +375,7 @@ export default function Shelf({ userData }) {
                         <img
                           src={book.cover}
                           alt="Book cover"
-                          className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-custom-dark"
+                          className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-lg"
                         />
                       </div>
                       {((index + 1) % 2 === 0 || index === arr.length - 1) &&

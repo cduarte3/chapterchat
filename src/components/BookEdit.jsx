@@ -111,7 +111,7 @@ export default function BookEdit({ bookData, userId, bookId }) {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/users/${userId}/book/${bookId}/edit`,
+        `${import.meta.env.VITE_API_URL}/users/${userId}/book/${bookId}/edit`,
         requestOptions
       );
 
