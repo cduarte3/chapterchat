@@ -6,9 +6,7 @@ function Add() {
   const { userId } = useParams();
   return (
     <>
-      <div className="">
-        <AddBook userId={userId} />
-      </div>
+      <AddBook userId={userId} />
     </>
   );
 }

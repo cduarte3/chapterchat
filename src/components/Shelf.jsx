@@ -22,7 +22,7 @@ export default function Shelf({ userData }) {
   const navRef = useRef();
   const [searchTerm, setSearchTerm] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [sortCriteria, setSortCriteria] = useState("titleAsc");
+  const [sortCriteria, setSortCriteria] = useState("addedDesc");
   const [hoveredBook, setHoveredBook] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 

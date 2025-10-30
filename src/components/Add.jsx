@@ -111,6 +111,8 @@ export default function AddBook({ userId }) {
     if (token) {
       navigate(-1);
       return;
+    } else {
+      navigate("/login");
     }
   };
 
@@ -238,7 +240,6 @@ export default function AddBook({ userId }) {
 
   return (
     <>
-      {" "}
       <div className="fixed top-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
         <GradualBlur
           target="parent"
@@ -266,7 +267,7 @@ export default function AddBook({ userId }) {
       </div>
       <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
         <div className="flex h-full flex-col">
-          <h2 className="text-white mt-48 py-0 md:py-3 text-center mx-auto text-6xl font-bold tracking-tight font-['Radley'] max-w-[85%]">
+          <h2 className="text-white mt-40 md:mt-48 py-0 md:py-3 text-center mx-auto text-6xl font-bold tracking-tight font-['Radley'] max-w-[85%]">
             Add Book Review
           </h2>
 
@@ -419,9 +420,16 @@ export default function AddBook({ userId }) {
                 <button
                   type="submit"
                   onClick={submit}
-                  className="flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-full py-4 px-5 text-2xl font-semibold bg-white border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] hover:text-white text-[#404040]"
+                  className="flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-full py-4 px-5 text-2xl font-semibold bg-[rgb(36,36,38)] border-2 border-white text-white hover:bg-[rgb(52,52,53)]"
                 >
                   Confirm
+                </button>
+                <button
+                  type="submit"
+                  onClick={goHome}
+                  className="mt-5 flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-full py-4 px-5 text-2xl font-semibold bg-red-600 hover:bg-red-900 border-white border-2 text-white"
+                >
+                  Cancel
                 </button>
               </div>
             </form>
