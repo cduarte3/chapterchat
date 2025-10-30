@@ -74,15 +74,15 @@ export default function Shelf({ userData }) {
         case "genre":
           return a.genre.toLowerCase().localeCompare(b.genre.toLowerCase());
         case "addedAsc":
-          return new Date(a.addedDate) - new Date(b.addedDate);
+          return new Date(a.dateAdded) - new Date(b.dateAdded);
         case "addedDesc":
-          return new Date(b.addedDate) - new Date(a.addedDate);
+          return new Date(b.dateAdded) - new Date(a.dateAdded);
         case "ratingAsc":
           return a.rating - b.rating;
         case "ratingDesc":
           return b.rating - a.rating;
         case "newlyUpdated":
-          return new Date(b.updatedAt) - new Date(a.updatedAt);
+          return new Date(b.lastUpdated) - new Date(a.lastUpdated);
         default:
           return 0;
       }
@@ -165,7 +165,16 @@ export default function Shelf({ userData }) {
         </div>
       )}
       <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
-        <div className="min-h-screen pb-20">
+        <div
+          className={`${
+            isDropdownOpen ? "min-h-screen" : "min-h-screen"
+          } pb-20`}
+          style={{
+            minHeight: isDropdownOpen
+              ? `${window.innerHeight + 300}px`
+              : "100vh",
+          }}
+        >
           <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
             <nav>
               <ul className="flex justify-center items-center space-x-4 md:px-3 text-xl">
@@ -267,7 +276,7 @@ export default function Shelf({ userData }) {
           </div>
 
           <div className="pt-28">
-            <h1 className="font-bold mt-[2%] p-5 text-center flex flex-wrap justify-center lg:text-8xl md:text-7xl sm:text-6xl text-5xl mx-auto text-white font-['Radley']">
+            <h1 className="font-bold mt-[2%] p-5 text-center flex flex-wrap justify-center lg:text-8xl md:text-7xl sm:text-6xl text-5xl mx-auto text-white font-['Radley'] gap-4">
               <span>{getPosessiveName(userData.username)}</span>
               <span className="">Shelf</span>
             </h1>
@@ -330,12 +339,10 @@ export default function Shelf({ userData }) {
                             {criteria === "authorAsc" && "Author (A-Z)"}
                             {criteria === "authorDesc" && "Author (Z-A)"}
                             {criteria === "genre" && "Genre"}
-                            {criteria === "addedAsc" &&
-                              "Date Added (Old - New)"}
-                            {criteria === "addedDesc" &&
-                              "Date Added (New - Old)"}
-                            {criteria === "ratingAsc" && "Rating (Low - High)"}
-                            {criteria === "ratingDesc" && "Rating (High - Low)"}
+                            {criteria === "addedAsc" && "Old - New"}
+                            {criteria === "addedDesc" && "New - Old"}
+                            {criteria === "ratingAsc" && "★ 1 - 5"}
+                            {criteria === "ratingDesc" && "★ 5 - 1"}
                             {criteria === "newlyUpdated" && "Recently Updated"}
                           </button>
                           {index < array.length - 1 && (
@@ -367,6 +374,14 @@ export default function Shelf({ userData }) {
                         onMouseMove={(e) => handleMouseMove(e, book)}
                         onMouseLeave={handleMouseLeave}
                       >
+                        {new Date(book.dateAdded) >
+                          new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) && (
+                          <img
+                            src="/new-icon.png"
+                            alt="New"
+                            className="absolute top-0 left-0 z-20 w-12 md:w-20"
+                          />
+                        )}
                         <img
                           src="/book.png"
                           alt="Book placeholder"

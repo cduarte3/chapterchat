@@ -266,7 +266,7 @@ export default function AddBook({ userId }) {
       </div>
       <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
         <div className="flex h-full flex-col">
-          <h2 className="text-white mt-48 py-3 text-center mx-auto text-6xl font-bold tracking-tight font-['Radley'] max-w-[85%]">
+          <h2 className="text-white mt-48 py-0 md:py-3 text-center mx-auto text-6xl font-bold tracking-tight font-['Radley'] max-w-[85%]">
             Add Book Review
           </h2>
 
