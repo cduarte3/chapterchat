@@ -124,8 +124,8 @@ export default function BookDetail({ bookData, userId }) {
   }, []);
 
   return (
-    <div>
-      <div className="min-h-screen mb-10">
+    <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
+      <div className="min-h-screen">
         <div className="fixed top-0 left-0 right-0 bg-[rgb(255,254,224)] py-4 flex justify-between items-center px-6 shadow-md z-50">
           <nav>
             <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
@@ -204,28 +204,28 @@ export default function BookDetail({ bookData, userId }) {
           </div>
         </div>
         <div className="pt-28">
-          <h1 className="font-['Radley'] font-bold mt-[2%] p-5 text-center flex flex-col xl:text-8xl sm:text-7xl text-5xl mx-auto justify-center text-[rgb(64,63,68)]">
+          <h1 className="font-['Radley'] font-bold mt-[2%] p-5 text-center flex flex-col xl:text-8xl sm:text-7xl text-5xl mx-auto justify-center text-white">
             {bookData.title}
           </h1>
-          <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-2xl mx-auto justify-center text-[rgb(64,63,68)]">
+          <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-2xl mx-auto justify-center text-white">
             {bookData.author}
           </h2>
-          <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-[rgb(64,63,68)]" />
+          <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-white" />
           <div className="justify-items-center flex-col grid w-[90%] xl:w-[80%] lg:grid-cols-2 grid-cols-1 mx-auto gap-5 sm:p-3">
             <div className="relative w-[60%] sm:w-[55%] md:w-[50%] lg:w-[70%] 2xl:w-[60%] aspect-[3/4]">
               <img
                 src="/book.png"
                 alt="blank book"
-                className="w-full shadow-custom-dark"
+                className="w-full shadow-custom-dark rounded-2xl"
               />
               <img
                 src={bookData.cover}
                 alt="Cover"
-                className="absolute top-[1%] left-[7%] w-[92%] h-[98%] max-h-[99%] bottom-[-10%] object-cover shadow-custom-dark object-fit"
+                className="absolute top-[1%] left-[7%] w-[92%] h-[98%] max-h-[99%] bottom-[-10%] object-cover shadow-lg object-fit rounded-xl"
               />
             </div>
             <div className="mx-5 sm:mx-0 flex flex-col justify-center h-full mt-3 lg:mt-0">
-              <p className="text-[rgb(64,63,68)] text-2xl xl:text-3xl 2xl:text-4xl text-center">
+              <p className="text-white text-2xl xl:text-3xl 2xl:text-4xl text-center">
                 {bookData.review}
               </p>
               <div className="mt-6 flex justify-center">
@@ -244,10 +244,12 @@ export default function BookDetail({ bookData, userId }) {
                 />
               </div>
               <div>
-                <h2 className="text-center flex flex-col xl:text-4xl text-3xl mx-auto justify-center text-[rgb(64,63,68)] mt-6">
-                  <b className="mb-2">Genre:</b>{" "}
-                  {getGenreDisplay(bookData.genre)}
+                <h2 className="text-center flex flex-col xl:text-5xl text-4xl mx-auto justify-center text-white mt-6 font-['Radley'] font-bold">
+                  Genre:
                 </h2>
+                <h3 className="text-center flex flex-col xl:text-4xl text-3xl mx-auto justify-center text-white mt-6">
+                  {getGenreDisplay(bookData.genre)}
+                </h3>
               </div>
             </div>
           </div>

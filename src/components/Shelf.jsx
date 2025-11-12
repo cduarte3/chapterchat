@@ -166,6 +166,8 @@ export default function Shelf({ userData }) {
       )}
       <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
         <div
+          className="min-h-screen pb-20"
+          /* 
           className={`${
             isDropdownOpen ? "min-h-screen" : "min-h-screen"
           } pb-20`}
@@ -174,6 +176,7 @@ export default function Shelf({ userData }) {
               ? `${window.innerHeight + 300}px`
               : "100vh",
           }}
+          */
         >
           <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
             <nav>
@@ -385,12 +388,12 @@ export default function Shelf({ userData }) {
                         <img
                           src="/book.png"
                           alt="Book placeholder"
-                          className="w-full shadow-custom-dark"
+                          className="w-full shadow-custom-dark rounded-2xl"
                         />
                         <img
                           src={book.cover}
                           alt="Book cover"
-                          className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-lg"
+                          className="absolute top-[1%] left-[7%] w-[92%] h-[98%] bottom-[-10%] object-cover shadow-lg rounded-xl"
                         />
                       </div>
                       {((index + 1) % 2 === 0 || index === arr.length - 1) &&
@@ -414,6 +417,7 @@ export default function Shelf({ userData }) {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );

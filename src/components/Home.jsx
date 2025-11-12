@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Footer from "./Footer";
 import { FiLogOut } from "react-icons/fi";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserCircle, FaWindowClose } from "react-icons/fa";
@@ -192,7 +193,7 @@ export default function Home() {
         <GradualBlur
           target="parent"
           position="bottom"
-          height="6rem"
+          height="2rem"
           strength={1}
           divCount={10}
           curve="bezier"
@@ -235,7 +236,7 @@ export default function Home() {
               </div>
               <div className="md:hidden">
                 <img
-                  src="iphone.png"
+                  src="mobile_dash.png"
                   className="w-auto mx-auto px-10 sm:px-32"
                   alt="Smartphone with app screenshot"
                 />
@@ -325,6 +326,7 @@ export default function Home() {
           </Link>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
