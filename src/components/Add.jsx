@@ -257,12 +257,12 @@ export default function AddBook({ userId }) {
           size={60}
           color="white"
           onClick={goHome}
-          className="z-50 h-10 sm:h-12 md:h-16 fixed mx-auto left-2 md:left-10 mt-6 cursor-pointer"
+          className="z-50 h-12 md:h-16 fixed mx-auto left-2 md:left-10 mt-6 cursor-pointer"
         />
         <img
           src="/chaptr-logo-sm.png"
           alt="Chaptr Logo"
-          className="z-50 h-10 sm:h-12 md:h-16 fixed mx-auto left-0 right-0 mt-6"
+          className="z-50 h-12 md:h-16 fixed mx-auto left-0 right-0 mt-6"
         />
       </div>
       <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
