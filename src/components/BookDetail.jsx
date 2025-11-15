@@ -258,7 +258,7 @@ export default function BookDetail({ bookData, userId }) {
                   className="absolute top-[1%] left-[7%] w-[92%] h-[98%] max-h-[99%] bottom-[-10%] object-cover shadow-lg object-fit rounded-xl"
                 />
               </div>
-              <div className="bg-[#242626] border-2 border-white px-2 sm:px-14 py-8 rounded-3xl z-30 mx-5 sm:mx-20 flex flex-col justify-center">
+              <div className=" border-2 border-white px-2 sm:px-14 py-8 rounded-3xl z-30 mx-5 sm:mx-20 flex flex-col justify-center">
                 <p className="text-white text-2xl xl:text-3xl 2xl:text-4xl text-center">
                   {bookData.review}
                 </p>

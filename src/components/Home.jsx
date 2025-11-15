@@ -202,131 +202,134 @@ export default function Home() {
         />
       </div>
 
-      <div className="relative w-full min-h-screen overflow-hidden z-0">
-        <div className="absolute inset-0 w-full h-full min-h-screen">
-          <Suspense
-            fallback={
-              <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
-            }
-          >
-            <Silk
-              speed={6}
-              scale={1}
-              color="#565656"
-              noiseIntensity={1.5}
-              rotation={0}
-            />
-          </Suspense>
-        </div>
+      <div className="fixed inset-0 w-full h-full min-h-screen z-0">
+        <Suspense
+          fallback={
+            <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
+          }
+        >
+          <Silk
+            speed={6}
+            scale={1}
+            color="#565656"
+            noiseIntensity={1.5}
+            rotation={0}
+          />
+        </Suspense>
+      </div>
 
-        <div className="relative z-10 min-h-screen">
-          <div className="min-h-screen w-full mx-auto justify-center items-center flex flex-col">
-            <div className="grid grid-cols-1 lg:grid-cols-2 pt-20 mx-auto justify-center items-center content-center pb-20 lg:pb-0">
+      <div className="relative lg:fixed inset-0 w-full h-full z-5 min-h-screen justify-center items-center flex">
+        <div className="w-full mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 pt-20 mx-auto justify-center items-center content-center pb-20 lg:pb-0">
+            <img
+              src="chaptr-logo-lg.png"
+              alt="Chaptr logo"
+              className="w-auto h-[55%] mx-auto"
+            />
+            <div className="md:block hidden">
               <img
-                src="chaptr-logo-lg.png"
-                alt="Chaptr logo"
-                className="w-auto h-[55%] mx-auto"
+                src="macbook.png"
+                className="w-auto mx-auto px-10 lg:pr-10"
+                alt="Laptop with app screenshot"
               />
-              <div className="md:block hidden">
-                <img
-                  src="macbook.png"
-                  className="w-auto mx-auto px-10 lg:pr-10"
-                  alt="Laptop with app screenshot"
-                />
-              </div>
-              <div className="md:hidden">
-                <img
-                  src="mobile_dash.png"
-                  className="w-auto mx-auto px-10 sm:px-32"
-                  alt="Smartphone with app screenshot"
-                />
-              </div>
+            </div>
+            <div className="md:hidden">
+              <img
+                src="mobile_dash.png"
+                className="w-auto mx-auto px-10 sm:px-32"
+                alt="Smartphone with app screenshot"
+              />
             </div>
           </div>
         </div>
-        <img
-          src="waves.svg"
-          alt="Waves"
-          className="w-full rotate-180 relative z-20"
-        />
       </div>
 
-      <div className="-mt-[1px] relative w-full min-h-screen flex flex-col bg-[#242626]">
-        <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center font-['Radley'] mt-20">
-          <span className="lg:hidden">
-            Welcome to
-            <br />
-            Chaptr
-          </span>
-          <span className="hidden lg:block">Welcome to Chaptr</span>
-        </h1>
+      <div className="relative z-10">
+        <div className="lg:min-h-screen"></div>
 
-        <SpotlightCard
-          className="custom-spotlight-card w-[80%] sm:w-[70%] lg:w-[50%] xl:max-w-[40%] mx-auto mt-44 mb-10 border border-gray-100 flex flex-col items-center text-center justify-center"
-          spotlightColor="rgba(255, 255, 255, 0.2)"
-        >
-          <img
-            src="/shelf.svg"
-            alt="Bookshelf"
-            className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
-          />
-          <h1 className="py-10 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white font-bold">
-            Chaptr is your digital collection for beloved reads using a
-            personalized virtual bookshelf.
-          </h1>
-        </SpotlightCard>
-        <SpotlightCard
-          className="custom-spotlight-card w-[80%] sm:w-[70%] lg:w-[50%] xl:max-w-[40%] mx-auto my-10 border border-gray-100 flex flex-col items-center text-center justify-center"
-          spotlightColor="rgba(255, 255, 255, 0.2)"
-        >
-          <img
-            src="/chat.svg"
-            alt="Text bubble"
-            className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
-          />
-          <h1 className="py-10 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white font-bold">
-            Simply record the Title, Author, Description, Genre, Rating, and
-            select a Cover Image.
-          </h1>
-        </SpotlightCard>
-        <SpotlightCard
-          className="custom-spotlight-card w-[80%] sm:w-[70%] lg:w-[50%] xl:max-w-[40%] mx-auto my-10 border border-gray-100 flex flex-col items-center text-center justify-center"
-          spotlightColor="rgba(255, 255, 255, 0.2)"
-        >
-          <img
-            src="/book-icon.png"
-            alt="Open book"
-            className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
-          />
-          <h1 className="py-10 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white font-bold">
-            As your collection grows, Chaptr becomes a living archive of your
-            thoughts and past favourites.
-          </h1>
-        </SpotlightCard>
+        <img
+          src="book_div.svg"
+          alt="Waves"
+          className="w-full rotate-180 relative z-20 h-10 sm:h-16 md:h-18 lg:h-20 xl:h-24"
+        />
 
-        <div className="flex flex-col mx-auto pt-10 mb-[8rem] font-['Radley'] items-center">
-          <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center mt-20">
+        <div className="-mt-[1px] relative w-full min-h-screen flex flex-col bg-[#242626]">
+          <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center font-['Radley'] mt-20">
             <span className="lg:hidden">
-              Get Started
+              Welcome to
               <br />
-              Now
+              Chaptr
             </span>
-            <span className="hidden lg:block">Get Started Now</span>
+            <span className="hidden lg:block">Welcome to Chaptr</span>
           </h1>
-          <Link to="/login" className="mt-10 mb-1">
-            <button className="w-[300px] md:w-[400px] lg:w-[500px] bg-white border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] hover:text-white text-[#404040] font-bold sm:py-4 md:px-9 py-3 px-5 rounded-full md:text-3xl text-2xl">
-              Sign In
-            </button>
-          </Link>
 
-          <Link to="/signup" className="mt-10">
-            <button className="w-[300px] md:w-[400px] lg:w-[500px] bg-[#404040] border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-9 py-3 px-5 rounded-full md:text-3xl text-2xl">
-              Sign Up
-            </button>
-          </Link>
+          <SpotlightCard
+            className="custom-spotlight-card w-[80%] sm:w-[70%] lg:w-[50%] xl:max-w-[40%] mx-auto mt-44 mb-10 border border-gray-100 flex flex-col items-center text-center justify-center"
+            spotlightColor="rgba(255, 255, 255, 0.2)"
+          >
+            <img
+              src="/shelf.svg"
+              alt="Bookshelf"
+              className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
+            />
+            <h1 className="py-10 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white font-bold">
+              Chaptr is your digital collection for beloved reads using a
+              personalized virtual bookshelf.
+            </h1>
+          </SpotlightCard>
+          <SpotlightCard
+            className="custom-spotlight-card w-[80%] sm:w-[70%] lg:w-[50%] xl:max-w-[40%] mx-auto my-10 border border-gray-100 flex flex-col items-center text-center justify-center"
+            spotlightColor="rgba(255, 255, 255, 0.2)"
+          >
+            <img
+              src="/chat.svg"
+              alt="Text bubble"
+              className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
+            />
+            <h1 className="py-10 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white font-bold">
+              Simply record the Title, Author, Description, Genre, Rating, and
+              select a Cover Image.
+            </h1>
+          </SpotlightCard>
+          <SpotlightCard
+            className="custom-spotlight-card w-[80%] sm:w-[70%] lg:w-[50%] xl:max-w-[40%] mx-auto my-10 border border-gray-100 flex flex-col items-center text-center justify-center"
+            spotlightColor="rgba(255, 255, 255, 0.2)"
+          >
+            <img
+              src="/book-icon.png"
+              alt="Open book"
+              className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
+            />
+            <h1 className="py-10 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white font-bold">
+              As your collection grows, Chaptr becomes a living archive of your
+              thoughts and past favourites.
+            </h1>
+          </SpotlightCard>
+
+          <div className="flex flex-col mx-auto pt-10 mb-[8rem] font-['Radley'] items-center">
+            <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center mt-20">
+              <span className="lg:hidden">
+                Get Started
+                <br />
+                Now
+              </span>
+              <span className="hidden lg:block">Get Started Now</span>
+            </h1>
+            <Link to="/login" className="mt-10 mb-1">
+              <button className="w-[300px] md:w-[400px] lg:w-[500px] bg-white border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] hover:text-white text-[#404040] font-bold sm:py-4 md:px-9 py-3 px-5 rounded-full md:text-3xl text-2xl">
+                Sign In
+              </button>
+            </Link>
+
+            <Link to="/signup" className="mt-10">
+              <button className="w-[300px] md:w-[400px] lg:w-[500px] bg-[#404040] border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-9 py-3 px-5 rounded-full md:text-3xl text-2xl">
+                Sign Up
+              </button>
+            </Link>
+          </div>
+          <Footer />
         </div>
       </div>
-      <Footer />
     </>
   );
 }

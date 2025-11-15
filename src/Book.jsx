@@ -51,7 +51,7 @@ export default function Profile() {
 
   if (!bookData) {
     return (
-      <div className="w-full h-screen font-bold mx-auto text-center flex flex-col justify-center md:text-7xl text-5xl">
+      <div className="text-white w-full h-screen font-bold font-['Radley'] mx-auto text-center flex flex-col justify-center md:text-7xl text-5xl">
         Loading Book
       </div>
     );
