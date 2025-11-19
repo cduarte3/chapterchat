@@ -135,7 +135,7 @@ export default function BookDetail({ bookData, userId }) {
           opacity={1}
         />
       </div>
-      <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
+      <div className="min-h-screen bg-[#242626] bg-cover bg-no-repeat bg-fixed">
         <div className="min-h-screen">
           <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
             <nav>
@@ -244,8 +244,9 @@ export default function BookDetail({ bookData, userId }) {
                 style={{ backgroundImage: `url(${bookData.cover})` }}
               />
 
-              {/* Blur overlay */}
-              <div className="absolute inset-0 backdrop-blur-xl bg-black/20" />
+              {/* Progressively blur the image into a darker colour for readability*/}
+              <div className="absolute inset-0 backdrop-blur-xl bg-gradient-to-b from-black/20 via-black/40 to-black/70" />
+
               <div className="relative z-30 w-[60%] sm:w-[55%] md:w-[50%] lg:w-[40%] 2xl:w-[30%] aspect-[3/4] mb-5 sm:mb-10">
                 <img
                   src="/book.png"
@@ -258,7 +259,7 @@ export default function BookDetail({ bookData, userId }) {
                   className="absolute top-[1%] left-[7%] w-[92%] h-[98%] max-h-[99%] bottom-[-10%] object-cover shadow-lg object-fit rounded-xl"
                 />
               </div>
-              <div className=" border-2 border-white px-2 sm:px-14 py-8 rounded-3xl z-30 mx-5 sm:mx-20 flex flex-col justify-center">
+              <div className="px-2 sm:px-14 py-8 rounded-3xl z-30 mx-5 sm:mx-20 flex flex-col justify-center">
                 <p className="text-white text-2xl xl:text-3xl 2xl:text-4xl text-center">
                   {bookData.review}
                 </p>

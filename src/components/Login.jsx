@@ -6,7 +6,6 @@ import { FaWindowClose } from "react-icons/fa";
 import GradualBlur from "./GradualBlur";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-
 const Silk = lazy(() => import("./Silk"));
 
 export default function Login() {
@@ -194,7 +193,7 @@ export default function Login() {
           </Suspense>
         </div>
 
-        <div className="mt-[3rem]  relative flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 z-10">
+        <div className="mt-[3rem] relative flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 z-10">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto w-[40%] lg:w-[60%]"
@@ -284,7 +283,7 @@ export default function Login() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center mx-auto rounded-[15px] py-3 px-5 text-xl font-semibold bg-white border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] hover:text-white text-[#404040]"
+                  className="flex w-full justify-center mx-auto rounded-[15px] py-3 px-5 text-xl font-semibold bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040]"
                 >
                   Sign in
                 </button>

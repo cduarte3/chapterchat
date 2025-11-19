@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import { TiThMenu } from "react-icons/ti";
@@ -7,6 +7,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { FaWindowClose, FaSort, FaUserCircle, FaSearch } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { isOwnProfile, getCurrentUserId } from "../utils/auth";
+const Silk = lazy(() => import("./Silk"));
 import GradualBlur from "./GradualBlur";
 
 export default function Shelf({ userData }) {
@@ -78,9 +79,9 @@ export default function Shelf({ userData }) {
         case "addedDesc":
           return new Date(b.dateAdded) - new Date(a.dateAdded);
         case "ratingAsc":
-          return a.rating - b.rating;
+          return parseInt(a.rating) - parseInt(b.rating);
         case "ratingDesc":
-          return b.rating - a.rating;
+          return parseInt(b.rating) - parseInt(a.rating);
         case "newlyUpdated":
           return new Date(b.lastUpdated) - new Date(a.lastUpdated);
         default:
@@ -164,6 +165,21 @@ export default function Shelf({ userData }) {
           {hoveredBook.title}
         </div>
       )}
+      <div className="fixed inset-0 w-full h-full min-h-screen z-0">
+        <Suspense
+          fallback={
+            <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
+          }
+        >
+          <Silk
+            speed={6}
+            scale={1}
+            color="#565656"
+            noiseIntensity={1.5}
+            rotation={0}
+          />
+        </Suspense>
+      </div>
       <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
         <div
           className="min-h-screen pb-20"
@@ -278,7 +294,7 @@ export default function Shelf({ userData }) {
             />
           </div>
 
-          <div className="pt-28">
+          <div className="relative pt-28">
             <h1 className="font-bold mt-[2%] p-5 text-center flex flex-wrap justify-center lg:text-8xl md:text-7xl sm:text-6xl text-5xl mx-auto text-white font-['Radley'] gap-4">
               <span>{getPosessiveName(userData.username)}</span>
               <span className="">Shelf</span>

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import GradualBlur from "./GradualBlur";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { IoMdArrowRoundBack } from "react-icons/io";
+const Silk = lazy(() => import("./Silk"));
+import Footer from "./Footer";
 
 export default function UserProfile({ userData }) {
   const [username, setUsername] = useState("");
@@ -172,19 +174,34 @@ export default function UserProfile({ userData }) {
           className="z-50 h-12 md:h-16 fixed mx-auto left-0 right-0 mt-6"
         />
       </div>
-      <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
+      <div className="fixed inset-0 w-full h-full min-h-screen">
+        <Suspense
+          fallback={
+            <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
+          }
+        >
+          <Silk
+            speed={6}
+            scale={1}
+            color="#565656"
+            noiseIntensity={1.5}
+            rotation={0}
+          />
+        </Suspense>
+      </div>
+      <div className="relative flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 z-10">
         <div className="flex h-full flex-col">
-          <h2 className="flex flex-wrap justify-center items-center gap-4 text-white mt-40 md:mt-48 py-0 md:py-3 text-center mx-auto text-6xl font-bold tracking-tight font-['Radley'] max-w-[85%]">
+          <h2 className="flex flex-wrap justify-center items-center gap-4 text-white mt-20 py-0 md:py-3 text-center mx-auto text-6xl font-bold tracking-tight font-['Radley'] max-w-[85%]">
             <span>{getPosessiveName(userData.username)}</span>
             <span>Profile</span>
           </h2>
 
-          <div className="mt-10 mx-auto">
-            <form onSubmit={formValidation} className="mb-10 lg:mb-15">
-              <div className="space-y-6">
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form onSubmit={formValidation} className="space-y-6">
+              <div>
                 <label
                   htmlFor="title"
-                  className="block text-4xl font-bold text-white font-['Radley']"
+                  className="font-['Radley'] block text-2xl text-white"
                 >
                   Username
                 </label>
@@ -194,76 +211,69 @@ export default function UserProfile({ userData }) {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder={userData.username}
-                    className="block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl"
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                   />
                 </div>
               </div>
-              <div className="mb-8">
-                <div className="flex items-center my-4 justify-between ">
-                  <label
-                    htmlFor="Email"
-                    className="block text-4xl font-bold text-white font-['Radley']"
-                  >
-                    Email
-                  </label>
-                </div>
+              <div>
+                <label
+                  htmlFor="Email"
+                  className="font-['Radley'] block text-2xl text-white"
+                >
+                  Email
+                </label>
                 <div className="mt-2 shadow">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={userData.email}
-                    className="block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl"
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                   />
                 </div>
               </div>
               <div>
-                <div className="flex items-center my-4 justify-between">
-                  <label
-                    htmlFor="Password"
-                    className="block text-4xl font-bold text-white font-['Radley']"
-                  >
-                    Password
-                  </label>
-                </div>
+                <label
+                  htmlFor="Password"
+                  className="font-['Radley'] block text-2xl text-white"
+                >
+                  Password
+                </label>
                 <div className="mt-2 shadow">
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl"
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                   />
                 </div>
               </div>
               <div>
-                <div className="flex items-center my-4 justify-between">
-                  <label
-                    htmlFor="confirmPassword"
-                    className="block text-4xl font-bold text-white font-['Radley']"
-                  >
-                    Confirm Password
-                  </label>
-                </div>
+                <label
+                  htmlFor="confirmPassword"
+                  className="font-['Radley'] block text-2xl text-white"
+                >
+                  Confirm Password
+                </label>
                 <div className="mt-2 shadow">
                   <input
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl"
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                   />
                 </div>
               </div>
               <div className="mt-10 mb-20">
                 <button
                   type="submit"
-                  className="flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-full py-4 px-5 text-2xl font-semibold bg-[rgb(36,36,38)] border-2 border-white text-white hover:bg-[rgb(52,52,53)]"
+                  className="flex w-full justify-center mx-auto rounded-[15px] py-3 px-5 text-xl font-semibold bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040]"
                 >
                   Confirm
                 </button>
                 <button
-                  type="submit"
                   onClick={cancelForm}
-                  className="mt-5 flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-full py-4 px-5 text-2xl font-semibold bg-red-600 hover:bg-red-900 border-white border-2 text-white"
+                  className="mt-5 flex w-full justify-center mx-auto rounded-[15px] py-3 px-5 text-xl font-semibold bg-red-600 hover:bg-red-900 border-white border-2 text-white"
                 >
                   Cancel
                 </button>
@@ -310,6 +320,7 @@ export default function UserProfile({ userData }) {
           opacity={1}
         />
       </div>
+      <Footer />
     </>
   );
 }

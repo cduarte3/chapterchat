@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import BasicRating from "./Modify_rating";
 import GradualBlur from "./GradualBlur";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { IoMdArrowRoundBack } from "react-icons/io";
+const Silk = lazy(() => import("./Silk"));
+import Footer from "./Footer";
+import { FaSearch } from "react-icons/fa";
 
 export default function AddBook({ userId }) {
   const [author, setAuthor] = useState("");
@@ -265,7 +268,22 @@ export default function AddBook({ userId }) {
           className="z-50 h-12 md:h-16 fixed mx-auto left-0 right-0 mt-6"
         />
       </div>
-      <div className="min-h-screen bg-[url('/background-shelf.png')] bg-cover bg-no-repeat bg-fixed">
+      <div className="fixed inset-0 w-full h-full min-h-screen">
+        <Suspense
+          fallback={
+            <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
+          }
+        >
+          <Silk
+            speed={6}
+            scale={1}
+            color="#565656"
+            noiseIntensity={1.5}
+            rotation={0}
+          />
+        </Suspense>
+      </div>
+      <div className="relative min-h-screen">
         <div className="flex h-full flex-col">
           <h2 className="text-white mt-40 md:mt-48 py-0 md:py-3 text-center mx-auto text-6xl font-bold tracking-tight font-['Radley'] max-w-[85%]">
             Add Book Review
@@ -280,7 +298,7 @@ export default function AddBook({ userId }) {
               <div className="space-y-6 flex flex-col xl:mx-auto xl:min-w-[400px] 2xl:min-w-[550px]">
                 <label
                   htmlFor="title"
-                  className="block text-4xl font-bold text-white font-['Radley']"
+                  className="block text-3xl font-bold text-white font-['Radley']"
                 >
                   Title
                 </label>
@@ -290,11 +308,11 @@ export default function AddBook({ userId }) {
                   onChange={handleTitleChange}
                   maxLength="50"
                   required
-                  className="block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl"
+                  className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                 />
                 <label
                   htmlFor="author"
-                  className="block text-4xl font-bold text-white font-['Radley']"
+                  className="block text-3xl font-bold text-white font-['Radley']"
                 >
                   Author
                 </label>
@@ -304,11 +322,11 @@ export default function AddBook({ userId }) {
                   onChange={handleAuthorChange}
                   maxLength="25"
                   required
-                  className="block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl"
+                  className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                 />
                 <label
                   htmlFor="genre"
-                  className="block text-4xl font-bold text-white font-['Radley']"
+                  className="block text-3xl font-bold text-white font-['Radley']"
                 >
                   Genre
                 </label>
@@ -317,7 +335,7 @@ export default function AddBook({ userId }) {
                   id="genre"
                   value={genre}
                   onChange={handleGenreChange}
-                  className={`block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl ${
+                  className={`bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px] ${
                     genre === "" ? "text-gray-400" : "text-white"
                   } `}
                 >
@@ -340,7 +358,7 @@ export default function AddBook({ userId }) {
                 </select>
                 <label
                   htmlFor="review"
-                  className="block text-4xl font-bold text-white font-['Radley']"
+                  className="block text-3xl font-bold text-white font-['Radley']"
                 >
                   Review
                 </label>
@@ -349,7 +367,7 @@ export default function AddBook({ userId }) {
                   onChange={handleReviewChange}
                   maxLength="600"
                   required
-                  className="resize-none block w-full border-transparent border-2 border-white bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-6 py-3 px-5 rounded-3xl md:text-2xl text-2xl"
+                  className="resize-none bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                   style={{ maxHeight: "300px", minHeight: "300px" }}
                 />
 
@@ -372,7 +390,7 @@ export default function AddBook({ userId }) {
                 <div className="flex justify-between items-center mb-8">
                   <label
                     htmlFor="cover"
-                    className="block font-bold text-white text-4xl font-['Radley']"
+                    className="block font-bold text-white text-3xl font-['Radley']"
                   >
                     Cover
                   </label>
@@ -381,9 +399,9 @@ export default function AddBook({ userId }) {
                       <button
                         type="button"
                         onClick={fetchCover}
-                        className="px-4 py-2 bg-[rgb(36,36,38)] border-2 border-white text-white rounded-full hover:bg-[rgb(52,52,53)] text-xl"
+                        className="p-4 shadow-custom-dark border-4 border-white bg-transparent backdrop-blur text-white rounded-full"
                       >
-                        Search
+                        <FaSearch size={24} />
                       </button>
                     )}
                     {cover && (
@@ -420,14 +438,13 @@ export default function AddBook({ userId }) {
                 <button
                   type="submit"
                   onClick={submit}
-                  className="flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-full py-4 px-5 text-2xl font-semibold bg-[rgb(36,36,38)] border-2 border-white text-white hover:bg-[rgb(52,52,53)]"
+                  className="flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-[15px] py-3 px-5 text-xl font-semibold bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040]"
                 >
                   Confirm
                 </button>
                 <button
-                  type="submit"
                   onClick={goHome}
-                  className="mt-5 flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-full py-4 px-5 text-2xl font-semibold bg-red-600 hover:bg-red-900 border-white border-2 text-white"
+                  className="mt-5 flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-[15px] py-3 px-5 text-xl font-semibold bg-red-600 hover:bg-red-900 border-white border-2 text-white"
                 >
                   Cancel
                 </button>
