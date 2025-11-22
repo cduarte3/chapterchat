@@ -12,6 +12,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 const Silk = lazy(() => import("./Silk"));
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Home() {
   const lenis = new Lenis();
 
@@ -25,6 +27,41 @@ export default function Home() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".custom-spotlight-card",
+        { y: 50, opacity: 0 },
+        {
+          opacity: 1,
+          y: 0,
+          scrollTrigger: {
+            trigger: ".custom-spotlight-card",
+            start: "top 80%",
+            end: "top 30%",
+            scrub: 1,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".craft-section",
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          scrollTrigger: {
+            trigger: ".craft-section",
+            start: "top 80%",
+            end: "top 30%",
+            scrub: 1,
+          },
+        }
+      );
+    });
+    return () => ctx.revert();
   }, []);
 
   const navigate = useNavigate();
@@ -250,57 +287,49 @@ export default function Home() {
         />
 
         <div className="-mt-[1px] relative w-full min-h-screen flex flex-col bg-[#242626]">
-          <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center font-['Radley'] mt-20">
-            <span className="lg:hidden">
-              Welcome to
-              <br />
-              Chaptr
-            </span>
-            <span className="hidden lg:block">Welcome to Chaptr</span>
-          </h1>
+          <SpotlightCard
+            className="custom-spotlight-card w-[90%] h-full max-w-[1800px] mx-auto mt-20 md:mt-32 lg:mt-44 mb-10 border border-gray-100 flex flex-col items-center text-center p-10 lg:p-20"
+            spotlightColor="rgba(255, 255, 255, 0.2)"
+          >
+            <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl xl:text-[7rem] 2xl:text-9xl drop-shadow-lg text-center font-['Radley']">
+              <span className="lg:hidden">
+                Welcome to
+                <br />
+                Chaptr
+              </span>
+              <span className="hidden lg:block">Welcome to Chaptr</span>
+            </h1>
+            <h2 className="py-10 lg:py-20 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white">
+              Chaptr is your personal digital library, designed to make book
+              reviews simple and intuitive.
+            </h2>
+            <Link to="/login">
+              <button className="font-['Radley'] flex w-[180px] lg:w-[300px] justify-center mx-auto rounded-[15px] py-3 px-5 text-2xl lg:text-3xl font-semibold bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040]">
+                Get Started
+              </button>
+            </Link>
+          </SpotlightCard>
 
-          <SpotlightCard
-            className="custom-spotlight-card w-[80%] sm:w-[70%] lg:w-[50%] xl:max-w-[40%] mx-auto mt-44 mb-10 border border-gray-100 flex flex-col items-center text-center justify-center"
-            spotlightColor="rgba(255, 255, 255, 0.2)"
-          >
-            <img
-              src="/shelf.svg"
-              alt="Bookshelf"
-              className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
-            />
-            <h1 className="py-10 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white font-bold">
-              Chaptr is your digital collection for beloved reads using a
-              personalized virtual bookshelf.
+          <div className="h-full relative w-full px-10 lg:px-20 craft-section overflow-hidden">
+            <div className="grid lg:grid-cols-12 gap-12 mb-24 border-b border-white/10 pb-16"></div>
+            <div className="absolute -right-24 top-20 w-[30rem] h-[30rem] lg:w-[70rem] lg:h-[70rem] border border-white/5 rounded-full"></div>
+
+            <h1 className="text-white text-5xl sm:text-7xl lg:text-8xl xl:text-[7rem] 2xl:text-9xl drop-shadow-lg mx-auto lg:mx-0 text-center lg:text-left mb-20 font-['Radley']">
+              CRAFT YOUR
+              <br />
+              <i>DIGITAL</i>
+              <br />
+              COLLECTION
             </h1>
-          </SpotlightCard>
-          <SpotlightCard
-            className="custom-spotlight-card w-[80%] sm:w-[70%] lg:w-[50%] xl:max-w-[40%] mx-auto my-10 border border-gray-100 flex flex-col items-center text-center justify-center"
-            spotlightColor="rgba(255, 255, 255, 0.2)"
-          >
-            <img
-              src="/chat.svg"
-              alt="Text bubble"
-              className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
-            />
-            <h1 className="py-10 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white font-bold">
-              Simply record the Title, Author, Description, Genre, Rating, and
-              select a Cover Image.
-            </h1>
-          </SpotlightCard>
-          <SpotlightCard
-            className="custom-spotlight-card w-[80%] sm:w-[70%] lg:w-[50%] xl:max-w-[40%] mx-auto my-10 border border-gray-100 flex flex-col items-center text-center justify-center"
-            spotlightColor="rgba(255, 255, 255, 0.2)"
-          >
-            <img
-              src="/book-icon.png"
-              alt="Open book"
-              className="w-28 h-28 md:w-52 md:h-52 lg:w-72 lg:h-72"
-            />
-            <h1 className="py-10 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white font-bold">
-              As your collection grows, Chaptr becomes a living archive of your
-              thoughts and past favourites.
-            </h1>
-          </SpotlightCard>
+
+            <h2 className="text-2xl md:text-3xl 2xl:text-4xl text-white w-[90%] lg:max-w-[70%] mx-auto lg:mx-0 text-center lg:text-left">
+              As your collection grows, Chaptr becomes a searchable archive,
+              helping you revisit past favourites, track what you've read, and
+              stay connected to the stories that matter to you.
+            </h2>
+
+            <div className="grid lg:grid-cols-12 gap-12 mb-24 border-b border-white/10 pb-16"></div>
+          </div>
 
           <div className="flex flex-col mx-auto pt-10 mb-[8rem] font-['Radley'] items-center">
             <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center mt-20">
