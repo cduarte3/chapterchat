@@ -11,6 +11,9 @@ import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 const Silk = lazy(() => import("./Silk"));
+import { TbMessageCheck } from "react-icons/tb";
+import { RiBookMarkedLine } from "react-icons/ri";
+import { LuBookOpenText } from "react-icons/lu";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,26 +40,57 @@ export default function Home() {
         {
           opacity: 1,
           y: 0,
+          duration: 0.6,
           scrollTrigger: {
             trigger: ".custom-spotlight-card",
-            start: "top 80%",
-            end: "top 30%",
-            scrub: 1,
+            start: "top 70%",
+            toggleActions: "play none none reverse",
           },
         }
       );
 
       gsap.fromTo(
         ".craft-section",
-        { opacity: 0, y: 50 },
+        { y: 50, opacity: 0 },
         {
           opacity: 1,
+          duration: 0.6,
           y: 0,
           scrollTrigger: {
             trigger: ".craft-section",
-            start: "top 80%",
-            end: "top 30%",
-            scrub: 1,
+            start: "top 55%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".step-card",
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: window.innerWidth < 1024 ? 0.2 : 0,
+          scrollTrigger: {
+            trigger: ".steps-container",
+            start: "top 75%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".get-started-section",
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: ".get-started-section",
+            start: "top 75%",
+            toggleActions: "play none none reverse",
           },
         }
       );
@@ -293,9 +327,9 @@ export default function Home() {
           >
             <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl xl:text-[7rem] 2xl:text-9xl drop-shadow-lg text-center font-['Radley']">
               <span className="lg:hidden">
-                Welcome to
+                Welcome
                 <br />
-                Chaptr
+                to Chaptr
               </span>
               <span className="hidden lg:block">Welcome to Chaptr</span>
             </h1>
@@ -310,29 +344,86 @@ export default function Home() {
             </Link>
           </SpotlightCard>
 
-          <div className="h-full relative w-full px-10 lg:px-20 craft-section overflow-hidden">
-            <div className="grid lg:grid-cols-12 gap-12 mb-24 border-b border-white/10 pb-16"></div>
-            <div className="absolute -right-24 top-20 w-[30rem] h-[30rem] lg:w-[70rem] lg:h-[70rem] border border-white/5 rounded-full"></div>
+          <div className="h-full relative w-full px-5 lg:px-20 overflow-hidden">
+            <div className="craft-section">
+              <div className="grid lg:grid-cols-12 gap-12 mb-24 border-b border-white/30 pb-16"></div>
+              <div className="absolute -right-[9rem] lg:-right-80 2xl:-right-34 top-20 w-[35rem] h-[35rem] lg:w-[70rem] lg:h-[70rem] border border-white/30 rounded-full"></div>
 
-            <h1 className="text-white text-5xl sm:text-7xl lg:text-8xl xl:text-[7rem] 2xl:text-9xl drop-shadow-lg mx-auto lg:mx-0 text-center lg:text-left mb-20 font-['Radley']">
-              CRAFT YOUR
-              <br />
-              <i>DIGITAL</i>
-              <br />
-              COLLECTION
-            </h1>
+              <h1 className="text-white text-5xl sm:text-7xl lg:text-8xl xl:text-[7rem] 2xl:text-9xl drop-shadow-lg mx-auto lg:mx-0 text-center lg:text-left mb-20 font-['Radley']">
+                CRAFT YOUR
+                <br />
+                <i>DIGITAL</i>
+                <br />
+                COLLECTION
+              </h1>
 
-            <h2 className="text-2xl md:text-3xl 2xl:text-4xl text-white w-[90%] lg:max-w-[70%] mx-auto lg:mx-0 text-center lg:text-left">
-              As your collection grows, Chaptr becomes a searchable archive,
-              helping you revisit past favourites, track what you've read, and
-              stay connected to the stories that matter to you.
-            </h2>
+              <h2 className="text-2xl md:text-3xl 2xl:text-4xl text-white w-[90%] lg:max-w-[70%] mx-auto lg:mx-0 text-center lg:text-left">
+                As your collection grows, Chaptr becomes a searchable archive,
+                helping you revisit past thoughts, track what you've read, and
+                stay connected to the stories that matter to you.
+              </h2>
+            </div>
+            <div>
+              <div className="grid lg:grid-cols-12 gap-12 mb-24 border-b border-white/30 pb-16"></div>
 
-            <div className="grid lg:grid-cols-12 gap-12 mb-24 border-b border-white/10 pb-16"></div>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-24 text-white steps-container">
+                <div className="flex flex-col items-center lg:items-start lg:mx-auto step-card">
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className="border-white/30 border-2 w-24 h-24 rounded-full flex items-center justify-center flex-shrink-0">
+                      <RiBookMarkedLine size={48} />
+                    </div>
+                    <h1 className="font-['Radley'] text-2xl 2xl:text-3xl">
+                      Step 1
+                    </h1>
+                  </div>
+                  <h2 className="font-['Radley'] text-3xl 2xl:text-5xl mb-5 text-center lg:text-left">
+                    CATALOG
+                  </h2>
+                  <h3 className="text-lg 2xl:text-2xl text-center lg:text-left">
+                    Enter book details, your thoughts, and select a Cover.
+                  </h3>
+                </div>
+                <div className="flex flex-col items-center lg:items-start lg:mx-auto step-card">
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className="border-white/30 border-2 w-24 h-24 rounded-full flex items-center justify-center flex-shrink-0">
+                      <TbMessageCheck size={48} />
+                    </div>
+                    <h1 className="font-['Radley'] text-2xl 2xl:text-3xl">
+                      Step 2
+                    </h1>
+                  </div>
+                  <h2 className="font-['Radley'] text-3xl 2xl:text-5xl mb-5 text-center lg:text-left">
+                    BUILD
+                  </h2>
+                  <h3 className="text-lg 2xl:text-2xl text-center lg:text-left">
+                    Save or modify entries and watch your personalized library
+                    grow.
+                  </h3>
+                </div>
+                <div className="flex flex-col items-center lg:items-start lg:mx-auto step-card">
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className="border-white/30 border-2 w-24 h-24 rounded-full flex items-center justify-center flex-shrink-0">
+                      <LuBookOpenText size={48} />
+                    </div>
+                    <h1 className="font-['Radley'] text-2xl 2xl:text-3xl">
+                      Step 3
+                    </h1>
+                  </div>
+                  <h2 className="font-['Radley'] text-3xl 2xl:text-5xl mb-5 text-center lg:text-left">
+                    REVISIT
+                  </h2>
+                  <h3 className="text-lg 2xl:text-2xl text-center lg:text-left">
+                    Browse your collection, and reflect on past favourites.
+                  </h3>
+                </div>
+              </div>
+
+              <div className="grid lg:grid-cols-12 gap-12 mb-24 border-b border-white/30"></div>
+            </div>
           </div>
 
-          <div className="flex flex-col mx-auto pt-10 mb-[8rem] font-['Radley'] items-center">
-            <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center mt-20">
+          <div className="flex flex-col mx-auto mb-[8rem] font-['Radley'] items-center get-started-section">
+            <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center my-5">
               <span className="lg:hidden">
                 Get Started
                 <br />
@@ -340,14 +431,14 @@ export default function Home() {
               </span>
               <span className="hidden lg:block">Get Started Now</span>
             </h1>
-            <Link to="/login" className="mt-10 mb-1">
-              <button className="w-[300px] md:w-[400px] lg:w-[500px] bg-white border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] hover:text-white text-[#404040] font-bold sm:py-4 md:px-9 py-3 px-5 rounded-full md:text-3xl text-2xl">
+            <Link to="/login" className="mt-10">
+              <button className="w-[300px] md:w-[400px] 2xl:w-[450px] bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040] font-semibold sm:py-4 md:px-9 py-3 px-5 rounded-[15px] md:text-3xl text-2xl">
                 Sign In
               </button>
             </Link>
 
-            <Link to="/signup" className="mt-10">
-              <button className="w-[300px] md:w-[400px] lg:w-[500px] bg-[#404040] border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] text-white font-bold sm:py-4 md:px-9 py-3 px-5 rounded-full md:text-3xl text-2xl">
+            <Link to="/signup" className="mt-8">
+              <button className="w-[300px] md:w-[400px] 2xl:w-[450px] bg-[#404040] border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] text-white font-semibold sm:py-4 md:px-9 py-3 px-5 rounded-[15px] md:text-3xl text-2xl">
                 Sign Up
               </button>
             </Link>
