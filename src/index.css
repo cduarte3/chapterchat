@@ -20,3 +20,11 @@ body {
   background: linear-gradient(45deg, #7b7481, #9b8b99);
   opacity: 0.1;
 }
+
+.custom-spotlight-card,
+.craft-section,
+.step-card,
+.get-started-section {
+  opacity: 0;
+  transform: translateY(50px);
+}

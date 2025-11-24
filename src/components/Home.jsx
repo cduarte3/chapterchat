@@ -29,10 +29,6 @@ export default function Home() {
   gsap.ticker.lagSmoothing(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     let ctx = gsap.context(() => {
       gsap.fromTo(
         ".custom-spotlight-card",
