@@ -1,16 +1,16 @@
-import React from 'react';
-import './index.css';
-import Feedback from './components/Feedback';
-import Footer from './components/Footer';
-
+import React from "react";
+import "./index.css";
+import Feedback from "./components/Feedback";
+import Footer from "./components/Footer";
 
 function Support() {
-  return (<>
-    <div className="h-full">
-      <Feedback/>
-    </div>
-    <Footer />
-  </>
+  return (
+    <>
+      <div className="h-full">
+        <Feedback />
+      </div>
+      <Footer />
+    </>
   );
 }
 

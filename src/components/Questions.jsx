@@ -102,9 +102,9 @@ export default function Questions() {
         </nav>
         <div onClick={handleNav} className="block md:hidden">
           {!nav ? (
-            <FaWindowClose size={50} color="rgb(64,63,68)" />
+            <FaWindowClose size={50} color="white" />
           ) : (
-            <TiThMenu size={50} color="rgb(64,63,68)" />
+            <TiThMenu size={50} color="white" />
           )}
         </div>
 
@@ -113,14 +113,14 @@ export default function Questions() {
           ref={navRef}
           className={
             !nav
-              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
+              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-70 border-gray-100"
               : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
           }
         >
-          <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
+          <ul className="pt-4 uppercase text-2xl text-white font-['Radley']">
             <li>
               <img
-                src="/logo_white.png"
+                src="/chaptr-logo-lg.png"
                 alt="Logo in light beige"
                 className="w-[10rem] justify-center mx-auto py-5"
               ></img>
