@@ -144,7 +144,7 @@ export default function Questions() {
           Frequently Asked Questions
         </h1>
         <div className="pt-10 md:pt-20">
-          <h2 className="font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
+          <h2 className="font-bold font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
             What is Chaptr?
           </h2>
           <p className="pt-5 text-center flex flex-col  md:text-3xl sm:text-3xl text-xl mx-auto justify-center">
@@ -162,36 +162,25 @@ export default function Questions() {
       <div className="relative z-20">
         <div className="pt-5 flex-col grid lg:grid-cols-2 grid-cols-1">
           <div className="lg:pt-28 pt-10 lg:w-[110%]">
-            <div className="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[8px] rounded-t-xl h-[172px] max-w-[301px] md:h-[294px] 2xl:h-[391px] md:max-w-[512px] 2xl:max-w-[690px]">
-              <div className="rounded-lg overflow-hidden h-[156px] md:h-[278px] 2xl:h-[372px] bg-white dark:bg-gray-800">
-                <img
-                  src="desk-dash.png"
-                  className="h-[156px] md:h-[278px] 2xl:h-[372px] w-full rounded-lg"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div className="relative mx-auto bg-gray-900 dark:bg-gray-700 rounded-b-xl rounded-t-sm h-[17px] max-w-[351px] md:h-[21px] 2xl:h-[31px] md:max-w-[597px] 2xl:max-w-[770px]">
-              <div className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-xl w-[56px] h-[5px] md:w-[96px] md:h-[8px] bg-gray-800"></div>
-            </div>
+            <img
+              src="desk_dash.png"
+              className="mx-auto h-[200px] sm:h-[250px] md:h-[300px] xl:h-[350px] 2xl:h-[450px]"
+              alt="Bookshelf"
+            />
           </div>
 
           <div className="py-10 lg:py-5">
-            <div className="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
-              <div className="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[72px] rounded-s-lg"></div>
-              <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[124px] rounded-s-lg"></div>
-              <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[178px] rounded-s-lg"></div>
-              <div className="h-[64px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -end-[17px] top-[142px] rounded-e-lg"></div>
-              <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-gray-800">
-                <img src="dash.png" className="w-[272px] h-[572px]" alt="" />
-              </div>
-            </div>
+            <img
+              src="mobile_dash.png"
+              className="mx-auto w-[200px] sm:w-[250px] xl:w-[275px] 2xl:w-[315px]"
+              alt="Mobile Bookshelf"
+            />
           </div>
         </div>
       </div>
       <div className="relative z-20 lg:max-w-[80%] max-w-[80%] mx-auto items-center h-full pb-20 text-white">
         <div className="pt-20">
-          <h2 className="font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
+          <h2 className="font-bold font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
             What information can I include about a book?
           </h2>
           <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center">
@@ -202,7 +191,7 @@ export default function Questions() {
           </p>
         </div>
         <div className="pt-20">
-          <h2 className="font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
+          <h2 className="font-bold font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
             How can I add a book to my shelf?
           </h2>
           <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center">
@@ -212,7 +201,7 @@ export default function Questions() {
           </p>
         </div>
         <div className="pt-20">
-          <h2 className="font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
+          <h2 className="font-bold font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
             What extra features will be added soon?
           </h2>
           <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center">
@@ -228,7 +217,7 @@ export default function Questions() {
                 to="https://github.com/cduarte3/chapterchat?tab=readme-ov-file#what-extra-features-will-be-added-soon"
                 target="_blank"
               >
-                <button className="flex md:w-[250px] justify-center rounded-xl bg-[rgb(64,63,68)] px-3 py-5 md:text-2xl text-xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]">
+                <button className="font-['Radley'] flex w-full justify-center mx-auto rounded-[15px] py-3 px-7 lg:px-10 text-2xl lg:text-3xl font-semibold bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040]">
                   Features
                 </button>
               </Link>
@@ -236,7 +225,7 @@ export default function Questions() {
 
             <div className="flex justify-center md:justify-start md:pl-10">
               <Link to="/support">
-                <button className="flex md:w-[250px] justify-center rounded-xl bg-[rgb(64,63,68)] px-3 py-5 md:text-2xl text-xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]">
+                <button className="font-['Radley'] flex w-full justify-center mx-auto rounded-[15px] py-3 px-7 lg:px-10 text-2xl lg:text-3xl font-semibold bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040]">
                   Support
                 </button>
               </Link>

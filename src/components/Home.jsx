@@ -291,7 +291,7 @@ export default function Home() {
             />
             <div className="md:block hidden">
               <img
-                src="macbook.png"
+                src="desk_dash.png"
                 className="w-auto mx-auto px-10 lg:pr-10"
                 alt="Laptop with app screenshot"
               />
