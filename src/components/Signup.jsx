@@ -1,10 +1,25 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { HiMiniHome } from "react-icons/hi2";
 import { TiThMenu } from "react-icons/ti";
 import { FaWindowClose } from "react-icons/fa";
+import GradualBlur from "./GradualBlur";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Footer from "./Footer";
+
+const Silk = lazy(() => import("./Silk"));
 
 export default function Signup() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const navigate = useNavigate();
   const [nav, setNav] = useState(true);
   const navRef = useRef();
@@ -35,16 +50,18 @@ export default function Signup() {
     const email = e.target.email.value;
     const username = e.target.username.value;
     const password = e.target.password.value;
-    const confirmPassword = e.target.confirmPassword.value; // get confirm password
+    const confirmPassword = e.target.confirmPassword.value;
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setErrorMessage("Passwords do not match");
+      handleOpen();
       return;
     } else if (password.length < 6) {
-      alert("Password must be at least 6 characters");
+      setErrorMessage("Password must be at least 6 characters");
+      handleOpen();
       return;
     } else {
-      const url = `${process.env.REACT_APP_API_URL}/signup`;
+      const url = `${import.meta.env.VITE_API_URL}/signup`;
       const requestOptions = {
         method: "POST",
         headers: {
@@ -63,43 +80,66 @@ export default function Signup() {
       try {
         const response = await fetch(url, requestOptions);
         if (response.status === 400 || response.status === 409) {
-          alert("Email or Username already in use");
-        } else {
+          setErrorMessage("Email or Username already in use");
+          handleOpen();
+        } else if (response.status === 201) {
           const data = await response.json();
-          navigate(`/user/${data}`);
+          console.log(data);
+
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("userId", data.id);
+
+          navigate(`/user/${data.id}`);
+        } else {
+          setErrorMessage("Server connection error. Please try again later.");
+          handleOpen();
         }
       } catch (error) {
         console.error("Error:", error);
+        setErrorMessage("Connection error. Please try again later.");
+        handleOpen();
       }
     }
   }
 
   return (
-    <div>
-      <div className="top-0 left-0 right-0 bg-[rgb(255,254,224)] z-50 px-4 flex justify-between items-center py-4 shadow-md">
+    <>
+      <div className="fixed top-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
+        <GradualBlur
+          target="parent"
+          position="top"
+          height="6rem"
+          strength={1}
+          divCount={10}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+        />
+      </div>
+      <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
         <nav>
-          <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-            <li className="md:px-5">
+          <ul className="flex justify-center items-center space-x-4 md:px-5 text-xl px-1">
+            <li>
               <img
-                src="/logo.png"
-                alt="ChapterChat Logo"
-                className="w-20 md:w-28"
-              ></img>
+                src="chaptr-logo-sm.png"
+                className="w-[150px]"
+                alt="Chaptr Logo"
+              />
             </li>
           </ul>
         </nav>
         <nav className="hidden md:flex">
-          <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-            <li className="md:px-3">
+          <ul className="flex justify-center items-center font-bold space-x-4 text-white sm:text-3xl md:px-5 text-xl px-1">
+            <li>
               <HiMiniHome size={60} onClick={goHome} />
             </li>
           </ul>
         </nav>
         <div onClick={handleNav} className="block md:hidden">
           {!nav ? (
-            <FaWindowClose size={50} color="rgb(64,63,68)" />
+            <FaWindowClose size={50} color="white" />
           ) : (
-            <TiThMenu size={50} color="rgb(64,63,68)" />
+            <TiThMenu size={50} color="white" />
           )}
         </div>
 
@@ -108,14 +148,14 @@ export default function Signup() {
           ref={navRef}
           className={
             !nav
-              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
+              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-70 border-gray-100"
               : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
           }
         >
-          <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
+          <ul className="pt-4 uppercase text-2xl text-white font-['Radley']">
             <li>
               <img
-                src="/logo_white.png"
+                src="/chaptr-logo-lg.png"
                 alt="Logo in light beige"
                 className="w-[10rem] justify-center mx-auto py-5"
               ></img>
@@ -126,126 +166,172 @@ export default function Signup() {
             <li className="p-4 font-bold">
               <Link to="/login">SIGN IN</Link>
             </li>
-            <li className="p-4 font-bold">
-              <Link to="/signup">SIGN UP</Link>
-            </li>
           </ul>
         </div>
       </div>
-      <div className="flex min-h-screen flex-col justify-center px-6 lg:px-8 mb-12 md:mt-12 lg:mt-0">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto w-[40%] md:w-[50%] lg:w-[60%] mt-5"
-            src="logo.png"
-            alt="ChapterChat Logo"
-          />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign up for an account
-          </h2>
-        </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            className="space-y-6"
-            action="#"
-            method="POST"
-            onSubmit={handleSubmit}
+      <div className="relative w-full min-h-screen overflow-hidden z-0">
+        <div className="absolute inset-0 w-full h-full min-h-screen">
+          <Suspense
+            fallback={
+              <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
+            }
           >
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-lg font-bold leading-6 text-gray-900"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
-                  placeholder="example@email.com"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="username"
-                className="block text-lg font-bold leading-6 text-gray-900"
-              >
-                Username
-              </label>
-              <div className="mt-2">
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  autoComplete="username"
-                  required
-                  className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
-                  placeholder="Username"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-lg font-bold leading-6 text-gray-900"
-                >
-                  Password (min. 6 chars)
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  placeholder="Password"
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="confirmPassword"
-                  className="block text-lg font-bold leading-6 text-gray-900"
-                >
-                  Confirm Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  placeholder="Password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
-              >
-                Sign up
-              </button>
-            </div>
-          </form>
+            <Silk
+              speed={6}
+              scale={1}
+              color="#565656"
+              noiseIntensity={1.5}
+              rotation={0}
+            />
+          </Suspense>
         </div>
+        <div className="mt-[3rem]  relative flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 z-10">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <img
+              className="mx-auto w-[40%] lg:w-[60%]"
+              src="chaptr-logo-lg.png"
+              alt="Chaptr Logo"
+            />
+            <h2 className="mt-10 text-center text-5xl font-bold leading-9 tracking-tight text-white font-['Radley']">
+              Sign up
+            </h2>
+          </div>
+
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box className="text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12  bg-[#242626] border-2 border-white rounded-3xl p-6 max-w-[80%] sm:max-w-md">
+              <img
+                src="alert.png"
+                alt="Alert icon"
+                className="mx-auto w-[40%]"
+              ></img>
+              <h1 className="text-white font-bold text-3xl mt-2 font-['Radley']">
+                Error
+              </h1>
+              <h2 className="text-white text-xl mt-2 font-['Libre Baskerville']">
+                {errorMessage}
+              </h2>
+            </Box>
+          </Modal>
+
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form
+              className="space-y-6"
+              action="#"
+              method="POST"
+              onSubmit={handleSubmit}
+            >
+              <div>
+                <label
+                  htmlFor="email"
+                  className="font-['Radley'] block text-2xl text-white"
+                >
+                  Email address
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
+                    placeholder="example@email.com"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="username"
+                  className="font-['Radley'] block text-2xl text-white"
+                >
+                  Username
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    autoComplete="username"
+                    required
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
+                    placeholder="Username"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="password"
+                    className="font-['Radley'] block text-2xl text-white"
+                  >
+                    Password (min. 6 chars)
+                  </label>
+                </div>
+                <div className="mt-2">
+                  <input
+                    placeholder="Password"
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="font-['Radley'] block text-2xl text-white"
+                  >
+                    Confirm Password
+                  </label>
+                </div>
+                <div className="mt-2">
+                  <input
+                    placeholder="Password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  className="flex w-full justify-center mx-auto rounded-[15px] py-3 px-5 text-xl font-semibold bg-white border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] hover:text-white text-[#404040]"
+                >
+                  Sign up
+                </button>
+                <h2 className="mt-4 text-center text-2xl leading-9 tracking-tight text-white">
+                  Already have an account?{" "}
+                  <a
+                    href="/login"
+                    className="font-bold hover:underline text-blue-300"
+                  >
+                    Sign in
+                  </a>
+                </h2>
+              </div>
+            </form>
+          </div>
+        </div>
+        <Footer />
       </div>
-    </div>
+    </>
   );
 }

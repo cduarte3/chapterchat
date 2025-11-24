@@ -1,6 +1,11 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
+import GradualBlur from "./GradualBlur";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import { IoMdArrowRoundBack } from "react-icons/io";
+const Silk = lazy(() => import("./Silk"));
+import Footer from "./Footer";
 
 export default function UserProfile({ userData }) {
   const [username, setUsername] = useState("");
@@ -8,6 +13,23 @@ export default function UserProfile({ userData }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const [modalIcon, setModalIcon] = useState("/alert.png");
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalHeader, setModalHeader] = useState("Error");
+  const [open, setOpen] = React.useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [isModalLocked, setIsModalLocked] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    if (!isModalLocked) {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   function cancelForm() {
     const token = localStorage.getItem("token");
@@ -19,11 +41,14 @@ export default function UserProfile({ userData }) {
     }
   }
 
+  const getPosessiveName = (name) => {
+    return name.endsWith("s") ? `${name}'` : `${name}'s`;
+  };
+
   async function formValidation(event) {
     event.preventDefault();
     const token = localStorage.getItem("token");
     try {
-      // if the token is undefined, send the user to the login page
       if (!token) {
         console.error("Token is not available");
         navigate("/login");
@@ -33,13 +58,25 @@ export default function UserProfile({ userData }) {
         email === userData.email ||
         (username === "" && email === "" && password === "")
       ) {
-        alert("No changes were made. All empty or possible conflicting fields");
+        setModalIcon("/alert.png");
+        setModalHeader("No Changes");
+        setModalMessage("All empty or non-changed fields.");
+        setIsModalLocked(false);
+        handleOpen();
         return;
       } else if (password && password !== confirmPassword) {
-        alert("Passwords do not match");
+        setModalIcon("/alert.png");
+        setModalHeader("Password Mismatch");
+        setModalMessage("Passwords do not match.");
+        setIsModalLocked(false);
+        handleOpen();
         return;
       } else if (password && password.length < 6) {
-        alert("Password must be at least 6 characters");
+        setModalIcon("/lock.png");
+        setModalHeader("Weak Password");
+        setModalMessage("Password must be at least 6 characters.");
+        setIsModalLocked(false);
+        handleOpen();
         return;
       }
       const requestOptions = {
@@ -55,15 +92,34 @@ export default function UserProfile({ userData }) {
       };
 
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/users/${userData.id}/update`,
+        `${import.meta.env.VITE_API_URL}/users/${userData.id}/update`,
         requestOptions
       );
       if (response.status === 200) {
-        alert("Account profile updated.");
-        navigate(`/user/${userData.id}`);
+        setModalIcon("/success.png");
+        setModalHeader("Success!");
+        setModalMessage("Profile updated successfully.");
+        setIsModalLocked(true);
+        setCountdown(5);
+        handleOpen();
+
+        const timer = setInterval(() => {
+          setCountdown((prev) => {
+            if (prev <= 1) {
+              clearInterval(timer);
+              navigate(`/user/${userData.id}`);
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
       }
       if (response.status === 409) {
-        alert("Username OR Email already exists.");
+        setModalIcon("/alert.png");
+        setModalHeader("Conflict!");
+        setModalMessage("Username OR Email already exists.");
+        setIsModalLocked(false);
+        handleOpen();
         return;
       }
       if (!response.ok) {
@@ -92,27 +148,60 @@ export default function UserProfile({ userData }) {
     */
 
   return (
-    <div>
-      <div className="flex h-full flex-col justify-center px-6 py-12 lg:px-8 my-10">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto w-[40%] lg:w-[60%]"
-            src="/logo.png"
-            alt="ChapterChat Logo"
+    <>
+      <div className="fixed top-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
+        <GradualBlur
+          target="parent"
+          position="top"
+          height="6rem"
+          strength={1}
+          divCount={10}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+        />
+      </div>
+      <div>
+        <IoMdArrowRoundBack
+          size={60}
+          color="white"
+          onClick={cancelForm}
+          className="z-50 h-12 md:h-16 fixed mx-auto left-2 md:left-10 mt-6 cursor-pointer"
+        />
+        <img
+          src="/chaptr-logo-sm.png"
+          alt="Chaptr Logo"
+          className="z-50 h-12 md:h-16 fixed mx-auto left-0 right-0 mt-6"
+        />
+      </div>
+      <div className="fixed inset-0 w-full h-full min-h-screen">
+        <Suspense
+          fallback={
+            <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
+          }
+        >
+          <Silk
+            speed={6}
+            scale={1}
+            color="#565656"
+            noiseIntensity={1.5}
+            rotation={0}
           />
-
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              {userData.username}'s Profile
-            </h2>
-          </div>
+        </Suspense>
+      </div>
+      <div className="relative flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 z-10">
+        <div className="flex h-full flex-col">
+          <h2 className="flex flex-wrap justify-center items-center gap-4 text-white mt-20 py-0 md:py-3 text-center mx-auto text-6xl font-bold tracking-tight font-['Radley'] max-w-[85%]">
+            <span>{getPosessiveName(userData.username)}</span>
+            <span>Profile</span>
+          </h2>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form onSubmit={formValidation}>
-              <div className="mb-8">
+            <form onSubmit={formValidation} className="space-y-6">
+              <div>
                 <label
                   htmlFor="title"
-                  className="block text-lg font-bold leading-6 text-gray-900"
+                  className="font-['Radley'] block text-2xl text-white"
                 >
                   Username
                 </label>
@@ -122,76 +211,69 @@ export default function UserProfile({ userData }) {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder={userData.username}
-                    className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                   />
                 </div>
               </div>
-              <div className="mb-8">
-                <div className="flex items-center my-4 justify-between ">
-                  <label
-                    htmlFor="Email"
-                    className="block text-lg font-bold leading-6 text-gray-900"
-                  >
-                    Email
-                  </label>
-                </div>
+              <div>
+                <label
+                  htmlFor="Email"
+                  className="font-['Radley'] block text-2xl text-white"
+                >
+                  Email
+                </label>
                 <div className="mt-2 shadow">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={userData.email}
-                    className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                   />
                 </div>
               </div>
               <div>
-                <div className="flex items-center my-4 justify-between">
-                  <label
-                    htmlFor="Password"
-                    className="block text-lg font-bold leading-6 text-gray-900"
-                  >
-                    Password
-                  </label>
-                </div>
+                <label
+                  htmlFor="Password"
+                  className="font-['Radley'] block text-2xl text-white"
+                >
+                  Password
+                </label>
                 <div className="mt-2 shadow">
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                   />
                 </div>
               </div>
               <div>
-                <div className="flex items-center my-4 justify-between">
-                  <label
-                    htmlFor="confirmPassword"
-                    className="block text-lg font-bold leading-6 text-gray-900"
-                  >
-                    Confirm Password
-                  </label>
-                </div>
+                <label
+                  htmlFor="confirmPassword"
+                  className="font-['Radley'] block text-2xl text-white"
+                >
+                  Confirm Password
+                </label>
                 <div className="mt-2 shadow">
                   <input
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 pl-3"
+                    className="bg-[#242626] block w-full border-0 py-4 px-4 text-white shadow-sm ring-1 ring-inset ring-white placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[rgb(36,36,38)] text-lg sm:leading-6 rounded-[15px]"
                   />
                 </div>
               </div>
-              <div>
+              <div className="mt-10 mb-20">
                 <button
                   type="submit"
-                  className="flex w-full justify-center mt-8 rounded-md bg-[rgb(64,63,68)] px-3 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
+                  className="flex w-full justify-center mx-auto rounded-[15px] py-3 px-5 text-xl font-semibold bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040]"
                 >
-                  Update
+                  Confirm
                 </button>
                 <button
-                  type="button"
-                  className="flex w-full justify-center rounded-md bg-[rgb(64,63,68)] px-3 mt-4 py-2 text-2xl font-semibold leading-6 text-amber-50 shadow-sm hover:bg-[rgb(36,36,38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(36,36,38)]"
                   onClick={cancelForm}
+                  className="mt-5 flex w-full justify-center mx-auto rounded-[15px] py-3 px-5 text-xl font-semibold bg-red-600 hover:bg-red-900 border-white border-2 text-white"
                 >
                   Cancel
                 </button>
@@ -200,6 +282,45 @@ export default function UserProfile({ userData }) {
           </div>
         </div>
       </div>
-    </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        disableEscapeKeyDown={isModalLocked}
+      >
+        <Box className="text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12  bg-[#242626] border-2 border-white rounded-3xl p-6 max-w-[80%] sm:max-w-md">
+          <img
+            src={modalIcon}
+            alt="Alert icon"
+            className="mx-auto w-[40%]"
+          ></img>
+          <h1 className="text-white font-bold text-3xl mt-2 font-['Radley']">
+            {modalHeader}
+          </h1>
+          <h2 className="text-white text-xl mt-2 font-['Libre Baskerville']">
+            {modalMessage}
+          </h2>
+          {countdown > 0 && (
+            <h2 className="text-white text-lg mt-2 font-['Libre Baskerville']">
+              Redirecting in {countdown} second{countdown !== 1 ? "s" : ""}...
+            </h2>
+          )}
+        </Box>
+      </Modal>
+      <div className="fixed bottom-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
+        <GradualBlur
+          target="parent"
+          position="bottom"
+          height="2rem"
+          strength={1}
+          divCount={10}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+        />
+      </div>
+      <Footer />
+    </>
   );
 }

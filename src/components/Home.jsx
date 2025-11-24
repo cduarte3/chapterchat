@@ -1,66 +1,98 @@
-import React from "react";
-import { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Footer from "./Footer";
 import { FiLogOut } from "react-icons/fi";
 import { TiThMenu } from "react-icons/ti";
-import {
-  FaChevronLeft,
-  FaChevronRight,
-  FaUserCircle,
-  FaWindowClose,
-} from "react-icons/fa";
+import { FaUserCircle, FaWindowClose } from "react-icons/fa";
 import { TbBooks } from "react-icons/tb";
+import GradualBlur from "./GradualBlur";
+import SpotlightCard from "./SpotlightCard";
+import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+const Silk = lazy(() => import("./Silk"));
+import { TbMessageCheck } from "react-icons/tb";
+import { RiBookMarkedLine } from "react-icons/ri";
+import { LuBookOpenText } from "react-icons/lu";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
+  const lenis = new Lenis();
+
+  lenis.on("scroll", ScrollTrigger.update);
+
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+
+  gsap.ticker.lagSmoothing(0);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    let ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".custom-spotlight-card",
+        { y: 50, opacity: 0 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: ".custom-spotlight-card",
+            start: "top 70%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".craft-section",
+        { y: 50, opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.6,
+          y: 0,
+          scrollTrigger: {
+            trigger: ".craft-section",
+            start: "top 55%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".step-card",
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: window.innerWidth < 1024 ? 0.2 : 0,
+          scrollTrigger: {
+            trigger: ".steps-container",
+            start: "top 75%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".get-started-section",
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: ".get-started-section",
+            start: "top 75%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    });
+    return () => ctx.revert();
   }, []);
-
-  const [cimg, setCimg] = useState("0");
-  const nextCimg = () => {
-    if (cimg === "0") {
-      setCimg("1");
-    } else if (cimg === "1") {
-      setCimg("2");
-    } else if (cimg === "2") {
-      setCimg("0");
-    }
-  };
-
-  const prevCimg = () => {
-    setCimg(cimg === "0" ? "2" : cimg === "1" ? "0" : "1");
-  };
-
-  const images = [
-    {
-      url: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      alt: "Person Reading",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?q=80&w=2400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      alt: "Person Writing",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      alt: "People talking over coffee",
-    },
-  ];
-
-  const headings = ["READ", "REVIEW", "CHAT"];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (cimg === "0") {
-        setCimg("1");
-      } else if (cimg === "1") {
-        setCimg("2");
-      } else if (cimg === "2") {
-        setCimg("0");
-      }
-    }, 7000);
-
-    return () => clearInterval(timer);
-  }, [cimg]);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -96,38 +128,60 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setNav(true);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 bg-[rgb(255,254,224)] z-50 px-4 flex justify-between items-center py-4 shadow-md">
+      <div className="fixed top-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
+        <GradualBlur
+          target="parent"
+          position="top"
+          height="6rem"
+          strength={1}
+          divCount={10}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+        />
+      </div>
+      <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
         <nav>
-          <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-            <li className="md:px-5">
+          <ul className="flex justify-center items-center space-x-4 md:px-5 text-xl px-1">
+            <li>
               <img
-                src="/logo.png"
-                alt="ChapterChat Logo"
-                className="w-20 md:w-28"
-              ></img>
+                src="chaptr-logo-sm.png"
+                className="w-[150px]"
+                alt="Chaptr Logo"
+              />
             </li>
           </ul>
         </nav>
         <nav className="hidden md:flex">
-          <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] text-2xl font-['Inter']">
+          <ul className="flex justify-center items-center font-bold space-x-4 text-white text-2xl font-['Radley']">
             {!token && (
               <>
-                <li className="md:px-3">
-                  <Link
-                    to="/login"
-                    className="py-3 px-5 bg-[rgb(64,63,68)] rounded-full text-[rgb(255,254,224)]"
-                  >
-                    Sign In
+                <li className="md:px-3 py-3">
+                  <Link to="/login" className="px-5 hover:text-[rgb(82,82,82)]">
+                    SIGN IN
                   </Link>
                 </li>
-                <li className="md:px-3">
+                <li className="md:px-3 py-3">
                   <Link
                     to="/signup"
-                    className="py-3 px-5 bg-[rgb(64,63,68)] rounded-full text-[rgb(255,254,224)]"
+                    className="px-5 hover:text-[rgb(82,82,82)]"
                   >
-                    Sign Up
+                    SIGN UP
                   </Link>
                 </li>
               </>
@@ -149,9 +203,9 @@ export default function Home() {
         </nav>
         <div onClick={handleNav} className="block md:hidden">
           {!nav ? (
-            <FaWindowClose size={50} color="rgb(64,63,68)" />
+            <FaWindowClose size={50} color="white" />
           ) : (
-            <TiThMenu size={50} color="rgb(64,63,68)" />
+            <TiThMenu size={50} color="white" />
           )}
         </div>
 
@@ -160,14 +214,14 @@ export default function Home() {
           ref={navRef}
           className={
             !nav
-              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-[rgb(64,63,68)] opacity-95"
+              ? "fixed left-0 top-0 w-[50%] h-full border-r bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-70 border-gray-100"
               : "fixed left-[-100%] top-0 w-[50%] h-full border-r"
           }
         >
-          <ul className="pt-4 uppercase text-2xl text-[rgb(255,254,224)]">
+          <ul className="pt-4 uppercase text-2xl text-white font-['Radley']">
             <li>
               <img
-                src="/logo_white.png"
+                src="/chaptr-logo-lg.png"
                 alt="Logo in light beige"
                 className="w-[10rem] justify-center mx-auto py-5"
               ></img>
@@ -198,162 +252,194 @@ export default function Home() {
           </ul>
         </div>
       </div>
-
-      <div className="mt-3 relative w-full h-[75vh] md:h-screen object-cover">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-        <div className="absolute inset-0 flex items-center justify-between p-4">
-          <button
-            onClick={prevCimg}
-            className="pl-2 pt-4 hover:text-[rgb(64,63,68)] text-[rgb(255,254,224)] transition"
-          >
-            <FaChevronLeft size={24} />
-          </button>
-          <div className="absolute bottom-0 left-0 p-8 z-10">
-            <h1 className="text-[rgb(255,254,224)] text-7xl sm:text-8xl md:text-9xl lg:text-[20vh] xl:text-[30vh] drop-shadow-lg font-['Radley']">
-              {headings[parseInt(cimg)]}
-            </h1>
-          </div>
-
-          <button
-            onClick={nextCimg}
-            className="pr-2 pt-4 hover:text-[rgb(64,63,68)] text-[rgb(255,254,224)] transition"
-          >
-            <FaChevronRight size={24} />
-          </button>
-        </div>
-
-        <div className="h-full w-full overflow-hidden">
-          <img
-            src={images[parseInt(cimg)].url}
-            alt={images[parseInt(cimg)].alt}
-            className="w-full h-full object-cover transition-opacity duration-500"
-          />
-        </div>
-
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCimg(index.toString())}
-              className={`h-1 rounded-full ${
-                cimg === index.toString()
-                  ? "bg-[rgb(255,254,224)] w-10"
-                  : "bg-[rgb(64,63,68)] w-6"
-              }`}
-            />
-          ))}
-        </div>
+      <div className="fixed bottom-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
+        <GradualBlur
+          target="parent"
+          position="bottom"
+          height="2rem"
+          strength={1}
+          divCount={10}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+        />
       </div>
-      <div className="w-full min-h-screen flex flex-col bg-[rgb(64,63,68)] py-32">
-        <h1 className="text-[rgb(255,254,224)] text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center font-['Radley']">
-          <span className="lg:hidden">
-            Welcome to
-            <br />
-            ChapterChat
-          </span>
-          <span className="hidden lg:block">Welcome to ChapterChat</span>
-        </h1>
 
-        <div className="pt-20 md:hidden">
-          <div className="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
-            <div className="h-[32px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[72px] rounded-s-lg"></div>
-            <div className="h-[46px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[124px] rounded-s-lg"></div>
-            <div className="h-[46px] w-[3px] bg-[rgb(24,24,24)] absolute -start-[17px] top-[178px] rounded-s-lg"></div>
-            <div className="h-[64px] w-[3px] bg-[rgb(24,24,24)] absolute -end-[17px] top-[142px] rounded-e-lg"></div>
-            <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-[rgb(24,24,24)]">
-              <img src="dash.png" className="w-[272px] h-[572px]" alt="" />
-            </div>
-          </div>
-        </div>
+      <div className="fixed inset-0 w-full h-full min-h-screen z-0">
+        <Suspense
+          fallback={
+            <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
+          }
+        >
+          <Silk
+            speed={6}
+            scale={1}
+            color="#565656"
+            noiseIntensity={1.5}
+            rotation={0}
+          />
+        </Suspense>
+      </div>
 
-        <div className="pt-20 hidden md:block">
-          <div className="relative mx-auto border-[rgb(24,24,24)] bg-[rgb(24,24,24)] border-[8px] rounded-t-xl  h-[294px] max-w-[512px]">
-            <div className="rounded-lg overflow-hidden h-[278px] bg-[rgb(24,24,24)]">
+      <div className="relative lg:fixed inset-0 w-full h-full z-5 min-h-screen justify-center items-center flex">
+        <div className="w-full mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 pt-20 mx-auto justify-center items-center content-center pb-20 lg:pb-0">
+            <img
+              src="chaptr-logo-lg.png"
+              alt="Chaptr logo"
+              className="w-auto h-[55%] mx-auto"
+            />
+            <div className="md:block hidden">
               <img
-                src="desk-dash.png"
-                className="h-[278px] w-full rounded-lg"
-                alt=""
+                src="desk_dash.png"
+                className="w-auto mx-auto px-10 lg:pr-10"
+                alt="Laptop with app screenshot"
+              />
+            </div>
+            <div className="md:hidden">
+              <img
+                src="mobile_dash.png"
+                className="w-auto mx-auto px-10 sm:px-32"
+                alt="Smartphone with app screenshot"
               />
             </div>
           </div>
-          <div className="relative mx-auto bg-[rgb(150,150,150)] rounded-b-xl rounded-t-sm h-[21px] max-w-[597px] shadow-md">
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-xl w-[96px] h-[8px] bg-[rgb(80,80,80)]"></div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 pt-32">
-          <div className="flex justify-center order-2 sm:order-1">
-            <img
-              src="/shelf.svg"
-              alt="Bookshelf"
-              className="w-40 h-40 md:w-60 md:h-60 lg:w-80 lg:h-80"
-            />
-          </div>
-          <div className="flex items-center justify-center order-1 sm:order-2">
-            <h1 className="text-center sm:text-right text-lg md:text-xl lg:text-3xl 2xl:text-4xl max-w-[90%] sm:pr-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
-              ChapterChat is your digital collection for beloved reads. This
-              creative platform empowers you to effortlessly curate a
-              personalized virtual bookshelf, a testament to your literary
-              journey.
-            </h1>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 pt-20">
-          <div className="flex items-center justify-center">
-            <h1 className="text-center sm:text-left text-lg md:text-xl lg:text-3xl 2xl:text-4xl max-w-[90%] sm:pl-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
-              Simply record the details of each book you've read – Title,
-              Author, Description, Genre, Rating (out of 5 stars), and a Cover
-              Image.
-            </h1>
-          </div>
-          <div className="flex justify-center">
-            <img
-              src="/chat.svg"
-              alt="Bookshelf"
-              className="w-40 h-40 md:w-60 md:h-60 lg:w-80 lg:h-80"
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 pt-20">
-          <div className="flex justify-center order-2 sm:order-1">
-            <img
-              src="/book.svg"
-              alt="Bookshelf"
-              className="w-40 h-40 md:w-60 md:h-60 lg:w-80 lg:h-80"
-            />
-          </div>
-          <div className="flex items-center justify-center order-1 sm:order-2">
-            <h1 className="text-center sm:text-right text-lg md:text-xl lg:text-3xl 2xl:text-4xl max-w-[90%] sm:pr-20 text-[rgb(255,254,224)] font-bold pb-10 sm:pb-0">
-              As your collection grows, ChapterChat becomes more than just a
-              list of reviews; it transforms into a living archive of your
-              literary history, allowing for a space to revisit past favorites,
-              or share any critiques about a certain title.
-            </h1>
-          </div>
         </div>
       </div>
-      <div className="max-w-[800px] w-full h-full  mx-auto text-center flex flex-col justify-center py-24 ">
-        <h1 className="text-[rgb(64,63,68)] text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center font-['Radley'] pb-10">
-          Get Started Now
-        </h1>
-        <img
-          src="logo.png"
-          alt="ChapterChat Logo"
-          className="mx-auto w-[40%]"
-          style={{ display: "block" }}
-        ></img>
-        <div className="grid max-w-screen-xl grid-cols-2 gap-8  mx-auto pt-10">
-          <Link to="/login">
-            <button className="bg-[rgb(64,63,68)] hover:bg-[rgb(36,36,38)] text-[rgb(255,254,224)] font-bold sm:py-4 md:px-9 py-3 px-5 rounded-full md:text-3xl text-2xl">
-              Sign In
-            </button>
-          </Link>
 
-          <Link to="/signup">
-            <button className="bg-[rgb(64,63,68)] hover:bg-[rgb(36,36,38)] text-[rgb(255,254,224)] font-bold sm:py-4 md:px-9 py-3 px-5 rounded-full md:text-3xl text-2xl">
-              Sign Up
-            </button>
-          </Link>
+      <div className="relative z-10">
+        <div className="lg:min-h-screen"></div>
+
+        <img
+          src="book_div.svg"
+          alt="Waves"
+          className="w-full rotate-180 relative z-20 h-10 sm:h-16 md:h-18 lg:h-20 xl:h-24"
+        />
+
+        <div className="-mt-[1px] relative w-full min-h-screen flex flex-col bg-[#242626]">
+          <SpotlightCard
+            className="custom-spotlight-card w-[90%] h-full max-w-[1800px] mx-auto mt-20 md:mt-32 lg:mt-44 mb-10 border border-gray-100 flex flex-col items-center text-center p-10 lg:p-20"
+            spotlightColor="rgba(255, 255, 255, 0.2)"
+          >
+            <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl xl:text-[7rem] 2xl:text-9xl drop-shadow-lg text-center font-['Radley']">
+              <span className="lg:hidden">
+                Welcome
+                <br />
+                to Chaptr
+              </span>
+              <span className="hidden lg:block">Welcome to Chaptr</span>
+            </h1>
+            <h2 className="py-10 lg:py-20 text-center text-2xl md:text-3xl 2xl:text-4xl max-w-[90%] sm:max-w-[80%] text-white">
+              Chaptr is your personal digital library, designed to make book
+              reviews simple and intuitive.
+            </h2>
+            <Link to="/login">
+              <button className="font-['Radley'] flex w-[180px] lg:w-[300px] justify-center mx-auto rounded-[15px] py-3 px-5 text-2xl lg:text-3xl font-semibold bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040]">
+                Get Started
+              </button>
+            </Link>
+          </SpotlightCard>
+
+          <div className="h-full relative w-full px-5 lg:px-20 overflow-hidden">
+            <div className="craft-section">
+              <div className="grid lg:grid-cols-12 gap-12 mb-24 border-b border-white/30 pb-16"></div>
+              <div className="absolute -right-[9rem] lg:-right-80 2xl:-right-34 top-20 w-[35rem] h-[35rem] lg:w-[70rem] lg:h-[70rem] border border-white/30 rounded-full"></div>
+
+              <h1 className="text-white text-5xl sm:text-7xl lg:text-8xl xl:text-[7rem] 2xl:text-9xl drop-shadow-lg mx-auto lg:mx-0 text-center lg:text-left mb-20 font-['Radley']">
+                CRAFT YOUR
+                <br />
+                <i>DIGITAL</i>
+                <br />
+                COLLECTION
+              </h1>
+
+              <h2 className="text-2xl md:text-3xl 2xl:text-4xl text-white w-[90%] lg:max-w-[70%] mx-auto lg:mx-0 text-center lg:text-left">
+                As your collection grows, Chaptr becomes a searchable archive,
+                helping you revisit past thoughts, track what you've read, and
+                stay connected to the stories that matter to you.
+              </h2>
+            </div>
+            <div>
+              <div className="grid lg:grid-cols-12 gap-12 mb-24 border-b border-white/30 pb-16"></div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-24 text-white steps-container">
+                <div className="flex flex-col items-center lg:items-start lg:mx-auto step-card">
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className="border-white/30 border-2 w-24 h-24 rounded-full flex items-center justify-center flex-shrink-0">
+                      <RiBookMarkedLine size={48} />
+                    </div>
+                    <h1 className="font-['Radley'] text-2xl 2xl:text-3xl">
+                      Step 1
+                    </h1>
+                  </div>
+                  <h2 className="font-['Radley'] text-3xl 2xl:text-5xl mb-5 text-center lg:text-left">
+                    CATALOG
+                  </h2>
+                  <h3 className="text-lg 2xl:text-2xl text-center lg:text-left">
+                    Enter book details, your thoughts, and select a Cover.
+                  </h3>
+                </div>
+                <div className="flex flex-col items-center lg:items-start lg:mx-auto step-card">
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className="border-white/30 border-2 w-24 h-24 rounded-full flex items-center justify-center flex-shrink-0">
+                      <TbMessageCheck size={48} />
+                    </div>
+                    <h1 className="font-['Radley'] text-2xl 2xl:text-3xl">
+                      Step 2
+                    </h1>
+                  </div>
+                  <h2 className="font-['Radley'] text-3xl 2xl:text-5xl mb-5 text-center lg:text-left">
+                    BUILD
+                  </h2>
+                  <h3 className="text-lg 2xl:text-2xl text-center lg:text-left">
+                    Save or modify entries and watch your personalized library
+                    grow.
+                  </h3>
+                </div>
+                <div className="flex flex-col items-center lg:items-start lg:mx-auto step-card">
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className="border-white/30 border-2 w-24 h-24 rounded-full flex items-center justify-center flex-shrink-0">
+                      <LuBookOpenText size={48} />
+                    </div>
+                    <h1 className="font-['Radley'] text-2xl 2xl:text-3xl">
+                      Step 3
+                    </h1>
+                  </div>
+                  <h2 className="font-['Radley'] text-3xl 2xl:text-5xl mb-5 text-center lg:text-left">
+                    REVISIT
+                  </h2>
+                  <h3 className="text-lg 2xl:text-2xl text-center lg:text-left">
+                    Browse your collection, and reflect on past favourites.
+                  </h3>
+                </div>
+              </div>
+
+              <div className="grid lg:grid-cols-12 gap-12 mb-24 border-b border-white/30"></div>
+            </div>
+          </div>
+
+          <div className="flex flex-col mx-auto mb-[8rem] font-['Radley'] items-center get-started-section">
+            <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl drop-shadow-lg text-center my-5">
+              <span className="lg:hidden">
+                Get Started
+                <br />
+                Now
+              </span>
+              <span className="hidden lg:block">Get Started Now</span>
+            </h1>
+            <Link to="/login" className="mt-10">
+              <button className="w-[300px] md:w-[400px] 2xl:w-[450px] bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040] font-semibold sm:py-4 md:px-9 py-3 px-5 rounded-[15px] md:text-3xl text-2xl">
+                Sign In
+              </button>
+            </Link>
+
+            <Link to="/signup" className="mt-8">
+              <button className="w-[300px] md:w-[400px] 2xl:w-[450px] bg-[#404040] border-transparent border-2 hover:border-[#404040] hover:bg-[rgb(36,36,38)] text-white font-semibold sm:py-4 md:px-9 py-3 px-5 rounded-[15px] md:text-3xl text-2xl">
+                Sign Up
+              </button>
+            </Link>
+          </div>
+          <Footer />
         </div>
       </div>
     </>
