@@ -7,6 +7,7 @@ import GradualBlur from "./GradualBlur";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 const Silk = lazy(() => import("./Silk"));
+import Footer from "./Footer";
 
 export default function Login() {
   useEffect(() => {
@@ -289,6 +290,7 @@ export default function Login() {
             </form>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );

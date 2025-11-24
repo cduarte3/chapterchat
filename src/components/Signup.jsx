@@ -6,6 +6,7 @@ import { FaWindowClose } from "react-icons/fa";
 import GradualBlur from "./GradualBlur";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import Footer from "./Footer";
 
 const Silk = lazy(() => import("./Silk"));
 
@@ -329,6 +330,7 @@ export default function Signup() {
             </form>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );

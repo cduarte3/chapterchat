@@ -236,8 +236,12 @@ export default function AddBook({ userId }) {
       // const data = await response.json();
       navigate(`/user/${activeUserId}`);
     } catch (error) {
-      console.error("Error:", error);
-      alert("Error adding book. Please try again.");
+      console.error("Error adding review:", error);
+      setErrorHeader("Error!");
+      setErrorMessage(
+        "Unable to submit the book review. Please try again later."
+      );
+      handleOpen();
     }
   }
 
@@ -438,13 +442,13 @@ export default function AddBook({ userId }) {
                 <button
                   type="submit"
                   onClick={submit}
-                  className="flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-[15px] py-3 px-5 text-xl font-semibold bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040]"
+                  className="flex w-full sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-[15px] py-3 px-5 text-xl font-semibold bg-white border-transparent border-2 hover:border-white hover:bg-[rgb(105,105,105)] hover:text-white text-[#404040]"
                 >
                   Confirm
                 </button>
                 <button
                   onClick={goHome}
-                  className="mt-5 flex w-[200px] sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-[15px] py-3 px-5 text-xl font-semibold bg-red-600 hover:bg-red-900 border-white border-2 text-white"
+                  className="mt-5 flex w-full sm:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto justify-center rounded-[15px] py-3 px-5 text-xl font-semibold bg-red-600 hover:bg-red-900 border-white border-2 text-white"
                 >
                   Cancel
                 </button>
@@ -486,6 +490,8 @@ export default function AddBook({ userId }) {
             opacity={1}
           />
         </div>
+
+        <Footer />
       </div>
     </>
   );

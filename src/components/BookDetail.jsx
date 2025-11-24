@@ -234,7 +234,7 @@ export default function BookDetail({ bookData, userId }) {
             <h1 className="font-['Radley'] font-bold mt-[2%] p-5 text-center flex flex-col xl:text-8xl sm:text-7xl text-5xl mx-auto justify-center text-white">
               {bookData.title}
             </h1>
-            <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-2xl mx-auto justify-center text-white">
+            <h2 className="text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-2xl mx-auto justify-center text-white">
               {bookData.author}
             </h2>
             <hr className="xl:w-[75%] w-[90%] h-1 mx-auto my-4 border-0 rounded md:my-10 bg-white" />
@@ -284,6 +284,12 @@ export default function BookDetail({ bookData, userId }) {
                   </h2>
                   <h3 className="text-center flex flex-col xl:text-4xl sm:text-3xl text-2xl mx-auto justify-center text-white mt-6">
                     {getGenreDisplay(bookData.genre)}
+                  </h3>
+                  <h2 className="text-center flex flex-col xl:text-5xl sm:text-4xl text-3xl mx-auto justify-center text-white mt-6 font-['Radley'] font-bold">
+                    Added:
+                  </h2>
+                  <h3 className="text-center flex flex-col xl:text-4xl sm:text-3xl text-2xl mx-auto justify-center text-white mt-6">
+                    {new Date(bookData.dateAdded).toLocaleDateString("en-US")}
                   </h3>
                 </div>
               </div>
