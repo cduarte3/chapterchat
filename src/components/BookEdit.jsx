@@ -253,6 +253,18 @@ export default function BookEdit({ bookData, userId, bookId }) {
           opacity={1}
         />
       </div>
+      <div className="fixed bottom-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
+        <GradualBlur
+          target="parent"
+          position="bottom"
+          height="2rem"
+          strength={1}
+          divCount={10}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+        />
+      </div>
       <div>
         <IoMdArrowRoundBack
           size={60}
@@ -449,6 +461,7 @@ export default function BookEdit({ bookData, userId, bookId }) {
               </div>
             </form>
           </div>
+          <Footer />
         </div>
         {/* Modal */}
         <Modal

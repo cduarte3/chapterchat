@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import BookEdit from "./components/BookEdit";
 import { useParams, useNavigate } from "react-router-dom";
-import Footer from "./components/Footer";
+import { isOwnProfile } from "./utils/auth";
 
 export default function Edit() {
   const { userId, bookId } = useParams();
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [bookData, setBookData] = useState(null);
+  const isCurrentUserProfile = isOwnProfile(userId);
 
   useEffect(() => {
     const url = `${
@@ -17,7 +18,13 @@ export default function Edit() {
     const fetchBookData = async () => {
       try {
         if (!token) {
-          console.error("Token is undefined");
+          console.error("Token is not available");
+          navigate("/login");
+          return;
+        }
+
+        if (!isCurrentUserProfile) {
+          console.error("User ID is incorrect for profile access");
           navigate("/");
           return;
         }
@@ -48,7 +55,7 @@ export default function Edit() {
     };
 
     fetchBookData();
-  }, [userId, bookId, token, navigate]);
+  }, [userId, bookId, token, navigate, isCurrentUserProfile]);
 
   if (!bookData) {
     return (
@@ -62,8 +69,6 @@ export default function Edit() {
       <div className="min-h-screen h-full">
         <BookEdit bookData={bookData} userId={userId} bookId={bookId} />
       </div>
-
-      <Footer />
     </>
   );
 }

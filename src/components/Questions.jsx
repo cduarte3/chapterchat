@@ -1,10 +1,11 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, lazy, Suspense } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { TiThMenu } from "react-icons/ti";
 import { HiMiniHome } from "react-icons/hi2";
-import { FaUserCircle, FaWindowClose } from "react-icons/fa";
-import { TbBooks } from "react-icons/tb";
+import { FaWindowClose } from "react-icons/fa";
+import GradualBlur from "./GradualBlur";
+const Silk = lazy(() => import("./Silk"));
 
 export default function Questions() {
   useEffect(() => {
@@ -13,7 +14,6 @@ export default function Questions() {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
   const [nav, setNav] = useState(true);
   const navRef = useRef();
 
@@ -31,51 +31,68 @@ export default function Questions() {
     navigate("/");
   };
 
-  const goProfile = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/user/" + userId + "/profile");
-      return;
-    }
-  };
-
-  const goShelf = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/user/" + userId);
-      return;
-    } else {
-      navigate("/");
-    }
-  };
-
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 bg-[rgb(255,254,224)] z-50 px-4 flex justify-between items-center py-4 shadow-md">
+      <div className="fixed top-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
+        <GradualBlur
+          target="parent"
+          position="top"
+          height="6rem"
+          strength={1}
+          divCount={10}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+        />
+      </div>
+      <div className="fixed bottom-0 left-0 right-0 z-40 hidden landscape:max-lg:hidden landscape:block">
+        <GradualBlur
+          target="parent"
+          position="bottom"
+          height="2rem"
+          strength={1}
+          divCount={10}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+        />
+      </div>
+
+      <div className="fixed inset-0 w-full h-full min-h-screen z-0">
+        <Suspense
+          fallback={
+            <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800" />
+          }
+        >
+          <Silk
+            speed={6}
+            scale={1}
+            color="#565656"
+            noiseIntensity={1.5}
+            rotation={0}
+          />
+        </Suspense>
+      </div>
+
+      <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
         <nav>
-          <ul className="flex justify-center items-center space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
-            <li className="md:px-5">
+          <ul className="flex justify-center items-center space-x-4 md:px-5 text-xl px-1">
+            <li>
               <img
-                src="/logo.png"
-                alt="ChapterChat Logo"
-                className="w-20 md:w-28"
-              ></img>
+                src="chaptr-logo-sm.png"
+                className="w-[150px]"
+                alt="Chaptr Logo"
+              />
             </li>
           </ul>
         </nav>
         <nav className="hidden md:flex">
-          <ul className="flex justify-center items-center font-bold space-x-4 text-[rgb(64,63,68)] sm:text-3xl md:px-5 text-xl px-1">
+          <ul className="flex justify-center items-center font-bold space-x-4 text-white sm:text-3xl md:px-5 text-xl px-1">
             <li className="md:px-3">
               <HiMiniHome size={60} onClick={goHome} />
             </li>
             {token && (
               <>
-                <li className="md:px-3" onClick={goShelf}>
-                  <TbBooks size={60} />
-                </li>
-                <li className="md:px-3" onClick={goProfile}>
-                  <FaUserCircle size={60} />
-                </li>
                 <li className="md:px-5">
                   <FiLogOut size={60} onClick={logOut} />
                 </li>
@@ -113,12 +130,6 @@ export default function Questions() {
             </li>
             {token && (
               <>
-                <li className="p-4 font-bold" onClick={goShelf}>
-                  <Link>BOOKSHELF</Link>
-                </li>
-                <li className="p-4 font-bold" onClick={goProfile}>
-                  <Link>PROFILE</Link>
-                </li>
                 <li className="p-4 font-bold" onClick={logOut}>
                   <Link>LOG OUT</Link>
                 </li>
@@ -127,28 +138,28 @@ export default function Questions() {
           </ul>
         </div>
       </div>
-      <div className="lg:max-w-[80%] max-w-[80%] mx-auto items-center h-full pt-28">
-        <h1 className="font-black mt-[2%] p-5 text-center flex flex-col xl:text-7xl md:text-6xl sm:text-6xl text-5xl mx-auto justify-center text-[rgb(64,63,68)]">
+
+      <div className="relative lg:max-w-[80%] max-w-[80%] mx-auto items-center h-full pt-28 z-20 text-white">
+        <h1 className="font-bold font-['Radley'] mt-[2%] p-5 text-center flex flex-col xl:text-7xl md:text-6xl sm:text-6xl text-5xl mx-auto justify-center">
           Frequently Asked Questions
         </h1>
         <div className="pt-10 md:pt-20">
-          <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center text-[rgb(64,63,68)]">
-            What is ChapterChat?
+          <h2 className="font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
+            What is Chaptr?
           </h2>
-          <p className="pt-5 text-center flex flex-col  md:text-3xl sm:text-3xl text-xl mx-auto justify-center text-[rgb(64,63,68)]">
-            ChapterChat is your digital collection for beloved reads. This
-            creative platform empowers you to effortlessly curate a personalized
-            virtual bookshelf, a testament to your literary journey. Simply
-            record the details of each book you've read – Title, Author,
-            Description, Rating (out of 5 stars), and a Cover Image. As your
-            collection grows, ChapterChat becomes more than just a list; it
-            transforms into a living archive of your literary passions, a space
-            to revisit past favorites, or remember what you didn't enjoy about a
-            certain title. Explore the magic of reading now with ChapterChat.
+          <p className="pt-5 text-center flex flex-col  md:text-3xl sm:text-3xl text-xl mx-auto justify-center">
+            Chaptr is your digital collection for beloved reads. This creative
+            platform empowers you to effortlessly curate a personalized virtual
+            bookshelf. Simply record the details of each book you've read –
+            Title, Author, Description, Rating (out of 5 stars), and a Cover
+            Image. As your collection grows, Chaptr becomes more than just a
+            list; it transforms into a living archive of your literary passions,
+            a space to revisit past favorites, or remember what you didn't enjoy
+            about a certain title.
           </p>
         </div>
       </div>
-      <div>
+      <div className="relative z-20">
         <div className="pt-5 flex-col grid lg:grid-cols-2 grid-cols-1">
           <div className="lg:pt-28 pt-10 lg:w-[110%]">
             <div className="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[8px] rounded-t-xl h-[172px] max-w-[301px] md:h-[294px] 2xl:h-[391px] md:max-w-[512px] 2xl:max-w-[690px]">
@@ -178,12 +189,12 @@ export default function Questions() {
           </div>
         </div>
       </div>
-      <div className="lg:max-w-[80%] max-w-[80%] mx-auto items-center h-full pb-20">
+      <div className="relative z-20 lg:max-w-[80%] max-w-[80%] mx-auto items-center h-full pb-20 text-white">
         <div className="pt-20">
-          <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center text-[rgb(64,63,68)]">
+          <h2 className="font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
             What information can I include about a book?
           </h2>
-          <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center text-[rgb(64,63,68)]">
+          <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center">
             Books you review can contain information fields such as Title,
             Author, Review Description, Genre, Star rating out of 5, and a cover
             that is applied for you automatically once inputting a title and
@@ -191,20 +202,20 @@ export default function Questions() {
           </p>
         </div>
         <div className="pt-20">
-          <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center text-[rgb(64,63,68)]">
+          <h2 className="font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
             How can I add a book to my shelf?
           </h2>
-          <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center text-[rgb(64,63,68)]">
+          <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center">
             Once you've signed up for an account or signed into your existing
             account, simply click on the '+' icon in the top left of your
             bookshelf to get started.
           </p>
         </div>
         <div className="pt-20">
-          <h2 className="font-bold text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center text-[rgb(64,63,68)]">
+          <h2 className="font-['Radley'] text-center flex flex-col xl:text-5xl md:text-4xl sm:text-4xl text-3xl mx-auto justify-center">
             What extra features will be added soon?
           </h2>
-          <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center text-[rgb(64,63,68)]">
+          <p className="pt-5 text-center flex flex-col xl:text-4xl md:text-3xl sm:text-3xl text-1xl mx-auto justify-center">
             To view upcoming additions to the site, click the 'Features' button
             below. To request new features, and/or report a bug or other issue
             with the site, please visit the 'Support' Button below. Any feedback

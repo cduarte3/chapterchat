@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import { TiThMenu } from "react-icons/ti";
-import { TbBooks } from "react-icons/tb";
+import { PiBooksFill } from "react-icons/pi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { FaWindowClose, FaSort, FaUserCircle, FaSearch } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
@@ -194,6 +194,19 @@ export default function Shelf({ userData }) {
           }}
           */
         >
+          <div className="fixed z-[100] left-0 right-0 top-5 hidden md:block">
+            <nav>
+              <ul className="flex justify-center items-center space-x-4 md:px-5 text-xl px-1">
+                <li>
+                  <img
+                    src="/chaptr-logo-sm.png"
+                    className="w-[150px]"
+                    alt="Chaptr Logo"
+                  />
+                </li>
+              </ul>
+            </nav>
+          </div>
           <div className="fixed top-0 left-0 right-0 px-4 flex justify-between items-center py-4 z-[100]">
             <nav>
               <ul className="flex justify-center items-center space-x-4 md:px-3 text-xl">
@@ -227,7 +240,7 @@ export default function Shelf({ userData }) {
                 )}
                 {!isCurrentUserProfile && (
                   <li className="md:px-3 cursor-pointer" onClick={goToMyShelf}>
-                    <TbBooks size={60} />
+                    <PiBooksFill size={60} />
                   </li>
                 )}
                 <li className="md:px-3 cursor-pointer" onClick={logOut}>

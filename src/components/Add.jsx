@@ -112,7 +112,7 @@ export default function AddBook({ userId }) {
   const goHome = () => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate(-1);
+      navigate("/");
       return;
     } else {
       navigate("/login");

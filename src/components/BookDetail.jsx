@@ -6,8 +6,7 @@ import { FaWindowClose } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { TiThMenu } from "react-icons/ti";
 import { PiBooksFill } from "react-icons/pi";
-import { FaUserCircle } from "react-icons/fa";
-import { isOwnProfile, getCurrentUserId } from "../utils/auth";
+import { isOwnProfile } from "../utils/auth";
 import GradualBlur from "./GradualBlur";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
@@ -17,7 +16,6 @@ export default function BookDetail({ bookData, userId }) {
   const [nav, setNav] = useState(true);
   const navRef = useRef();
   const isCurrentUserProfile = isOwnProfile(userId);
-  const currentUserId = getCurrentUserId();
 
   const getGenreDisplay = (genreValue) => {
     const genreMap = {
@@ -87,18 +85,10 @@ export default function BookDetail({ bookData, userId }) {
   const goShelf = () => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate("/user/" + currentUserId);
+      navigate("/");
       return;
     } else {
-      navigate("/");
-    }
-  };
-
-  const goProfile = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/user/" + currentUserId + "/profile");
-      return;
+      navigate("/login");
     }
   };
 
@@ -174,9 +164,6 @@ export default function BookDetail({ bookData, userId }) {
                 <li className="md:px-3" onClick={goShelf}>
                   <PiBooksFill size={60} />
                 </li>
-                <li className="md:px-3" onClick={goProfile}>
-                  <FaUserCircle size={60} />
-                </li>
                 <li className="md:px-3" onClick={logOut}>
                   <FiLogOut size={60} />
                 </li>
@@ -217,12 +204,6 @@ export default function BookDetail({ bookData, userId }) {
                 </li>
                 <li className="p-4 font-bold cursor-pointer" onClick={goShelf}>
                   <Link>Bookshelf</Link>
-                </li>
-                <li
-                  className="p-4 font-bold cursor-pointer"
-                  onClick={goProfile}
-                >
-                  <Link>PROFILE</Link>
                 </li>
                 <li className="p-4 font-bold cursor-pointer" onClick={logOut}>
                   <Link>LOG OUT</Link>
