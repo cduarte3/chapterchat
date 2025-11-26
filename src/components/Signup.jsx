@@ -79,10 +79,7 @@ export default function Signup() {
 
       try {
         const response = await fetch(url, requestOptions);
-        if (response.status === 400 || response.status === 409) {
-          setErrorMessage("Email or Username already in use");
-          handleOpen();
-        } else if (response.status === 201) {
+        if (response.status === 201) {
           const data = await response.json();
           console.log(data);
 
@@ -90,6 +87,26 @@ export default function Signup() {
           localStorage.setItem("userId", data.id);
 
           navigate(`/user/${data.id}`);
+        }
+        if (response.status === 400) {
+          setErrorMessage("Missing required fields: email, username, password");
+          handleOpen();
+        }
+        if (response.status === 401) {
+          setErrorMessage("Password must be at least 6 characters");
+          handleOpen();
+        }
+        if (response.status === 402) {
+          setErrorMessage("Username must be between 3 and 20 characters");
+          handleOpen();
+        }
+        if (response.status === 409) {
+          setErrorMessage("Email or Username already in use");
+          handleOpen();
+        }
+        if (response.status === 500) {
+          setErrorMessage("Server connection error. Please try again later.");
+          handleOpen();
         } else {
           setErrorMessage("Server connection error. Please try again later.");
           handleOpen();

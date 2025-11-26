@@ -114,15 +114,56 @@ export default function UserProfile({ userData }) {
           });
         }, 1000);
       }
-      if (response.status === 409) {
-        setModalIcon("/alert.png");
-        setModalHeader("Conflict!");
-        setModalMessage("Username OR Email already exists.");
-        setIsModalLocked(false);
-        handleOpen();
-        return;
-      }
+
       if (!response.ok) {
+        if (response.status === 400) {
+          setModalIcon("/alert.png");
+          setModalHeader("Error!");
+          setModalMessage("Username must be between 3 and 20 characters.");
+          setIsModalLocked(false);
+          handleOpen();
+          return;
+        }
+        if (response.status === 404) {
+          setModalIcon("/alert.png");
+          setModalHeader("Error!");
+          setModalMessage("Error with updating profile. User not found.");
+          setIsModalLocked(false);
+          handleOpen();
+          return;
+        }
+        if (response.status === 407) {
+          setModalIcon("/lock.png");
+          setModalHeader("Error!");
+          setModalMessage("Password must be at least 6 characters.");
+          setIsModalLocked(false);
+          handleOpen();
+          return;
+        }
+        if (response.status === 408) {
+          setModalIcon("/alert.png");
+          setModalHeader("Conflict!");
+          setModalMessage("Email already in use.");
+          setIsModalLocked(false);
+          handleOpen();
+          return;
+        }
+        if (response.status === 409) {
+          setModalIcon("/alert.png");
+          setModalHeader("Conflict!");
+          setModalMessage("Username already in use.");
+          setIsModalLocked(false);
+          handleOpen();
+          return;
+        }
+        if (response.status === 500) {
+          setModalIcon("/alert.png");
+          setModalHeader("Error!");
+          setModalMessage("Server connection error. Please try again later.");
+          setIsModalLocked(false);
+          handleOpen();
+          return;
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
