@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate, Link } from "react-router-dom";
 import { HiMiniHome } from "react-icons/hi2";
 import { TiThMenu } from "react-icons/ti";
@@ -70,6 +71,13 @@ export default function Login() {
       );
 
       if (!response.ok) {
+        if (response.status === 400) {
+          setErrorMessage(
+            "This account uses Google Sign-In. Please sign in with Google or set a password in your profile settings."
+          );
+          handleOpen();
+          return;
+        }
         if (response.status === 401) {
           setErrorMessage("Password is incorrect, please try again.");
           handleOpen();
@@ -77,6 +85,11 @@ export default function Login() {
         }
         if (response.status === 404) {
           setErrorMessage("Email not found, please check again.");
+          handleOpen();
+          return;
+        }
+        if (response.status === 500) {
+          setErrorMessage("Server error. Please try again later.");
           handleOpen();
           return;
         }
@@ -92,6 +105,44 @@ export default function Login() {
       setErrorMessage("Connection error. Please try again later.");
       handleOpen();
     }
+  }
+
+  async function handleGoogleSuccess(credentialResponse) {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/login/google`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          credentials: "include",
+          mode: "cors",
+          body: JSON.stringify({
+            idToken: credentialResponse.credential,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.id);
+      navigate(`/user/${data.id}`, { state: { token: data.token } });
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+      setErrorMessage("Google sign-in failed. Please try again.");
+      handleOpen();
+    }
+  }
+
+  function handleGoogleError() {
+    setErrorMessage("Google sign-in was cancelled or failed.");
+    handleOpen();
   }
 
   return (
@@ -277,6 +328,20 @@ export default function Login() {
                 >
                   Sign in
                 </button>
+
+                {/* Google Sign-In Button */}
+                <div className="mt-4 flex justify-center">
+                  <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={handleGoogleError}
+                    useOneTap
+                    theme="filled_white"
+                    size="extra_large"
+                    text="signin_with"
+                    shape="rectangular"
+                  />
+                </div>
+
                 <h2 className="mt-4 text-center text-2xl leading-9 tracking-tight text-white">
                   Don't have an account?{" "}
                   <a
