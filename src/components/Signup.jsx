@@ -100,14 +100,15 @@ export default function Signup() {
           setErrorMessage("Username must be between 3 and 20 characters");
           handleOpen();
         }
-        if (response.status === 409) {
-          setErrorMessage("Email or Username already in use");
+        if (response.status === 408) {
+          setErrorMessage("Email already in use");
+          handleOpen();
+        }
+        if (response.status === 406) {
+          setErrorMessage("Username already in use");
           handleOpen();
         }
         if (response.status === 500) {
-          setErrorMessage("Server connection error. Please try again later.");
-          handleOpen();
-        } else {
           setErrorMessage("Server connection error. Please try again later.");
           handleOpen();
         }

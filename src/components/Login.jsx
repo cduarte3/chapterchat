@@ -73,7 +73,7 @@ export default function Login() {
       if (!response.ok) {
         if (response.status === 400) {
           setErrorMessage(
-            "This account uses Google Sign-In. Please sign in with Google or set a password in your profile settings."
+            "This account uses Google Sign-In. Please sign in with Google first and set a password in your profile settings."
           );
           handleOpen();
           return;
@@ -83,8 +83,15 @@ export default function Login() {
           handleOpen();
           return;
         }
+        if (response.status === 402) {
+          setErrorMessage(
+            "Missing or invalid Google idToken. Please try again later."
+          );
+          handleOpen();
+          return;
+        }
         if (response.status === 404) {
-          setErrorMessage("Email not found, please check again.");
+          setErrorMessage("Email not found, please try again.");
           handleOpen();
           return;
         }
